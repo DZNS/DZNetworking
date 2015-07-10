@@ -126,12 +126,41 @@ NSString *const DZErrorTask = @"com.dz.error.task";
     
     return [PMKPromise promiseWithResolverBlock:^(PMKResolver resolve) {
         
-        NSURL *URL = [NSURL URLWithString:URI relativeToURL:self.baseURL];
+        NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
         
-        NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:URL];
-        mutableRequest.HTTPMethod = method;
+        NSMutableURLRequest *mutableRequest;
         
-        NSURLRequest *request = [self formattedRequest:mutableRequest withParameters:params];
+        NSError *error;
+        
+        if([method isEqualToString:@"GET"])
+        {
+            mutableRequest = [OMGHTTPURLRQ GET:url :params error:&error];
+        }
+        else if([method isEqualToString:@"POST"])
+        {
+            mutableRequest = [OMGHTTPURLRQ POST:url :params error:&error];
+        }
+        else if([method isEqualToString:@"PUT"])
+        {
+            mutableRequest = [OMGHTTPURLRQ PUT:url :params error:&error];
+        }
+        else if([method isEqualToString:@"DELETE"])
+        {
+            mutableRequest = [OMGHTTPURLRQ DELETE:url :params error:&error];
+        }
+        else
+        {
+            mutableRequest = [OMGHTTPURLRQ GET:url :params error:&error];
+            mutableRequest.HTTPMethod = method;
+        }
+        
+        if(error)
+        {
+            resolve(error);
+            return;
+        }
+        
+        NSURLRequest *request = mutableRequest.copy;
         
         NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
            
@@ -145,12 +174,6 @@ NSString *const DZErrorTask = @"com.dz.error.task";
             
             NSError *jsonError;
             id responseObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
-            
-            if(jsonError)
-            {
-                resolve(jsonError);
-                return;
-            }
             
             if(res.statusCode > self.maximumSuccessStatusCode)
             {
@@ -168,6 +191,12 @@ NSString *const DZErrorTask = @"com.dz.error.task";
                 
             }
             
+            if(jsonError)
+            {
+                resolve(jsonError);
+                return;
+            }
+            
             resolve(PMKManifold(responseObject, res, task));
             
         }];
@@ -175,100 +204,6 @@ NSString *const DZErrorTask = @"com.dz.error.task";
         [task resume];
         
     }];
-    
-}
-
-#pragma mark - Helpers
-
-- (NSURLRequest *)formattedRequest:(NSURLRequest *)request
-                    withParameters:(NSDictionary *)parameters
-{
-    NSParameterAssert(request);
-    
-    NSMutableURLRequest *mutableRequest = [request mutableCopy];
-    
-    // Update the HTTP Headers for the request if they exist.
-    if(self.HTTPHeaders && self.HTTPHeaders.count)
-    {
-        
-        for(NSString *key in self.HTTPHeaders)
-        {
-            
-            // If a value for the HTTP Header is set, skip the default.
-            if([mutableRequest valueForHTTPHeaderField:key]) continue;
-            
-            [mutableRequest setValue:[self.HTTPHeaders valueForKey:key] forHTTPHeaderField:key];
-            
-        }
-        
-    }
-    
-    // Lets work out the Parameters.
-    if(parameters && parameters.count)
-    {
-        
-        NSString *serialized = [self serializedQueryStringFromParams:parameters];
-        
-        NSString *method = mutableRequest.HTTPMethod;
-        
-        // We set it in the URL as query params for the following methods.
-        if([method isEqualToString:@"GET"] ||
-           [method isEqualToString:@"DELETE"] ||
-           [method isEqualToString:@"HEAD"] ||
-           [method isEqualToString:@"OPTIONS"])
-        {
-            
-            NSString *url;
-            
-            // If we have existing query, append the params.
-            if([mutableRequest.URL.absoluteString containsString:@"?"])
-            {
-                url = [NSString stringWithFormat:@"%@&%@", mutableRequest.URL.absoluteString, serialized];
-            }
-            // Add the params normally.
-            else
-            {
-                url = [NSString stringWithFormat:@"%@?%@", mutableRequest.URL.absoluteString, serialized];
-            }
-            
-            NSURL *URL = [NSURL URLWithString:url];
-            
-            mutableRequest.URL = URL;
-            
-        }
-        
-        // These need the params in the HTTPBody.
-        // If you need query params, include them in the URL directly.
-        else if ([method isEqualToString:@"PUT"] ||
-                 [method isEqualToString:@"POST"] ||
-                 [method isEqualToString:@"PATCH"])
-        {
-            mutableRequest.HTTPBody = [serialized dataUsingEncoding:NSUTF8StringEncoding];
-        }
-        
-        // Undefined behavior. If you run into this, please open an issue on https://github.com/DZNS/DZNetworking/
-        else
-        {
-            DZLog(@"Undefined behavior for setting request parameters.");
-        }
-        
-    }
-    
-    return mutableRequest.copy;
-}
-
-- (NSString *)serializedQueryStringFromParams:(NSDictionary *)params
-{
-    
-    NSMutableArray *array = [NSMutableArray arrayWithCapacity:params.count];
-    
-    for(NSString *key in params)
-    {
-        NSString *item = [@[key, [params objectForKey:key]] componentsJoinedByString:@"="];
-        [array addObject:item];
-    }
-    
-    return [array componentsJoinedByString:@"&"];
     
 }
 

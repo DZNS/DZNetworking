@@ -1,0 +1,3 @@
+[submodule "DZNetworking/vendors/OMGHTTPURLRQ"]
+	path = DZNetworking/vendors/OMGHTTPURLRQ
+	url = https://github.com/mxcl/OMGHTTPURLRQ.git
