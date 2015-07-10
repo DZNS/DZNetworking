@@ -1,0 +1,1 @@
+To install the autocomplete snippets, copy the desired files to ~/Library/Developer/Xcode/UserData/CodeSnippets/
