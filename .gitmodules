@@ -1,3 +1,6 @@
 [submodule "DZNetworking/vendors/OMGHTTPURLRQ"]
 	path = DZNetworking/vendors/OMGHTTPURLRQ
 	url = https://github.com/mxcl/OMGHTTPURLRQ.git
+[submodule "DZNetworking/vendors/PromiseKit"]
+	path = DZNetworking/vendors/PromiseKit
+	url = https://github.com/mxcl/PromiseKit.git
