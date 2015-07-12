@@ -19,6 +19,8 @@
         if(error) DZLog(@"%@", error.localizedDescription);\
     }];\
 
+#define extraQueryParams @"userId=10&Auth=21bghdyu26%30"
+
 @interface DZNetworkingTests : XCTestCase {
     DZURLSession *_session;
 }
@@ -35,6 +37,32 @@
     {
         _session = [DZURLSession shared];
         _session.baseURL = [NSURL URLWithString:@"http://jsonplaceholder.typicode.com"];
+        
+        _session.requestModifier = ^(NSURLRequest *request) {
+          
+            NSMutableURLRequest *req = request.mutableCopy;
+            
+            NSURL *aURL = req.URL;
+            NSString *url = aURL.absoluteString;
+            
+            if([url containsString:@"?"])
+            {
+                //already has query params. Append.
+                
+                url = [url stringByAppendingString:extraQueryParams];
+                
+            }
+            else
+            {
+                url = [url stringByAppendingFormat:@"?%@", extraQueryParams];
+            }
+            
+            req.URL = [NSURL URLWithString:url];
+            
+            return req.copy;
+            
+        };
+        
     }
     
 }
@@ -44,9 +72,32 @@
     [super tearDown];
 }
 
+- (void)testRequestModifier
+{
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"GET:/post/1"];
+    
+    [_session GET:@"/posts/1" parameters:nil]
+    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+        
+        if([task.response.URL.absoluteString containsString:extraQueryParams])
+        {
+            [expectation fulfill];
+        }
+        
+    })
+    .catch(^(NSError *error) {
+        
+        DZLog(@"%@", error.localizedDescription);
+        
+    });
+    
+    waitForExpectation;
+    
+}
+
 - (void)testGET
 {
-    // This is an example of a functional test case.
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET:/post/1"];
     
@@ -68,7 +119,7 @@
         
     })
     .catch(^(NSError *error) {
-        DZLog(@"%@", error);
+        DZLog(@"%@", error.localizedDescription);
     });
     
     waitForExpectation;

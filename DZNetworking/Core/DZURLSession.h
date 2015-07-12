@@ -35,12 +35,12 @@
 #ifdef DEBUG
 
 #define DZLog(fmt,...) {\
-NSLog((@"(%s - Line: %d) " fmt),__func__,__LINE__,##__VA_ARGS__);\
+    NSLog((@"(%s - Line: %d) " fmt),__func__,__LINE__,##__VA_ARGS__);\
 }
 
 #else
 
-#define DZLog(fmt,...) {}
+    #define DZLog(fmt,...) {}
 
 #endif
 
@@ -50,6 +50,8 @@ extern NSString *const DZErrorDomain;
 extern NSString *const DZErrorData;
 extern NSString *const DZErrorResponse;
 extern NSString *const DZErrorTask;
+extern NSInteger const DZUnusableRequestError;
+
 typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
 
 @interface DZURLSession : NSObject
