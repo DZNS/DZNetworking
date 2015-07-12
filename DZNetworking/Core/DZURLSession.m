@@ -184,6 +184,24 @@ NSString *const DZErrorTask = @"com.dz.error.task";
         
         NSURLRequest *request = mutableRequest.copy;
         
+        if(self.requestModifier)
+        {
+            
+            request = self.requestModifier(request);
+            
+            if(!request)
+            {
+                
+                NSError *modifierError = [[NSError alloc] initWithDomain:DZErrorDomain code:DZUnusableRequestError userInfo:nil];
+                
+                resolve(modifierError);
+                
+                return;
+                
+            }
+            
+        }
+        
         NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
            
             if(error)

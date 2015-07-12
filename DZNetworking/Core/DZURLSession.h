@@ -50,6 +50,7 @@ extern NSString *const DZErrorDomain;
 extern NSString *const DZErrorData;
 extern NSString *const DZErrorResponse;
 extern NSString *const DZErrorTask;
+typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
 
 @interface DZURLSession : NSObject
 
@@ -83,6 +84,12 @@ extern NSString *const DZErrorTask;
  *  Use the OMGUserAgent. Default is No.
  */
 @property (nonatomic, assign) BOOL useOMGUserAgent;
+
+/**
+ *  The request modifier block, if provided, is called before the NSURLRequest is actually used in a request. You can utilize this block to add additional data to the request if required..
+ *  An example could be, adding authentication query parameters to the URL which are dynamically generated (Flickr oAuth API).
+ */
+@property (nonatomic, copy) requestModifierBlock requestModifier;
 
 /**
  *  Trigger a GET request
