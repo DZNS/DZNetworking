@@ -1,0 +1,6 @@
+language: objective-c
+osx_image: xcode6.4
+xcode_project: DZNetworking.xcodeproj
+xcode_scheme: DZNetworking
+xcode_sdk: iphonesimulator8.4
+before_install: git submodule update --init --recursive

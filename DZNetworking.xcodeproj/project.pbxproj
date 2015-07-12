@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F02D47981B5004A0008BB8DF /* OMGFormURLEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = F02D47921B5004A0008BB8DF /* OMGFormURLEncode.h */; };
+		F02D47981B5004A0008BB8DF /* OMGFormURLEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = F02D47921B5004A0008BB8DF /* OMGFormURLEncode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F02D47991B5004A0008BB8DF /* OMGFormURLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47931B5004A0008BB8DF /* OMGFormURLEncode.m */; };
 		F02D479A1B5004A0008BB8DF /* OMGFormURLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47931B5004A0008BB8DF /* OMGFormURLEncode.m */; };
-		F02D479B1B5004A0008BB8DF /* OMGHTTPURLRQ.h in Headers */ = {isa = PBXBuildFile; fileRef = F02D47941B5004A0008BB8DF /* OMGHTTPURLRQ.h */; };
+		F02D479B1B5004A0008BB8DF /* OMGHTTPURLRQ.h in Headers */ = {isa = PBXBuildFile; fileRef = F02D47941B5004A0008BB8DF /* OMGHTTPURLRQ.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F02D479C1B5004A0008BB8DF /* OMGHTTPURLRQ.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47951B5004A0008BB8DF /* OMGHTTPURLRQ.m */; };
 		F02D479D1B5004A0008BB8DF /* OMGHTTPURLRQ.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47951B5004A0008BB8DF /* OMGHTTPURLRQ.m */; };
-		F02D479E1B5004A0008BB8DF /* OMGUserAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = F02D47961B5004A0008BB8DF /* OMGUserAgent.h */; };
+		F02D479E1B5004A0008BB8DF /* OMGUserAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = F02D47961B5004A0008BB8DF /* OMGUserAgent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F02D479F1B5004A0008BB8DF /* OMGUserAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47971B5004A0008BB8DF /* OMGUserAgent.m */; };
 		F02D47A01B5004A0008BB8DF /* OMGUserAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47971B5004A0008BB8DF /* OMGUserAgent.m */; };
 		F0692C9D1B4FE72C0084BBD8 /* DZURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E6D1B4FB22600FDA46C /* DZURLSession.m */; };
