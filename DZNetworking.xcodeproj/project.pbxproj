@@ -7,17 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F02D47981B5004A0008BB8DF /* OMGFormURLEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = F02D47921B5004A0008BB8DF /* OMGFormURLEncode.h */; };
-		F02D47991B5004A0008BB8DF /* OMGFormURLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47931B5004A0008BB8DF /* OMGFormURLEncode.m */; };
-		F02D479A1B5004A0008BB8DF /* OMGFormURLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47931B5004A0008BB8DF /* OMGFormURLEncode.m */; };
-		F02D479B1B5004A0008BB8DF /* OMGHTTPURLRQ.h in Headers */ = {isa = PBXBuildFile; fileRef = F02D47941B5004A0008BB8DF /* OMGHTTPURLRQ.h */; };
-		F02D479C1B5004A0008BB8DF /* OMGHTTPURLRQ.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47951B5004A0008BB8DF /* OMGHTTPURLRQ.m */; };
-		F02D479D1B5004A0008BB8DF /* OMGHTTPURLRQ.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47951B5004A0008BB8DF /* OMGHTTPURLRQ.m */; };
-		F02D479E1B5004A0008BB8DF /* OMGUserAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = F02D47961B5004A0008BB8DF /* OMGUserAgent.h */; };
-		F02D479F1B5004A0008BB8DF /* OMGUserAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47971B5004A0008BB8DF /* OMGUserAgent.m */; };
-		F02D47A01B5004A0008BB8DF /* OMGUserAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D47971B5004A0008BB8DF /* OMGUserAgent.m */; };
 		F0692C9D1B4FE72C0084BBD8 /* DZURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E6D1B4FB22600FDA46C /* DZURLSession.m */; };
 		F0692EC81B4FF0C80084BBD8 /* PromiseKit.framework in Copy PromiseKit */ = {isa = PBXBuildFile; fileRef = F0692EB91B4FF0C10084BBD8 /* PromiseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F0EE885C1B5243F800050A8E /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */; };
+		F0EE885D1B52443300050A8E /* OMGHTTPURLRQ.framework in Copy PromiseKit */ = {isa = PBXBuildFile; fileRef = F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FC8E5C1B4FB1D300FDA46C /* DZNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */; };
 		F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E621B4FB1D400FDA46C /* DZNetworkingTests.m */; };
@@ -82,6 +75,27 @@
 			remoteGlobalIDString = 638CDF031AEE734B0023A543;
 			remoteInfo = PMKTestHost;
 		};
+		F0EE88561B5243CA00050A8E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 63EDFE721A7FFD0E0030F974;
+			remoteInfo = OMGiOS;
+		};
+		F0EE88581B5243CA00050A8E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 63F804341AB8AAA300E4DEE1;
+			remoteInfo = OMGOSX;
+		};
+		F0EE885A1B5243CA00050A8E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 63EDFE7D1A7FFD0E0030F974;
+			remoteInfo = OMGTest;
+		};
 		F0FC8E5D1B4FB1D300FDA46C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F0FC8E471B4FB1D300FDA46C /* Project object */;
@@ -98,6 +112,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F0EE885D1B52443300050A8E /* OMGHTTPURLRQ.framework in Copy PromiseKit */,
 				F0692EC81B4FF0C80084BBD8 /* PromiseKit.framework in Copy PromiseKit */,
 			);
 			name = "Copy PromiseKit";
@@ -106,13 +121,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		F02D47921B5004A0008BB8DF /* OMGFormURLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMGFormURLEncode.h; sourceTree = "<group>"; };
-		F02D47931B5004A0008BB8DF /* OMGFormURLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMGFormURLEncode.m; sourceTree = "<group>"; };
-		F02D47941B5004A0008BB8DF /* OMGHTTPURLRQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMGHTTPURLRQ.h; sourceTree = "<group>"; };
-		F02D47951B5004A0008BB8DF /* OMGHTTPURLRQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMGHTTPURLRQ.m; sourceTree = "<group>"; };
-		F02D47961B5004A0008BB8DF /* OMGUserAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMGUserAgent.h; sourceTree = "<group>"; };
-		F02D47971B5004A0008BB8DF /* OMGUserAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMGUserAgent.m; sourceTree = "<group>"; };
 		F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PromiseKit.xcodeproj; path = vendors/PromiseKit/PromiseKit.xcodeproj; sourceTree = "<group>"; };
+		F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OMGHTTPURLRQ.xcodeproj; path = vendors/OMGHTTPURLRQ/OMGHTTPURLRQ.xcodeproj; sourceTree = "<group>"; };
 		F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DZNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0FC8E541B4FB1D300FDA46C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNetworking.h; sourceTree = "<group>"; };
@@ -128,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0EE885C1B5243F800050A8E /* OMGHTTPURLRQ.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,20 +153,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F02D47911B5004A0008BB8DF /* OMGHTTPURLRQ */ = {
-			isa = PBXGroup;
-			children = (
-				F02D47921B5004A0008BB8DF /* OMGFormURLEncode.h */,
-				F02D47931B5004A0008BB8DF /* OMGFormURLEncode.m */,
-				F02D47941B5004A0008BB8DF /* OMGHTTPURLRQ.h */,
-				F02D47951B5004A0008BB8DF /* OMGHTTPURLRQ.m */,
-				F02D47961B5004A0008BB8DF /* OMGUserAgent.h */,
-				F02D47971B5004A0008BB8DF /* OMGUserAgent.m */,
-			);
-			name = OMGHTTPURLRQ;
-			path = vendors/OMGHTTPURLRQ/Sources;
-			sourceTree = "<group>";
-		};
 		F0692EAE1B4FF0C10084BBD8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +164,16 @@
 				F0692EC31B4FF0C10084BBD8 /* PMKiOSCategoryHostedTests.xctest */,
 				F0692EC51B4FF0C10084BBD8 /* PMKOSXCategoryTests.xctest */,
 				F0692EC71B4FF0C10084BBD8 /* PMKTestHost.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F0EE88511B5243CA00050A8E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */,
+				F0EE88591B5243CA00050A8E /* OMGHTTPURLRQ.framework */,
+				F0EE885B1B5243CA00050A8E /* OMGTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -237,7 +244,7 @@
 		F0FC8E711B4FB2A500FDA46C /* vendors */ = {
 			isa = PBXGroup;
 			children = (
-				F02D47911B5004A0008BB8DF /* OMGHTTPURLRQ */,
+				F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */,
 				F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */,
 			);
 			name = vendors;
@@ -252,9 +259,6 @@
 			files = (
 				F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */,
 				F0FC8E6E1B4FB22600FDA46C /* DZURLSession.h in Headers */,
-				F02D479B1B5004A0008BB8DF /* OMGHTTPURLRQ.h in Headers */,
-				F02D47981B5004A0008BB8DF /* OMGFormURLEncode.h in Headers */,
-				F02D479E1B5004A0008BB8DF /* OMGUserAgent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +331,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = F0EE88511B5243CA00050A8E /* Products */;
+					ProjectRef = F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */;
+				},
+				{
 					ProductGroup = F0692EAE1B4FF0C10084BBD8 /* Products */;
 					ProjectRef = F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */;
 				},
@@ -396,6 +404,27 @@
 			remoteRef = F0692EC61B4FF0C10084BBD8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OMGHTTPURLRQ.framework;
+			remoteRef = F0EE88561B5243CA00050A8E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F0EE88591B5243CA00050A8E /* OMGHTTPURLRQ.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OMGHTTPURLRQ.framework;
+			remoteRef = F0EE88581B5243CA00050A8E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F0EE885B1B5243CA00050A8E /* OMGTest.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OMGTest.xctest;
+			remoteRef = F0EE885A1B5243CA00050A8E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -421,9 +450,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */,
-				F02D47991B5004A0008BB8DF /* OMGFormURLEncode.m in Sources */,
-				F02D479F1B5004A0008BB8DF /* OMGUserAgent.m in Sources */,
-				F02D479C1B5004A0008BB8DF /* OMGHTTPURLRQ.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,9 +459,6 @@
 			files = (
 				F0692C9D1B4FE72C0084BBD8 /* DZURLSession.m in Sources */,
 				F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */,
-				F02D479D1B5004A0008BB8DF /* OMGHTTPURLRQ.m in Sources */,
-				F02D479A1B5004A0008BB8DF /* OMGFormURLEncode.m in Sources */,
-				F02D47A01B5004A0008BB8DF /* OMGUserAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

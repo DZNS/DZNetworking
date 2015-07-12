@@ -30,7 +30,7 @@
 
 #import <Foundation/Foundation.h>
 #import <PromiseKit/PromiseKit.h>
-#import "OMGHTTPURLRQ.h"
+#import <OMGHTTPURLRQ/OMGHTTPURLRQ.h>
 
 #ifdef DEBUG
 
