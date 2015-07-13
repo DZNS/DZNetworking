@@ -171,4 +171,21 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
 - (DZPromise *)OPTIONS:(NSString *)URI
             parameters:(NSDictionary *)params;
 
+#pragma mark - 
+
+// The following methods make two assumptions:
+// 1. The NSURLRequest is valid, and ready to be fired.
+// 2. The NSURLRequest will not be run through the requestModifier block. If you need to, you must do that before passing it here.
+//
+// The following methods will however:
+// 1. Correctly set the HTTPMethod for you incase it isn't correct.
+
+- (DZPromise *)GET:(NSURLRequest *)req;
+- (DZPromise *)PUT:(NSURLRequest *)req;
+- (DZPromise *)POST:(NSURLRequest *)req;
+- (DZPromise *)PATCH:(NSURLRequest *)req;
+- (DZPromise *)DELETE:(NSURLRequest *)req;
+- (DZPromise *)OPTIONS:(NSURLRequest *)req;
+- (DZPromise *)HEAD:(NSURLRequest *)req;
+
 @end

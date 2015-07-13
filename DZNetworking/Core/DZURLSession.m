@@ -142,6 +142,91 @@ NSInteger const DZUnusableRequestError = 2100;
     
 }
 
+#pragma mark - 
+
+- (DZPromise *)GET:(NSURLRequest *)req
+{
+    
+    req = [self ensureHTTPMethod:@"GET" onRequest:req];
+    
+    return [self requestWithReq:req];
+    
+}
+
+- (DZPromise *)PUT:(NSURLRequest *)req
+{
+    
+    req = [self ensureHTTPMethod:@"PUT" onRequest:req];
+    
+    return [self requestWithReq:req];
+    
+}
+
+- (DZPromise *)POST:(NSURLRequest *)req
+{
+    
+    req = [self ensureHTTPMethod:@"POST" onRequest:req];
+    
+    return [self requestWithReq:req];
+    
+}
+
+- (DZPromise *)PATCH:(NSURLRequest *)req
+{
+    
+    req = [self ensureHTTPMethod:@"PATCH" onRequest:req];
+    
+    return [self requestWithReq:req];
+    
+}
+
+- (DZPromise *)DELETE:(NSURLRequest *)req
+{
+    
+    req = [self ensureHTTPMethod:@"DELETE" onRequest:req];
+    
+    return [self requestWithReq:req];
+    
+}
+
+- (DZPromise *)OPTIONS:(NSURLRequest *)req
+{
+    
+    req = [self ensureHTTPMethod:@"OPTIONS" onRequest:req];
+    
+    return [self requestWithReq:req];
+    
+}
+
+- (DZPromise *)HEAD:(NSURLRequest *)req
+{
+    
+    req = [self ensureHTTPMethod:@"HEAD" onRequest:req];
+    
+    return [self requestWithReq:req];
+    
+}
+
+#pragma mark - Internal
+
+- (NSURLRequest *)ensureHTTPMethod:(NSString *)method
+                         onRequest:(NSURLRequest *)request
+{
+    
+    if(![request.HTTPMethod isEqualToString:method])
+    {
+        
+        NSMutableURLRequest *req = request.mutableCopy;
+        req.HTTPMethod = method;
+        
+        request = req.copy;
+        
+    }
+    
+    return request;
+    
+}
+
 - (DZPromise *)requestWithURI:(NSString *)URI
                         method:(NSString *)method
                         params:(NSDictionary *)params
@@ -246,6 +331,56 @@ NSInteger const DZUnusableRequestError = 2100;
         
     }];
     
+}
+
+- (DZPromise *)requestWithReq:(NSURLRequest *)request
+{
+    
+    return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
+        
+        __block NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            
+            if(error)
+            {
+                resolve(error);
+                return;
+            }
+            
+            NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
+            
+            NSError *jsonError;
+            id responseObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+            
+            if(res.statusCode > self.maximumSuccessStatusCode)
+            {
+                
+                // Treat this as an error.
+                
+                NSDictionary *userInfo = @{DZErrorData : data,
+                                           DZErrorResponse : responseObject,
+                                           DZErrorTask : task};
+                
+                NSError *error = [NSError errorWithDomain:DZErrorDomain code:res.statusCode userInfo:userInfo];
+                
+                resolve(error);
+                return;
+                
+            }
+            
+            if(jsonError)
+            {
+                resolve(jsonError);
+                return;
+            }
+            
+            resolve(PMKManifold(responseObject, res, task));
+            
+        }];
+        
+        [task resume];
+        
+    }];
+
 }
 
 @end
