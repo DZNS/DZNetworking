@@ -36,7 +36,7 @@ NSString *const DZErrorResponse = @"com.dz.error.response";
 NSString *const DZErrorTask = @"com.dz.error.task";
 NSInteger const DZUnusableRequestError = 2100;
 
-@interface DZURLSession()
+@interface DZURLSession() <NSURLSessionDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 
@@ -76,7 +76,7 @@ NSInteger const DZUnusableRequestError = 2100;
         
         defaultConfig.URLCache = cache;
         
-        _session = [NSURLSession sessionWithConfiguration:defaultConfig];
+        _session = [NSURLSession sessionWithConfiguration:defaultConfig delegate:self delegateQueue:[NSOperationQueue currentQueue]];
         
     }
     
@@ -98,7 +98,39 @@ NSInteger const DZUnusableRequestError = 2100;
          parameters:(NSDictionary *)params
 {
     
-    return [self requestWithURI:URI method:@"POST" params:params];
+    return [self POST:URI queryParams:nil parameters:params];
+    
+}
+
+- (DZPromise *)POST:(NSString *)URI
+        queryParams:(NSDictionary *)query
+         parameters:(NSDictionary *)params
+{
+
+    return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
+       
+        NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
+        
+        id queryString = OMGFormURLEncode(params);
+        if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
+        
+        NSError *error = nil;
+        NSMutableURLRequest *req = [OMGHTTPURLRQ POST:url :params error:&error];
+        
+        if(error)
+        {
+            resolve(error);
+            return;
+        }
+        
+        resolve([self requestWithReq:req.copy]);
+        
+    }]
+    .then(^(DZPromise *promise) {
+    
+        return promise;
+    
+    });
     
 }
 
@@ -107,6 +139,38 @@ NSInteger const DZUnusableRequestError = 2100;
 {
     
     return [self requestWithURI:URI method:@"PUT" params:params];
+    
+}
+
+- (DZPromise *)PUT:(NSString *)URI
+       queryParams:(NSDictionary *)query
+        parameters:(NSDictionary *)params
+{
+    
+    return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
+        
+        NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
+        
+        id queryString = OMGFormURLEncode(params);
+        if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
+        
+        NSError *error = nil;
+        NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url :params error:&error];
+        
+        if(error)
+        {
+            resolve(error);
+            return;
+        }
+        
+        resolve([self requestWithReq:req.copy]);
+        
+    }]
+    .then(^(DZPromise *promise) {
+        
+        return promise;
+        
+    });
     
 }
 
@@ -307,7 +371,6 @@ NSInteger const DZUnusableRequestError = 2100;
                 // Treat this as an error.
                 
                 NSDictionary *userInfo = @{DZErrorData : data,
-                                           DZErrorResponse : responseObject,
                                            DZErrorTask : task};
                 
                 NSError *error = [NSError errorWithDomain:DZErrorDomain code:res.statusCode userInfo:userInfo];
@@ -381,6 +444,58 @@ NSInteger const DZUnusableRequestError = 2100;
         
     }];
 
+}
+
+#pragma mark - NSURLSessionDelegate
+
+- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler
+{
+    
+    [self callDelegate:@selector(URLSession:didReceiveChallenge:completionHandler:) arg1:session arg2:challenge arg3:completionHandler];
+    
+}
+
+#pragma mark - Helpers
+
+- (void)callDelegate:(SEL)aSelector
+{
+    
+    if(self.delegate && [self.delegate respondsToSelector:aSelector])
+    {
+        
+        NSMethodSignature * ms = [self methodSignatureForSelector:aSelector];
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:ms];
+        [inv setTarget:self.delegate];
+        [inv setSelector:aSelector];
+        [inv invoke];
+        
+    }
+    
+}
+
+- (id)callDelegate:(SEL)aSelector arg1:(id)param1 arg2:(id)param2 arg3:(id)param3
+{
+    
+    if(self.delegate && [self.delegate respondsToSelector:aSelector])
+    {
+     
+        NSMethodSignature * ms = [self methodSignatureForSelector:aSelector];
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:ms];
+        [inv setTarget:self.delegate];
+        [inv setSelector:aSelector];
+        [inv setArgument:&param1 atIndex:2];
+        [inv setArgument:&param2 atIndex:3];
+        [inv setArgument:&param3 atIndex:3];
+        [inv invoke];
+        id returnObject = nil;
+        [inv getReturnValue:&returnObject];
+        
+        return returnObject;
+        
+    }
+    
+    return nil;
+    
 }
 
 @end
