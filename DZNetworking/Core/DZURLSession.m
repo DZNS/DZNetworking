@@ -111,7 +111,7 @@ NSInteger const DZUnusableRequestError = 2100;
        
         NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
         
-        id queryString = OMGFormURLEncode(params);
+        id queryString = OMGFormURLEncode(query);
         if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
         
         NSError *error = nil;
@@ -151,7 +151,7 @@ NSInteger const DZUnusableRequestError = 2100;
         
         NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
         
-        id queryString = OMGFormURLEncode(params);
+        id queryString = OMGFormURLEncode(query);
         if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
         
         NSError *error = nil;
