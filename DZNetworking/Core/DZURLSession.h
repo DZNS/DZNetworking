@@ -29,6 +29,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <DZNetworking/DZURLSessionProtocol.h>
 #import <PromiseKit/PromiseKit.h>
 #import <OMGHTTPURLRQ/OMGHTTPURLRQ.h>
 
@@ -62,6 +63,8 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *  @return DZURLSession.
  */
 + (instancetype)shared;
+
+@property (nonatomic, weak) id<DZURLSessionProtocol> delegate;
 
 /**
  *  The base URL to use for all the requests. 
@@ -116,6 +119,19 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
          parameters:(NSDictionary *)params;
 
 /**
+ *  Trigger a POST request
+ *
+ *  @param URI    The URI for the request
+ *  @param query  Parameters for the URL query.
+ *  @param params Parameters for the request. These will be included in the HTTP Body.
+ *
+ *  @return DZPromise
+ */
+- (DZPromise *)POST:(NSString *)URI
+        queryParams:(NSDictionary *)query
+         parameters:(NSDictionary *)params;
+
+/**
  *  Trigger a PUT request
  *
  *  @param URI    The URI for the request
@@ -124,6 +140,19 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *  @return DZPromise
  */
 - (DZPromise *)PUT:(NSString *)URI
+        parameters:(NSDictionary *)params;
+
+/**
+ *  Trigger a PUT request
+ *
+ *  @param URI    The URI for the request
+ *  @param query  Parameters for the URL query.
+ *  @param params Parameters for the request. These will be included in the HTTP Body.
+ *
+ *  @return DZPromise
+ */
+- (DZPromise *)PUT:(NSString *)URI
+       queryParams:(NSDictionary *)query
         parameters:(NSDictionary *)params;
 
 /**
@@ -141,7 +170,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *  Trigger a DELETE request. The response for such requests may not include a responseObject from the server. Check for the statusCode on the response object instead.
  *
  *  @param URI    The URI for the request
- *  @param params Parameters for the request. These will be included in the URL as query parameters.
+ *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
  *  @return DZPromise
  */
