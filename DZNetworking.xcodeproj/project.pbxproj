@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F0692C9D1B4FE72C0084BBD8 /* DZURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E6D1B4FB22600FDA46C /* DZURLSession.m */; };
 		F0692EC81B4FF0C80084BBD8 /* PromiseKit.framework in Copy PromiseKit */ = {isa = PBXBuildFile; fileRef = F0692EB91B4FF0C10084BBD8 /* PromiseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F0EE885C1B5243F800050A8E /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */; };
 		F0EE885D1B52443300050A8E /* OMGHTTPURLRQ.framework in Copy PromiseKit */ = {isa = PBXBuildFile; fileRef = F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -96,13 +95,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 63EDFE7D1A7FFD0E0030F974;
 			remoteInfo = OMGTest;
-		};
-		F0FC8E5D1B4FB1D300FDA46C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0FC8E471B4FB1D300FDA46C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F0FC8E4F1B4FB1D300FDA46C;
-			remoteInfo = DZNetworking;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -299,7 +291,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F0FC8E5E1B4FB1D300FDA46C /* PBXTargetDependency */,
 			);
 			name = DZNetworkingTests;
 			productName = DZNetworkingTests;
@@ -461,20 +452,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0692C9D1B4FE72C0084BBD8 /* DZURLSession.m in Sources */,
 				F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		F0FC8E5E1B4FB1D300FDA46C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F0FC8E4F1B4FB1D300FDA46C /* DZNetworking */;
-			targetProxy = F0FC8E5D1B4FB1D300FDA46C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F0FC8E641B4FB1D400FDA46C /* Debug */ = {
@@ -579,7 +561,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
