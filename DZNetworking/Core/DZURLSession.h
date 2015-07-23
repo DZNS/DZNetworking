@@ -207,7 +207,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
 // 2. The NSURLRequest will not be run through the requestModifier block. If you need to, you must do that before passing it here.
 //
 // The following methods will however:
-// 1. Correctly set the HTTPMethod for you incase it isn't correct.
+// 1. Correctly set the HTTPMethod for you incase it is incorrect.
 
 - (DZPromise *)GET:(NSURLRequest *)req;
 - (DZPromise *)PUT:(NSURLRequest *)req;

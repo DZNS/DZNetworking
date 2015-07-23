@@ -15,7 +15,7 @@
  */
 
 #define waitForExpectation \
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {\
+    [self waitForExpectationsWithTimeout:30 handler:^(NSError *error) {\
         if(error) DZLog(@"%@", error.localizedDescription);\
     }];\
 
@@ -164,12 +164,51 @@
     
 }
 
+- (void)testPOSTWithQuery
+{
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"POST:/posts"];
+    
+    [_session POST:@"/posts" parameters:@{
+                                          @"title": @"foo",
+                                          @"body": @"bar",
+                                          @"userId" : @1
+                                          }]
+    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+        
+        if(responseObject &&
+           [responseObject isKindOfClass:[NSDictionary class]])
+        {
+            
+            id userId = [responseObject valueForKey:@"userId"];
+            
+            DZLog(@"Created post with ID: %@", [responseObject valueForKey:@"id"]);
+            
+            if(userId && [userId integerValue] == 1)
+            {
+                [expectation fulfill];
+            }
+            
+        }
+        
+    })
+    .catch(^(NSError *error) {
+        
+        DZLog(@"%@", error.localizedDescription);
+        
+    });
+    
+    waitForExpectation;
+
+    
+}
+
 - (void)testPUT
 {
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"PUT:/posts/1"];
     
-    [_session PUT:@"/posts/1" parameters:@{
+    [_session PUT:@"/posts/1" queryParams:@{@"foo" : @"bar"} parameters:@{
                                            @"title": @"foo",
                                            @"body": @"bar",
                                            @"userId" : @1,
@@ -196,14 +235,49 @@
     
 }
 
+- (void)testPUTWithQuery
+{
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"PUT:/posts/1"];
+    
+    [_session PUT:@"/posts/1"
+      queryParams:@{@"foo" : @"bar"}
+       parameters:@{
+                    @"title": @"foo",
+                    @"body": @"bar",
+                    @"userId" : @1,
+                    @"id" : @1
+                    }]
+    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+        
+        if(responseObject &&
+           [responseObject isKindOfClass:[NSDictionary class]])
+        {
+            
+            [expectation fulfill];
+            
+        }
+        
+    })
+    .catch(^(NSError *error) {
+        
+        DZLog(@"%@", error.localizedDescription);
+        
+    });
+    
+    waitForExpectation;
+
+    
+}
+
 - (void)testPATCH
 {
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"PATCH:/posts/1"];
     
-    [_session PUT:@"/posts/1" parameters:@{
-                                           @"title": @"foo",
-                                          }]
+    [_session PUT:@"/posts/1"
+      queryParams:@{@"foo" : @"bar"}
+       parameters:@{@"title": @"foo"}]
     .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
         
         if(responseObject &&
