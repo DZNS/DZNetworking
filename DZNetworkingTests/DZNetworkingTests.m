@@ -15,7 +15,7 @@
  */
 
 #define waitForExpectation \
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {\
+    [self waitForExpectationsWithTimeout:30 handler:^(NSError *error) {\
         if(error) DZLog(@"%@", error.localizedDescription);\
     }];\
 
