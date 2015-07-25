@@ -17,7 +17,7 @@
 #define waitForExpectation \
     [self waitForExpectationsWithTimeout:30 handler:^(NSError *error) {\
         if(error) DZLog(@"%@", error.localizedDescription);\
-    }];\
+    }];
 
 #define extraQueryParams @"userId=10&Auth=21bghdyu26%30"
 

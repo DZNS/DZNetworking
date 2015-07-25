@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F024470E1B612564004C65F9 /* DZUploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F024470C1B612564004C65F9 /* DZUploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F024470F1B612564004C65F9 /* DZUploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F024470D1B612564004C65F9 /* DZUploadSession.m */; };
+		F024471D1B6125AC004C65F9 /* DZCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = F024471B1B6125AC004C65F9 /* DZCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = F024471C1B6125AC004C65F9 /* DZCommon.m */; };
+		F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02447201B61278A004C65F9 /* MobileCoreServices.framework */; };
+		F02447241B612873004C65F9 /* DZUploadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F02447231B612873004C65F9 /* DZUploadTests.m */; };
 		F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0692EC81B4FF0C80084BBD8 /* PromiseKit.framework in Copy PromiseKit */ = {isa = PBXBuildFile; fileRef = F0692EB91B4FF0C10084BBD8 /* PromiseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F0EE885C1B5243F800050A8E /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */; };
@@ -114,6 +120,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F024470C1B612564004C65F9 /* DZUploadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZUploadSession.h; path = Core/DZUploadSession.h; sourceTree = "<group>"; };
+		F024470D1B612564004C65F9 /* DZUploadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZUploadSession.m; path = Core/DZUploadSession.m; sourceTree = "<group>"; };
+		F024471B1B6125AC004C65F9 /* DZCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZCommon.h; path = Utilities/DZCommon.h; sourceTree = "<group>"; };
+		F024471C1B6125AC004C65F9 /* DZCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZCommon.m; path = Utilities/DZCommon.m; sourceTree = "<group>"; };
+		F02447201B61278A004C65F9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		F02447231B612873004C65F9 /* DZUploadTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZUploadTests.m; sourceTree = "<group>"; };
 		F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZURLSessionProtocol.h; path = Core/DZURLSessionProtocol.h; sourceTree = "<group>"; };
 		F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PromiseKit.xcodeproj; path = vendors/PromiseKit/PromiseKit.xcodeproj; sourceTree = "<group>"; };
 		F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OMGHTTPURLRQ.xcodeproj; path = vendors/OMGHTTPURLRQ/OMGHTTPURLRQ.xcodeproj; sourceTree = "<group>"; };
@@ -132,6 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */,
 				F0EE885C1B5243F800050A8E /* OMGHTTPURLRQ.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,6 +160,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F024471F1B6125B1004C65F9 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F024471B1B6125AC004C65F9 /* DZCommon.h */,
+				F024471C1B6125AC004C65F9 /* DZCommon.m */,
+				F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		F0692EAE1B4FF0C10084BBD8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +198,7 @@
 		F0FC8E461B4FB1D300FDA46C = {
 			isa = PBXGroup;
 			children = (
+				F02447201B61278A004C65F9 /* MobileCoreServices.framework */,
 				F0FC8E521B4FB1D300FDA46C /* DZNetworking */,
 				F0FC8E5F1B4FB1D300FDA46C /* DZNetworkingTests */,
 				F0FC8E511B4FB1D300FDA46C /* Products */,
@@ -194,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */,
+				F024471F1B6125B1004C65F9 /* Utilities */,
 				F0FC8E701B4FB22900FDA46C /* Core */,
 				F0FC8E711B4FB2A500FDA46C /* vendors */,
 				F0FC8E531B4FB1D300FDA46C /* Supporting Files */,
@@ -213,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				F0FC8E621B4FB1D400FDA46C /* DZNetworkingTests.m */,
+				F02447231B612873004C65F9 /* DZUploadTests.m */,
 				F0FC8E601B4FB1D300FDA46C /* Supporting Files */,
 			);
 			path = DZNetworkingTests;
@@ -231,7 +257,8 @@
 			children = (
 				F0FC8E6C1B4FB22600FDA46C /* DZURLSession.h */,
 				F0FC8E6D1B4FB22600FDA46C /* DZURLSession.m */,
-				F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */,
+				F024470C1B612564004C65F9 /* DZUploadSession.h */,
+				F024470D1B612564004C65F9 /* DZUploadSession.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -254,7 +281,9 @@
 			files = (
 				F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */,
 				F0FC8E6E1B4FB22600FDA46C /* DZURLSession.h in Headers */,
+				F024470E1B612564004C65F9 /* DZUploadSession.h in Headers */,
 				F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */,
+				F024471D1B6125AC004C65F9 /* DZCommon.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,7 +473,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */,
 				F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */,
+				F024470F1B612564004C65F9 /* DZUploadSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F02447241B612873004C65F9 /* DZUploadTests.m in Sources */,
 				F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

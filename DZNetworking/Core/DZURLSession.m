@@ -30,12 +30,6 @@
 
 #import "DZURLSession.h"
 
-NSString *const DZErrorDomain = @"com.dz.error.domain";
-NSString *const DZErrorData = @"com.dz.error.data";
-NSString *const DZErrorResponse = @"com.dz.error.response";
-NSString *const DZErrorTask = @"com.dz.error.task";
-NSInteger const DZUnusableRequestError = 2100;
-
 @interface DZURLSession() <NSURLSessionDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
