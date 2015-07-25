@@ -33,6 +33,9 @@
 
 typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
 
+/**
+ *  The base class for all REST API networking.
+ */
 @interface DZURLSession : NSObject
 
 /**
@@ -156,11 +159,12 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
            parameters:(NSDictionary *)params;
 
 /**
- *  Trigger a HEAD request. The response for such requests does not include a responseObject from the server. Check the response object for the desired information.
+ *  Trigger a HEAD request.
  *
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the URL as query parameters.
  *
+ *  @discussion The response for such requests does not include a responseObject from the server. Check the response object for the desired information.
  *  @return DZPromise
  */
 - (DZPromise *)HEAD:(NSString *)URI
@@ -168,11 +172,12 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
 
 
 /**
- *  Trigger a OPTIONS request. The response for such requests may not include a responseObject from the server. Check the response object for the desired information.
+ *  Trigger a OPTIONS request.
  *
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the URL as query parameters.
  *
+ *  @discussion The response for such requests may not include a responseObject from the server. Check the response object for the desired information.
  *  @return DZPromise
  */
 - (DZPromise *)OPTIONS:(NSString *)URI

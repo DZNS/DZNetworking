@@ -1,0 +1,47 @@
+#!/bin/bash 
+# Use this script to generate the documentation for DZNetowkring.
+# If you get a permission denied, run chmod +x ./gendocs
+# @Parameters
+# --no-open -no Don't open the documentation in the browser after the task is finished.
+
+noOpen=true
+
+# Parse arguments
+for i in "$@"
+do
+case $i in
+    -n|--no-open)
+    noOpen=false
+    ;;
+    # -s=*|--searchpath=*)
+    # SEARCHPATH="${i#*=}"
+    # ;;
+    *)
+    echo "$i"
+    echo "unknown option passed"
+    ;;
+esac
+done
+# parse the arguments
+
+# delete the folder if it already exists
+rm -r docs
+
+# enter the code dir
+cd DZNetworking
+# generate the docs
+appledoc -o ../docs -p DZNetworking -c "Dezine Zync Studios LLP." -v "0.1" --no-create-docset -i ./vendors ./
+# change back to the parent dir.
+cd ..
+# do some cleanup
+mv docs/html/* ./docs
+rm -r docs/html
+# open the documentation.
+if $noOpen
+then
+    open docs/index.html
+else
+    echo "Finished"
+fi
+
+#open docs/index.html
