@@ -69,4 +69,8 @@
                   URL:(NSString *)URL
            parameters:(NSDictionary *)params;
 
+#pragma mark - Internal
+
++ (NSString *)mimeTypeForFileAtPath:(NSString *)path;
+
 @end

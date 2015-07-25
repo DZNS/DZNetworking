@@ -1,8 +1,8 @@
 //
-//  DZNetworking.h
+//  DZS3CredentialsManager.h
 //  DZNetworking
 //
-//  Created by Nikhil Nigade on 7/10/15.
+//  Created by Nikhil Nigade on 7/25/15.
 //  Copyright (c) 2015 Dezine Zync Studios LLP. All rights reserved.
 //
 //  The MIT License (MIT)
@@ -28,21 +28,24 @@
 // SOFTWARE.
 //
 
-/*
- * Major props to Mohd Iftekhar Qurashi (http://stackoverflow.com/questions/27484997/how-to-create-an-umbrella-framework-in-ios-sdk) for explaining how to create an Umbrella framework.
- */
-
 #import <Foundation/Foundation.h>
 
-//! Project version number for DZNetworking.
-FOUNDATION_EXPORT double DZNetworkingVersionNumber;
+extern NSString *const kDZACLPrivate;
+extern NSString *const kDZACLPublic;
 
-//! Project version string for DZNetworking.
-FOUNDATION_EXPORT const unsigned char DZNetworkingVersionString[];
+extern NSString *const kDZEncryptionAES256;
 
-// In this header, you should import all the public headers of your framework using statements like #import <DZNetworking/PublicHeader.h>
-#import <DZNetworking/DZURLSession.h>
-#import <DZNetworking/DZUploadSession.h>
-#import <DZNetworking/DZS3CredentialsManager.h>
-#import <DZNetworking/DZS3UploadSession.h>
+@interface DZS3CredentialsManager : NSObject
 
+- (instancetype)initWithKey:(NSString *)key secret:(NSString *)secret;
+
+- (NSString *)authorizationWithMethod:(NSString *)method
+                               bucket:(NSString *)bucket
+                                 path:(NSString *)path
+                              content:(NSData *)data
+                                  ACL:(NSString *)ACL
+                           encryption:(NSString *)encryption
+                          contentType:(NSString *)contentType
+                              expires:(NSString *)expires;
+
+@end

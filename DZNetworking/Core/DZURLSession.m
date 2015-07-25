@@ -424,6 +424,13 @@
                 
             }
             
+            if(res.statusCode == 200)
+            {
+                // our request succeeded but returned no data. Treat valid.
+                resolve(PMKManifold(@{}, res, task));
+                return;
+            }
+            
             if(jsonError)
             {
                 resolve(jsonError);
@@ -445,7 +452,10 @@
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler
 {
     
-    [self callDelegate:@selector(URLSession:didReceiveChallenge:completionHandler:) arg1:session arg2:challenge arg3:completionHandler];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(URLSession:didReceiveChallenge:completionHandler:)])
+    {
+        [self.delegate URLSession:session didReceiveChallenge:challenge completionHandler:completionHandler];
+    }
     
 }
 
