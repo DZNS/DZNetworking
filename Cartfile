@@ -1,1 +1,2 @@
 github "mxcl/PromiseKit" == 2.1.1
+github "mxcl/OMGHTTPURLRQ" ~> 2.1.3
