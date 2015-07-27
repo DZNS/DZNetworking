@@ -30,3 +30,5 @@ _Archive
 node_modules/
 docs
 Carthage
+scripts/certs/dist.cer
+scripts/certs/dist.p12
