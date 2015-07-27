@@ -3,4 +3,10 @@ osx_image: xcode6.4
 xcode_project: DZNetworking.xcodeproj
 xcode_scheme: DZNetworking
 xcode_sdk: iphonesimulator8.4
-before_install: git submodule update --init --recursive
+before_install:
+    - brew update
+    - brew install carthage
+install: carthage bootstrap --verbose
+branches:
+    only:
+        - master
