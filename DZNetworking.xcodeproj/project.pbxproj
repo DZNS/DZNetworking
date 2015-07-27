@@ -14,8 +14,8 @@
 		F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02447201B61278A004C65F9 /* MobileCoreServices.framework */; };
 		F02447241B612873004C65F9 /* DZUploadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F02447231B612873004C65F9 /* DZUploadTests.m */; };
 		F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F078628D1B66104800E5740C /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628B1B66104800E5740C /* OMGHTTPURLRQ.framework */; };
-		F078628E1B66104800E5740C /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628C1B66104800E5740C /* PromiseKit.framework */; };
+		F078628D1B66104800E5740C /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628B1B66104800E5740C /* OMGHTTPURLRQ.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F078628E1B66104800E5740C /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628C1B66104800E5740C /* PromiseKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F07862971B6613EC00E5740C /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628B1B66104800E5740C /* OMGHTTPURLRQ.framework */; };
 		F07862981B6613EC00E5740C /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628C1B66104800E5740C /* PromiseKit.framework */; };
 		F0D0E2431B63EA900077F186 /* DZS3UploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2411B63EA900077F186 /* DZS3UploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
