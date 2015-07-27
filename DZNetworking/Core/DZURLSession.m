@@ -437,47 +437,4 @@
     
 }
 
-#pragma mark - Helpers
-
-- (void)callDelegate:(SEL)aSelector
-{
-    
-    if(self.delegate && [self.delegate respondsToSelector:aSelector])
-    {
-        
-        NSMethodSignature * ms = [self methodSignatureForSelector:aSelector];
-        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:ms];
-        [inv setTarget:self.delegate];
-        [inv setSelector:aSelector];
-        [inv invoke];
-        
-    }
-    
-}
-
-- (id)callDelegate:(SEL)aSelector arg1:(id)param1 arg2:(id)param2 arg3:(id)param3
-{
-    
-    if(self.delegate && [self.delegate respondsToSelector:aSelector])
-    {
-     
-        NSMethodSignature * ms = [self methodSignatureForSelector:aSelector];
-        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:ms];
-        [inv setTarget:self.delegate];
-        [inv setSelector:aSelector];
-        [inv setArgument:&param1 atIndex:2];
-        [inv setArgument:&param2 atIndex:3];
-        [inv setArgument:&param3 atIndex:3];
-        [inv invoke];
-        id returnObject = nil;
-        [inv getReturnValue:&returnObject];
-        
-        return returnObject;
-        
-    }
-    
-    return nil;
-    
-}
-
 @end
