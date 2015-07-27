@@ -3,6 +3,10 @@ osx_image: xcode6.4
 xcode_project: DZNetworking.xcodeproj
 xcode_scheme: DZNetworking
 xcode_sdk: iphonesimulator8.4
+before_script:
+    - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dist.cer.enc -d -a -out scripts/certs/dist.cer
+    - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dist.p12.enc -d -a -out scripts/certs/dist.p12
+    - ./scripts/add-key.sh
 before_install:
   - brew update
   - brew install carthage
@@ -10,3 +14,7 @@ install: carthage bootstrap --verbose
 branches:
   only:
   - master
+env:
+  global:
+  - secure: uBS9xnFs923RC2xenLkywvR6kphZl0n3VJRIHbL9JsWV73f9GeOmhiNx4oWojqTkrAHmuF2DKC2GXNDwVX4rbYxeI5U0o9acjvqjaR6PxubwAN27WyRXy7UaQrH1Zt7wNglOqq++q+UG60NTYpSzwE1jxwRoaKcOloIJUaFeG3BHdX+H7nGlWam+bSe7xFgiFSO8OKzXCz0nCzZjQIMIapal95XfPCIglkot8yIfuugdM5LT7JyjcVJZeW4TM4zMfEB1Ogb+4WTDiuta7Gyl4Ckhzm6Aacp7t/Re7eqylQA+4jiohclM/MMzhuWRaWoxw0sS2HpJI75+5McdPJ79KY5NTKU6M6e9evV8P1QFZh74FJh/cLHrhxvownQfCpq9D6KmMlsOj1MKR1v8PNGwbuU5iIsDFEUeFObm4NvWgexDXSmSsgQpBIaYpGZUr34B4K5IlLD2+Orzz8q0U6sUgZje/4RhPZ6AYFFnZTVerF2RvJ8eqoU+plyl74G/way9y1nalyrbUVeTncpxxIoKLUfineOG8c1fy4d6rw97/fooQigaUoehatv4PHb8Yz3XzR0+6l2tWbPZCIjHnIgslzBTGK4sBquUCqJ+txfJfp2FTpxTM8wHbI7bOHitWRxHmVOaC0tTXscuRnu7MYmvjPYI7QdjKR1o92opJ7GFYlQ=
+  - secure: r6h52d7EiLE2isOn3wTX8QIKgzcvJKipzsJu+Aw2Q7uNSMD4pgcm1aAuXlhf8rAM4lrOT74wu9OX+iO06RNq88RwU+uvyrXhjhdas8tLnBUuBbcO8cOCwa8WmR9HwRr8ZfkL6N7Nk8gbW4+GW0i6psjjqZhpfffrixyXzUJ8EWhUBB2gYJGvc/bXLQ2sIrw2GNxy8gpr/C1YNHdP9Yl6P7Dj2aPoNN44AxiFBBgHOqfNpt1gH/Ze3WfG52+azkdFuwW64cW65cpxQvO/WEqFZazM+mZtHtk5w34k8VSdNZ+sWiuuooTvKqa/HwqnfdBW6symi5thDHrMGVXntzeR/oN/6JRIjoTJ5fNvviOApCyIdimKwWVG5TbkKj02oScur4PJKNt4N5KFMbPw2IctZ+fL9ilw0iBEoOIhw7ybTjPJwO+TaHSLWW5abDZmuzvh3lsv7tPlubfPqhdpY1uzGaaRnDIeA+0aY5sMeaU0Hs5ykdDU3LyrNqVnDbLCAIzYfLG17sLqPB+PDyWCXcBRcE2rPXP7Uajjj3ZxNNYHTQbSU6U5xTZafRxORgecfL8gb2BBPBy9elMyYte5lr3SIy2gCqjnb3BMJJNTCfKvBFRxQcDygKoT8LAirAc+58X0srpR7sXxzsCcx3NDW6awqBRK/og9glwfKOCttDx+HaU=
