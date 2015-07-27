@@ -6,7 +6,7 @@ xcode_sdk: iphonesimulator8.4
 before_install:
     - brew update
     - brew install carthage
-    - carthage bootstrap --verbose --configuration Debug
+    - carthage build --no-skip-current --platform=iphonesimulator
 branches:
     only:
         - master
