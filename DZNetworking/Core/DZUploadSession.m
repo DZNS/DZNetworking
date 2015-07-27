@@ -92,15 +92,7 @@
             [processed addParameters:params];
         }
         
-        NSError *error = nil;
-        
-        NSMutableURLRequest *request = [OMGHTTPURLRQ POST:URL :processed error:&error];
-        
-        if(error)
-        {
-            resolve(error);
-            return;
-        }
+        NSMutableURLRequest *request = [OMGHTTPURLRQ POST:URL :processed];
         
         __block NSURLSessionUploadTask *task = [self.session uploadTaskWithRequest:request.copy fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             

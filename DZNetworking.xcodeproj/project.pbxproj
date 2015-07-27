@@ -14,116 +14,22 @@
 		F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02447201B61278A004C65F9 /* MobileCoreServices.framework */; };
 		F02447241B612873004C65F9 /* DZUploadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F02447231B612873004C65F9 /* DZUploadTests.m */; };
 		F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F0692EC81B4FF0C80084BBD8 /* PromiseKit.framework in Copy PromiseKit */ = {isa = PBXBuildFile; fileRef = F0692EB91B4FF0C10084BBD8 /* PromiseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F078628D1B66104800E5740C /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628B1B66104800E5740C /* OMGHTTPURLRQ.framework */; };
+		F078628E1B66104800E5740C /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628C1B66104800E5740C /* PromiseKit.framework */; };
+		F07862971B6613EC00E5740C /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628B1B66104800E5740C /* OMGHTTPURLRQ.framework */; };
+		F07862981B6613EC00E5740C /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628C1B66104800E5740C /* PromiseKit.framework */; };
 		F0D0E2431B63EA900077F186 /* DZS3UploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2411B63EA900077F186 /* DZS3UploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0D0E2441B63EA900077F186 /* DZS3UploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E2421B63EA900077F186 /* DZS3UploadSession.m */; };
 		F0D0E2471B63F0700077F186 /* DZS3CredentialsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2451B63F0700077F186 /* DZS3CredentialsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0D0E2481B63F0700077F186 /* DZS3CredentialsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E2461B63F0700077F186 /* DZS3CredentialsManager.m */; };
 		F0D0E24E1B63F4900077F186 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D0E24D1B63F4900077F186 /* Security.framework */; };
 		F0D0E2501B63F60C0077F186 /* DZS3UploadSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E24F1B63F60C0077F186 /* DZS3UploadSessionTests.m */; };
-		F0EE885C1B5243F800050A8E /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */; };
-		F0EE885D1B52443300050A8E /* OMGHTTPURLRQ.framework in Copy PromiseKit */ = {isa = PBXBuildFile; fileRef = F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FC8E5C1B4FB1D300FDA46C /* DZNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */; };
 		F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E621B4FB1D400FDA46C /* DZNetworkingTests.m */; };
 		F0FC8E6E1B4FB22600FDA46C /* DZURLSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E6C1B4FB22600FDA46C /* DZURLSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E6D1B4FB22600FDA46C /* DZURLSession.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		F0692EB81B4FF0C10084BBD8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 63F803A31AB87A8200E4DEE1;
-			remoteInfo = PMKiOS;
-		};
-		F0692EBA1B4FF0C10084BBD8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 63F803CC1AB89A0F00E4DEE1;
-			remoteInfo = PMKOSX;
-		};
-		F0692EBC1B4FF0C10084BBD8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6388E1A21AD315F90074D85B;
-			remoteInfo = PMKTests;
-		};
-		F0692EBE1B4FF0C10084BBD8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 63533B331AE57A9300C10972;
-			remoteInfo = PMKAPlusTests;
-		};
-		F0692EC01B4FF0C10084BBD8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 638E0ED51AEF16530052E28F;
-			remoteInfo = PMKiOSCategoryTests;
-		};
-		F0692EC21B4FF0C10084BBD8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 63CA14931AEA9CBE00223904;
-			remoteInfo = PMKiOSCategoryHostedTests;
-		};
-		F0692EC41B4FF0C10084BBD8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 63CA14571AE9FBD000223904;
-			remoteInfo = PMKOSXCategoryTests;
-		};
-		F0692EC61B4FF0C10084BBD8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 638CDF031AEE734B0023A543;
-			remoteInfo = PMKTestHost;
-		};
-		F0EE88561B5243CA00050A8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 63EDFE721A7FFD0E0030F974;
-			remoteInfo = OMGiOS;
-		};
-		F0EE88581B5243CA00050A8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 63F804341AB8AAA300E4DEE1;
-			remoteInfo = OMGOSX;
-		};
-		F0EE885A1B5243CA00050A8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 63EDFE7D1A7FFD0E0030F974;
-			remoteInfo = OMGTest;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		F0692EAC1B4FF0A90084BBD8 /* Copy PromiseKit */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				F0EE885D1B52443300050A8E /* OMGHTTPURLRQ.framework in Copy PromiseKit */,
-				F0692EC81B4FF0C80084BBD8 /* PromiseKit.framework in Copy PromiseKit */,
-			);
-			name = "Copy PromiseKit";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		F024470C1B612564004C65F9 /* DZUploadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZUploadSession.h; path = Core/DZUploadSession.h; sourceTree = "<group>"; };
@@ -133,14 +39,14 @@
 		F02447201B61278A004C65F9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F02447231B612873004C65F9 /* DZUploadTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZUploadTests.m; sourceTree = "<group>"; };
 		F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZURLSessionProtocol.h; path = Core/DZURLSessionProtocol.h; sourceTree = "<group>"; };
-		F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PromiseKit.xcodeproj; path = vendors/PromiseKit/PromiseKit.xcodeproj; sourceTree = "<group>"; };
+		F078628B1B66104800E5740C /* OMGHTTPURLRQ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OMGHTTPURLRQ.framework; path = ../Carthage/Build/iOS/OMGHTTPURLRQ.framework; sourceTree = "<group>"; };
+		F078628C1B66104800E5740C /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = ../Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
 		F0D0E2411B63EA900077F186 /* DZS3UploadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZS3UploadSession.h; path = Core/DZS3UploadSession.h; sourceTree = "<group>"; };
 		F0D0E2421B63EA900077F186 /* DZS3UploadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZS3UploadSession.m; path = Core/DZS3UploadSession.m; sourceTree = "<group>"; };
 		F0D0E2451B63F0700077F186 /* DZS3CredentialsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZS3CredentialsManager.h; path = Utilities/DZS3CredentialsManager.h; sourceTree = "<group>"; };
 		F0D0E2461B63F0700077F186 /* DZS3CredentialsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZS3CredentialsManager.m; path = Utilities/DZS3CredentialsManager.m; sourceTree = "<group>"; };
 		F0D0E24D1B63F4900077F186 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F0D0E24F1B63F60C0077F186 /* DZS3UploadSessionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZS3UploadSessionTests.m; sourceTree = "<group>"; };
-		F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OMGHTTPURLRQ.xcodeproj; path = vendors/OMGHTTPURLRQ/OMGHTTPURLRQ.xcodeproj; sourceTree = "<group>"; };
 		F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DZNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0FC8E541B4FB1D300FDA46C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNetworking.h; sourceTree = "<group>"; };
@@ -158,7 +64,8 @@
 			files = (
 				F0D0E24E1B63F4900077F186 /* Security.framework in Frameworks */,
 				F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */,
-				F0EE885C1B5243F800050A8E /* OMGHTTPURLRQ.framework in Frameworks */,
+				F078628D1B66104800E5740C /* OMGHTTPURLRQ.framework in Frameworks */,
+				F078628E1B66104800E5740C /* PromiseKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +73,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F07862971B6613EC00E5740C /* OMGHTTPURLRQ.framework in Frameworks */,
+				F07862981B6613EC00E5740C /* PromiseKit.framework in Frameworks */,
 				F0FC8E5C1B4FB1D300FDA46C /* DZNetworking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,31 +92,6 @@
 				F0D0E2461B63F0700077F186 /* DZS3CredentialsManager.m */,
 			);
 			name = Utilities;
-			sourceTree = "<group>";
-		};
-		F0692EAE1B4FF0C10084BBD8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F0692EB91B4FF0C10084BBD8 /* PromiseKit.framework */,
-				F0692EBB1B4FF0C10084BBD8 /* PromiseKit.framework */,
-				F0692EBD1B4FF0C10084BBD8 /* PMKTests.xctest */,
-				F0692EBF1B4FF0C10084BBD8 /* PMKAPlusTests.xctest */,
-				F0692EC11B4FF0C10084BBD8 /* PMKiOSCategoryTests.xctest */,
-				F0692EC31B4FF0C10084BBD8 /* PMKiOSCategoryHostedTests.xctest */,
-				F0692EC51B4FF0C10084BBD8 /* PMKOSXCategoryTests.xctest */,
-				F0692EC71B4FF0C10084BBD8 /* PMKTestHost.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		F0EE88511B5243CA00050A8E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */,
-				F0EE88591B5243CA00050A8E /* OMGHTTPURLRQ.framework */,
-				F0EE885B1B5243CA00050A8E /* OMGTest.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		F0FC8E461B4FB1D300FDA46C = {
@@ -234,7 +118,6 @@
 				F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */,
 				F024471F1B6125B1004C65F9 /* Utilities */,
 				F0FC8E701B4FB22900FDA46C /* Core */,
-				F0FC8E711B4FB2A500FDA46C /* vendors */,
 				F0FC8E531B4FB1D300FDA46C /* Supporting Files */,
 			);
 			path = DZNetworking;
@@ -243,6 +126,8 @@
 		F0FC8E531B4FB1D300FDA46C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F078628B1B66104800E5740C /* OMGHTTPURLRQ.framework */,
+				F078628C1B66104800E5740C /* PromiseKit.framework */,
 				F0D0E24D1B63F4900077F186 /* Security.framework */,
 				F02447201B61278A004C65F9 /* MobileCoreServices.framework */,
 				F0FC8E541B4FB1D300FDA46C /* Info.plist */,
@@ -282,15 +167,6 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
-		F0FC8E711B4FB2A500FDA46C /* vendors */ = {
-			isa = PBXGroup;
-			children = (
-				F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */,
-				F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */,
-			);
-			name = vendors;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -319,7 +195,7 @@
 				F0FC8E4C1B4FB1D300FDA46C /* Frameworks */,
 				F0FC8E4D1B4FB1D300FDA46C /* Headers */,
 				F0FC8E4E1B4FB1D300FDA46C /* Resources */,
-				F0692EAC1B4FF0A90084BBD8 /* Copy PromiseKit */,
+				F078628F1B6611AD00E5740C /* Carthage Copy-Frameworks */,
 			);
 			buildRules = (
 			);
@@ -337,6 +213,7 @@
 				F0FC8E571B4FB1D300FDA46C /* Sources */,
 				F0FC8E581B4FB1D300FDA46C /* Frameworks */,
 				F0FC8E591B4FB1D300FDA46C /* Resources */,
+				F078629A1B66144800E5740C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -374,16 +251,6 @@
 			mainGroup = F0FC8E461B4FB1D300FDA46C;
 			productRefGroup = F0FC8E511B4FB1D300FDA46C /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = F0EE88511B5243CA00050A8E /* Products */;
-					ProjectRef = F0EE88501B5243CA00050A8E /* OMGHTTPURLRQ.xcodeproj */;
-				},
-				{
-					ProductGroup = F0692EAE1B4FF0C10084BBD8 /* Products */;
-					ProjectRef = F0692EAD1B4FF0C10084BBD8 /* PromiseKit.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F0FC8E4F1B4FB1D300FDA46C /* DZNetworking */,
@@ -391,86 +258,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		F0692EB91B4FF0C10084BBD8 /* PromiseKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PromiseKit.framework;
-			remoteRef = F0692EB81B4FF0C10084BBD8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F0692EBB1B4FF0C10084BBD8 /* PromiseKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PromiseKit.framework;
-			remoteRef = F0692EBA1B4FF0C10084BBD8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F0692EBD1B4FF0C10084BBD8 /* PMKTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PMKTests.xctest;
-			remoteRef = F0692EBC1B4FF0C10084BBD8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F0692EBF1B4FF0C10084BBD8 /* PMKAPlusTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PMKAPlusTests.xctest;
-			remoteRef = F0692EBE1B4FF0C10084BBD8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F0692EC11B4FF0C10084BBD8 /* PMKiOSCategoryTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PMKiOSCategoryTests.xctest;
-			remoteRef = F0692EC01B4FF0C10084BBD8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F0692EC31B4FF0C10084BBD8 /* PMKiOSCategoryHostedTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PMKiOSCategoryHostedTests.xctest;
-			remoteRef = F0692EC21B4FF0C10084BBD8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F0692EC51B4FF0C10084BBD8 /* PMKOSXCategoryTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PMKOSXCategoryTests.xctest;
-			remoteRef = F0692EC41B4FF0C10084BBD8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F0692EC71B4FF0C10084BBD8 /* PMKTestHost.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = PMKTestHost.app;
-			remoteRef = F0692EC61B4FF0C10084BBD8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F0EE88571B5243CA00050A8E /* OMGHTTPURLRQ.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = OMGHTTPURLRQ.framework;
-			remoteRef = F0EE88561B5243CA00050A8E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F0EE88591B5243CA00050A8E /* OMGHTTPURLRQ.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = OMGHTTPURLRQ.framework;
-			remoteRef = F0EE88581B5243CA00050A8E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F0EE885B1B5243CA00050A8E /* OMGTest.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = OMGTest.xctest;
-			remoteRef = F0EE885A1B5243CA00050A8E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F0FC8E4E1B4FB1D300FDA46C /* Resources */ = {
@@ -488,6 +275,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F078628F1B6611AD00E5740C /* Carthage Copy-Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/OMGHTTPURLRQ.framework",
+			);
+			name = "Carthage Copy-Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		F078629A1B66144800E5740C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/OMGHTTPURLRQ.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F0FC8E4B1B4FB1D300FDA46C /* Sources */ = {
@@ -612,7 +433,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
+				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -637,7 +461,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
+				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -655,10 +482,12 @@
 		F0FC8E6A1B4FB1D400FDA46C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(SRCROOT)/Carthage/Build/iOS/**",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -673,10 +502,12 @@
 		F0FC8E6B1B4FB1D400FDA46C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(SRCROOT)/Carthage/Build/iOS/**",
 				);
 				INFOPLIST_FILE = DZNetworkingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

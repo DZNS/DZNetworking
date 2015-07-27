@@ -108,14 +108,7 @@
         id queryString = OMGFormURLEncode(query);
         if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
         
-        NSError *error = nil;
-        NSMutableURLRequest *req = [OMGHTTPURLRQ POST:url :params error:&error];
-        
-        if(error)
-        {
-            resolve(error);
-            return;
-        }
+        NSMutableURLRequest *req = [OMGHTTPURLRQ POST:url :params];
         
         resolve([self requestWithReq:req.copy]);
         
@@ -148,14 +141,7 @@
         id queryString = OMGFormURLEncode(query);
         if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
         
-        NSError *error = nil;
-        NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url :params error:&error];
-        
-        if(error)
-        {
-            resolve(error);
-            return;
-        }
+        NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url :params];
         
         resolve([self requestWithReq:req.copy]);
         
@@ -296,34 +282,26 @@
         
         NSMutableURLRequest *mutableRequest;
         
-        NSError *error;
-        
         if([method isEqualToString:@"GET"])
         {
-            mutableRequest = [OMGHTTPURLRQ GET:url :params error:&error];
+            mutableRequest = [OMGHTTPURLRQ GET:url :params];
         }
         else if([method isEqualToString:@"POST"])
         {
-            mutableRequest = [OMGHTTPURLRQ POST:url :params error:&error];
+            mutableRequest = [OMGHTTPURLRQ POST:url :params];
         }
         else if([method isEqualToString:@"PUT"])
         {
-            mutableRequest = [OMGHTTPURLRQ PUT:url :params error:&error];
+            mutableRequest = [OMGHTTPURLRQ PUT:url :params];
         }
         else if([method isEqualToString:@"DELETE"])
         {
-            mutableRequest = [OMGHTTPURLRQ DELETE:url :params error:&error];
+            mutableRequest = [OMGHTTPURLRQ DELETE:url :params];
         }
         else
         {
-            mutableRequest = [OMGHTTPURLRQ GET:url :params error:&error];
+            mutableRequest = [OMGHTTPURLRQ GET:url :params];
             mutableRequest.HTTPMethod = method;
-        }
-        
-        if(error)
-        {
-            resolve(error);
-            return;
         }
         
         NSURLRequest *request = mutableRequest.copy;
