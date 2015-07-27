@@ -10,7 +10,7 @@ before_script:
 before_install:
   - brew update
   - brew install carthage
-install: carthage build --no-skip-current
+install: carthage bootstrap --verbose
 branches:
   only:
   - master
