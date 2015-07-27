@@ -10,7 +10,7 @@ before_script:
 before_install:
     - brew update
     - brew install carthage
-    - carthage build --configuration Release --no-skip-current
+    - carthage build --configuration Release --platform iOS --no-skip-current
 branches:
   only:
   - master
