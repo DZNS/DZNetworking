@@ -103,14 +103,21 @@
 
     return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
        
-        NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
-        
-        id queryString = OMGFormURLEncode(query);
-        if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
-        
-        NSMutableURLRequest *req = [OMGHTTPURLRQ POST:url :params];
-        
-        resolve([self requestWithReq:req.copy]);
+        if(query)
+        {
+            NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
+            
+            id queryString = OMGFormURLEncode(query);
+            if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
+            
+            NSMutableURLRequest *req = [OMGHTTPURLRQ POST:url :params];
+            
+            resolve([self requestWithReq:req.copy]);
+        }
+        else
+        {
+            resolve([self requestWithURI:URI method:@"POST" params:params]);
+        }
         
     }]
     .then(^(DZPromise *promise) {
