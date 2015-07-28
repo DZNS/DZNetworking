@@ -13,6 +13,8 @@
 		F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = F024471C1B6125AC004C65F9 /* DZCommon.m */; };
 		F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02447201B61278A004C65F9 /* MobileCoreServices.framework */; };
 		F02447241B612873004C65F9 /* DZUploadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F02447231B612873004C65F9 /* DZUploadTests.m */; };
+		F038A8961B6773B000349EA8 /* DZResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = F038A8941B6773B000349EA8 /* DZResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F038A8971B6773B000349EA8 /* DZResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F038A8951B6773B000349EA8 /* DZResponse.m */; };
 		F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F078628D1B66104800E5740C /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628B1B66104800E5740C /* OMGHTTPURLRQ.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F078628E1B66104800E5740C /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F078628C1B66104800E5740C /* PromiseKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -38,6 +40,8 @@
 		F024471C1B6125AC004C65F9 /* DZCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZCommon.m; path = Utilities/DZCommon.m; sourceTree = "<group>"; };
 		F02447201B61278A004C65F9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F02447231B612873004C65F9 /* DZUploadTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZUploadTests.m; sourceTree = "<group>"; };
+		F038A8941B6773B000349EA8 /* DZResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZResponse.h; path = Core/DZResponse.h; sourceTree = "<group>"; };
+		F038A8951B6773B000349EA8 /* DZResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZResponse.m; path = Core/DZResponse.m; sourceTree = "<group>"; };
 		F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZURLSessionProtocol.h; path = Core/DZURLSessionProtocol.h; sourceTree = "<group>"; };
 		F078628B1B66104800E5740C /* OMGHTTPURLRQ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OMGHTTPURLRQ.framework; path = ../Carthage/Build/iOS/OMGHTTPURLRQ.framework; sourceTree = "<group>"; };
 		F078628C1B66104800E5740C /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = ../Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 		F0FC8E701B4FB22900FDA46C /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				F038A8941B6773B000349EA8 /* DZResponse.h */,
+				F038A8951B6773B000349EA8 /* DZResponse.m */,
 				F0FC8E6C1B4FB22600FDA46C /* DZURLSession.h */,
 				F0FC8E6D1B4FB22600FDA46C /* DZURLSession.m */,
 				F024470C1B612564004C65F9 /* DZUploadSession.h */,
@@ -181,6 +187,7 @@
 				F0D0E2431B63EA900077F186 /* DZS3UploadSession.h in Headers */,
 				F0D0E2471B63F0700077F186 /* DZS3CredentialsManager.h in Headers */,
 				F024471D1B6125AC004C65F9 /* DZCommon.h in Headers */,
+				F038A8961B6773B000349EA8 /* DZResponse.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +327,7 @@
 				F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */,
 				F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */,
 				F024470F1B612564004C65F9 /* DZUploadSession.m in Sources */,
+				F038A8971B6773B000349EA8 /* DZResponse.m in Sources */,
 				F0D0E2441B63EA900077F186 /* DZS3UploadSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -62,7 +62,7 @@
     }
     
     [_session UPLOAD:path fieldName:@"file" URL:URL parameters:nil]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+    .thenInBackground(^(DZResponse *responded) {
         
         [expectation fulfill];
         
@@ -91,7 +91,7 @@
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     
     [_session UPLOAD:data name:@"sample.txt" fieldName:@"file" URL:URL parameters:nil]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+    .thenInBackground(^(DZResponse *responded) {
         
         [expectation fulfill];
         

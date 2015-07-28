@@ -11,6 +11,7 @@
 #import <DZNetworking/DZURLSessionProtocol.h>
 #import <PromiseKit/PromiseKit.h>
 #import <OMGHTTPURLRQ/OMGHTTPURLRQ.h>
+#import <DZNetworking/DZResponse.h>
 
 #ifdef DEBUG
 

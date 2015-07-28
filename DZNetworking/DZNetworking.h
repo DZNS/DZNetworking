@@ -41,6 +41,7 @@ FOUNDATION_EXPORT double DZNetworkingVersionNumber;
 FOUNDATION_EXPORT const unsigned char DZNetworkingVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <DZNetworking/PublicHeader.h>
+#import <DZNetworking/DZResponse.h>
 #import <DZNetworking/DZURLSession.h>
 #import <DZNetworking/DZUploadSession.h>
 #import <DZNetworking/DZS3CredentialsManager.h>

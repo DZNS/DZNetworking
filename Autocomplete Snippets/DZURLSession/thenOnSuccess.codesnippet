@@ -9,10 +9,10 @@
 		<string>CodeBlock</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>.thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
-        
+	<string>.thenInBackground(^(DZResponse *responded) {
+
         &lt;#Handle response #&gt;
-    
+
     });</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>9EB916CE-5AB9-4297-8BDB-69CE8793D6E6</string>

@@ -112,6 +112,11 @@
             
             NSMutableURLRequest *req = [OMGHTTPURLRQ POST:url :params];
             
+            if(self.requestModifier)
+            {
+                req = [self.requestModifier(req) mutableCopy];
+            }
+            
             resolve([self requestWithReq:req.copy]);
         }
         else
@@ -143,14 +148,26 @@
     
     return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
         
-        NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
-        
-        id queryString = OMGFormURLEncode(query);
-        if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
-        
-        NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url :params];
-        
-        resolve([self requestWithReq:req.copy]);
+        if(query)
+        {
+            NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
+            
+            id queryString = OMGFormURLEncode(query);
+            if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
+            
+            NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url :params];
+            
+            if(self.requestModifier)
+            {
+                req = [self.requestModifier(req) mutableCopy];
+            }
+            
+            resolve([self requestWithReq:req.copy]);
+        }
+        else
+        {
+            resolve([self requestWithURI:URI method:@"PUT" params:params]);
+        }
         
     }]
     .then(^(DZPromise *promise) {
@@ -331,47 +348,14 @@
             
         }
         
-        __block NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-           
-            if(error)
-            {
-                resolve(error);
-                return;
-            }
-            
-            NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
-            
-            NSError *jsonError;
-            id responseObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
-            
-            if(res.statusCode > self.maximumSuccessStatusCode)
-            {
-                
-                // Treat this as an error.
-                
-                NSDictionary *userInfo = @{DZErrorData : data,
-                                           DZErrorTask : task};
-                
-                NSError *error = [NSError errorWithDomain:DZErrorDomain code:res.statusCode userInfo:userInfo];
-                
-                resolve(error);
-                return;
-                
-            }
-            
-            if(jsonError)
-            {
-                resolve(jsonError);
-                return;
-            }
-            
-            resolve(PMKManifold(responseObject, res, task));
-            
-        }];
+        resolve(request);
         
-        [task resume];
+    }]
+    .then(^(NSURLRequest *request) {
         
-    }];
+        return [self requestWithReq:request];
+        
+    });
     
 }
 
@@ -409,10 +393,12 @@
                 
             }
             
-            if(res.statusCode == 200)
+            if(res.statusCode == 200 && !responseObject)
             {
                 // our request succeeded but returned no data. Treat valid.
-                resolve(PMKManifold(@{}, res, task));
+                DZResponse *obj = [[DZResponse alloc] initWithData:responseObject :res :task];
+                
+                resolve(obj);
                 return;
             }
             
@@ -422,7 +408,9 @@
                 return;
             }
             
-            resolve(PMKManifold(responseObject, res, task));
+            DZResponse *obj = [[DZResponse alloc] initWithData:responseObject :res :task];
+            
+            resolve(obj);
             
         }];
         
@@ -440,6 +428,10 @@
     if(self.delegate && [self.delegate respondsToSelector:@selector(URLSession:didReceiveChallenge:completionHandler:)])
     {
         [self.delegate URLSession:session didReceiveChallenge:challenge completionHandler:completionHandler];
+    }
+    else
+    {
+        completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
     }
     
 }

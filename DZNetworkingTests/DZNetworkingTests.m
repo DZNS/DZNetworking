@@ -78,7 +78,9 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET:/post/1"];
     
     [_session GET:@"/posts/1" parameters:nil]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+    .thenInBackground(^(DZResponse *responded) {
+        
+        NSURLSessionTask *task = responded.task;
         
         if([task.response.URL.absoluteString containsString:extraQueryParams])
         {
@@ -102,7 +104,9 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET:/post/1"];
     
     [_session GET:@"/posts/1" parameters:nil]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+    .thenInBackground(^(DZResponse *responded) {
+        
+        id responseObject = responded.responseObject;
         
         if(responseObject &&
            [responseObject isKindOfClass:[NSDictionary class]])
@@ -136,7 +140,9 @@
                                           @"body": @"bar",
                                           @"userId" : @1
                                           }]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+    .thenInBackground(^(DZResponse *responded) {
+        
+        id responseObject = responded.responseObject;
         
         if(responseObject &&
            [responseObject isKindOfClass:[NSDictionary class]])
@@ -169,12 +175,15 @@
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"POST:/posts"];
     
-    [_session POST:@"/posts" parameters:@{
-                                          @"title": @"foo",
-                                          @"body": @"bar",
-                                          @"userId" : @1
-                                          }]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+    [_session POST:@"/posts" queryParams:@{@"foo" : @"bar"}
+        parameters:@{
+                     @"title": @"foo",
+                     @"body": @"bar",
+                     @"userId" : @1
+                     }]
+    .thenInBackground(^(DZResponse *responded) {
+        
+        id responseObject = responded.responseObject;
         
         if(responseObject &&
            [responseObject isKindOfClass:[NSDictionary class]])
@@ -214,7 +223,9 @@
                                            @"userId" : @1,
                                            @"id" : @1
                                            }]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+    .thenInBackground(^(DZResponse *responded) {
+        
+        id responseObject = responded.responseObject;
         
         if(responseObject &&
            [responseObject isKindOfClass:[NSDictionary class]])
@@ -248,7 +259,9 @@
                     @"userId" : @1,
                     @"id" : @1
                     }]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+    .thenInBackground(^(DZResponse *responded) {
+        
+        id responseObject = responded.responseObject;
         
         if(responseObject &&
            [responseObject isKindOfClass:[NSDictionary class]])
@@ -278,7 +291,9 @@
     [_session PUT:@"/posts/1"
       queryParams:@{@"foo" : @"bar"}
        parameters:@{@"title": @"foo"}]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+    .thenInBackground(^(DZResponse *responded) {
+        
+        id responseObject = responded.responseObject;
         
         if(responseObject &&
            [responseObject isKindOfClass:[NSDictionary class]])
@@ -305,7 +320,9 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"DELETE:/posts/1"];
     
     [_session DELETE:@"/posts/1" parameters:nil]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+    .thenInBackground(^(DZResponse *responded) {
+        
+        NSHTTPURLResponse *response = responded.response;
         
         if(response.statusCode <= 204)
         {

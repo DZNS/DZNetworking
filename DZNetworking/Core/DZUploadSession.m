@@ -29,11 +29,12 @@
 //
 
 #import "DZUploadSession.h"
+#import <DZNetworking/DZURLSession.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
 @interface DZUploadSession () <NSURLSessionTaskDelegate>
 
-@property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) DZURLSession *session;
 
 @end
 
@@ -60,10 +61,7 @@
     if(self = [super init])
     {
         
-        NSURLSessionConfiguration *defaultConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-        defaultConfig.HTTPMaximumConnectionsPerHost = 1;
-        
-        _session = [NSURLSession sessionWithConfiguration:defaultConfig];
+        _session = [[DZURLSession alloc] init];
         
     }
     
@@ -94,47 +92,14 @@
         
         NSMutableURLRequest *request = [OMGHTTPURLRQ POST:URL :processed];
         
-        __block NSURLSessionUploadTask *task = [self.session uploadTaskWithRequest:request.copy fromData:nil completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            
-            if(error)
-            {
-                resolve(error);
-                return;
-            }
-            
-            NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
-            
-            NSError *jsonError;
-            id responseObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
-            
-            if(res.statusCode > 399)
-            {
-                
-                // Treat this as an error.
-                
-                NSDictionary *userInfo = @{DZErrorData : data,
-                                           DZErrorTask : task};
-                
-                NSError *error = [NSError errorWithDomain:DZErrorDomain code:res.statusCode userInfo:userInfo];
-                
-                resolve(error);
-                return;
-                
-            }
-            
-            if(jsonError)
-            {
-                resolve(jsonError);
-                return;
-            }
-            
-            resolve(PMKManifold(responseObject, res, task));
-            
-        }];
+        resolve(request);
         
-        [task resume];
+    }]
+    .then(^(NSURLRequest *request) {
+     
+        return [self.session POST:request];
         
-    }];
+    });
     
 }
 
