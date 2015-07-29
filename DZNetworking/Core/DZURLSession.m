@@ -382,8 +382,8 @@
                 
                 // Treat this as an error.
                 
-                NSDictionary *userInfo = @{DZErrorData : data,
-                                           DZErrorResponse : responseObject,
+                NSDictionary *userInfo = @{DZErrorData : data ?: [NSData data],
+                                           DZErrorResponse : responseObject ?: @{},
                                            DZErrorTask : task};
                 
                 NSError *error = [NSError errorWithDomain:DZErrorDomain code:res.statusCode userInfo:userInfo];
