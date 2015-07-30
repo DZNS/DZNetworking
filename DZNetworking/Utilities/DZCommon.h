@@ -12,6 +12,7 @@
 #import <PromiseKit/PromiseKit.h>
 #import <OMGHTTPURLRQ/OMGHTTPURLRQ.h>
 #import <DZNetworking/DZResponse.h>
+#import <DZNetworking/NSString+URLExtended.h>
 
 #ifdef DEBUG
 

@@ -185,6 +185,34 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
 
 #pragma mark - 
 
+/**
+ *  Build an NSURLRequest with the provided information.
+ *
+ *  @param URI    the URI for the request
+ *  @param method The HTTP request method to be used for the request.
+ *  @param params For PUT, POST, PATCH and DELETE requests, the params will be set on the HTTPBody. For all other request types, the parameters will be set on the query.
+ *
+ *  @return DZPromise (resolves to NSURLRequest if it succeeds)
+ */
+- (DZPromise *)requestWithURI:(NSString *)URI
+                       method:(NSString *)method
+                       params:(NSDictionary *)params;
+
+/**
+ *  Build an NSURLRequest using requestWithURI:method:params and then trigger that request.
+ *
+ *  @param URI    the URI for the request
+ *  @param method The HTTP request method to be used for the request.
+ *  @param params For PUT, POST, PATCH and DELETE requests, the params will be set on the HTTPBody. For all other request types, the parameters will be set on the query.
+ *
+ *  @return DZPromise (resolves to DZResponse if it succeeds)
+ */
+- (DZPromise *)performRequestWithURI:(NSString *)URI
+                              method:(NSString *)method
+                              params:(NSDictionary *)params;
+
+#pragma mark - 
+
 // The following methods make two assumptions:
 // 1. The NSURLRequest is valid, and ready to be fired.
 // 2. The NSURLRequest will not be run through the requestModifier block. If you need to, you must do that before passing it here.

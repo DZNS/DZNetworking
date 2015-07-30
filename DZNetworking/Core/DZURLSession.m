@@ -84,7 +84,7 @@
          parameters:(NSDictionary *)params
 {
     
-    return [self requestWithURI:URI method:@"GET" params:params];
+    return [self performRequestWithURI:URI method:@"GET" params:params];
     
 }
 
@@ -117,11 +117,11 @@
                 req = [self.requestModifier(req) mutableCopy];
             }
             
-            resolve([self requestWithReq:req.copy]);
+            resolve([self requestWithReq:req]);
         }
         else
         {
-            resolve([self requestWithURI:URI method:@"POST" params:params]);
+            resolve([self performRequestWithURI:URI method:@"POST" params:params]);
         }
         
     }]
@@ -137,7 +137,7 @@
         parameters:(NSDictionary *)params
 {
     
-    return [self requestWithURI:URI method:@"PUT" params:params];
+    return [self performRequestWithURI:URI method:@"PUT" params:params];
     
 }
 
@@ -166,7 +166,7 @@
         }
         else
         {
-            resolve([self requestWithURI:URI method:@"PUT" params:params]);
+            resolve([self performRequestWithURI:URI method:@"PUT" params:params]);
         }
         
     }]
@@ -182,7 +182,7 @@
           parameters:(NSDictionary *)params
 {
     
-    return [self requestWithURI:URI method:@"PATCH" params:params];
+    return [self performRequestWithURI:URI method:@"PATCH" params:params];
     
 }
 
@@ -190,7 +190,7 @@
            parameters:(NSDictionary *)params
 {
     
-    return [self requestWithURI:URI method:@"DELETE" params:params];
+    return [self performRequestWithURI:URI method:@"DELETE" params:params];
     
 }
 
@@ -198,7 +198,7 @@
          parameters:(NSDictionary *)params
 {
     
-    return [self requestWithURI:URI method:@"HEAD" params:params];
+    return [self performRequestWithURI:URI method:@"HEAD" params:params];
     
 }
 
@@ -206,7 +206,7 @@
             parameters:(NSDictionary *)params
 {
     
-    return [self requestWithURI:URI method:@"OPTIONS" params:params];
+    return [self performRequestWithURI:URI method:@"OPTIONS" params:params];
     
 }
 
@@ -296,8 +296,8 @@
 }
 
 - (DZPromise *)requestWithURI:(NSString *)URI
-                        method:(NSString *)method
-                        params:(NSDictionary *)params
+                       method:(NSString *)method
+                       params:(NSDictionary *)params
 {
     
     return [PMKPromise promiseWithResolverBlock:^(PMKResolver resolve) {
@@ -350,7 +350,16 @@
         
         resolve(request);
         
-    }]
+    }];
+    
+}
+
+- (DZPromise *)performRequestWithURI:(NSString *)URI
+                              method:(NSString *)method
+                              params:(NSDictionary *)params
+{
+    
+    return [self requestWithURI:URI method:method params:params]
     .then(^(NSURLRequest *request) {
         
         return [self requestWithReq:request];
