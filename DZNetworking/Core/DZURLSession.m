@@ -73,6 +73,8 @@
         
         _session = [NSURLSession sessionWithConfiguration:defaultConfig delegate:self delegateQueue:[NSOperationQueue currentQueue]];
         
+        _useActivityManager = YES;
+        
     }
     
     return self;
