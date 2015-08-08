@@ -7,7 +7,7 @@ before_install:
   - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dist.cer.enc -d -a -out scripts/certs/dist.cer
   - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dist.p12.enc -d -a -out scripts/certs/dist.p12
   - ./scripts/add-key.sh
-  - brew update
+  - brew update; brew update #temporary workaround https://github.com/Homebrew/homebrew/issues/42553#issuecomment-128453641
   - brew install carthage
 install:
     - carthage bootstrap --configuration Debug --platform iOS --verbose
