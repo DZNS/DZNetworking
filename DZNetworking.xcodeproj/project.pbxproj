@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F00D50541B75D5F100845897 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F00D50551B75D5F100845897 /* DZActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F00D50531B75D5F100845897 /* DZActivityIndicatorManager.m */; };
 		F024470E1B612564004C65F9 /* DZUploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F024470C1B612564004C65F9 /* DZUploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F024470F1B612564004C65F9 /* DZUploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F024470D1B612564004C65F9 /* DZUploadSession.m */; };
 		F024471D1B6125AC004C65F9 /* DZCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = F024471B1B6125AC004C65F9 /* DZCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -37,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZActivityIndicatorManager.h; path = Utilities/DZActivityIndicatorManager.h; sourceTree = "<group>"; };
+		F00D50531B75D5F100845897 /* DZActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZActivityIndicatorManager.m; path = Utilities/DZActivityIndicatorManager.m; sourceTree = "<group>"; };
 		F024470C1B612564004C65F9 /* DZUploadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZUploadSession.h; path = Core/DZUploadSession.h; sourceTree = "<group>"; };
 		F024470D1B612564004C65F9 /* DZUploadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZUploadSession.m; path = Core/DZUploadSession.m; sourceTree = "<group>"; };
 		F024471B1B6125AC004C65F9 /* DZCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZCommon.h; path = Utilities/DZCommon.h; sourceTree = "<group>"; };
@@ -102,6 +106,8 @@
 				F0D0E2461B63F0700077F186 /* DZS3CredentialsManager.m */,
 				F02DC60A1B6A665500656FDE /* NSString+URLExtended.h */,
 				F02DC60B1B6A665500656FDE /* NSString+URLExtended.m */,
+				F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */,
+				F00D50531B75D5F100845897 /* DZActivityIndicatorManager.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -190,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */,
+				F00D50541B75D5F100845897 /* DZActivityIndicatorManager.h in Headers */,
 				F0FC8E6E1B4FB22600FDA46C /* DZURLSession.h in Headers */,
 				F024470E1B612564004C65F9 /* DZUploadSession.h in Headers */,
 				F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */,
@@ -335,6 +342,7 @@
 			files = (
 				F0D0E2481B63F0700077F186 /* DZS3CredentialsManager.m in Sources */,
 				F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */,
+				F00D50551B75D5F100845897 /* DZActivityIndicatorManager.m in Sources */,
 				F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */,
 				F024470F1B612564004C65F9 /* DZUploadSession.m in Sources */,
 				F02DC60D1B6A665500656FDE /* NSString+URLExtended.m in Sources */,

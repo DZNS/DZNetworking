@@ -34,7 +34,7 @@
 typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
 
 /**
- *  The base class for all REST API networking.
+ *  The base class for all REST API networking. This class should satisfy all your REST API networking requirements. If you believe we've missed something, or perhaps something needs fixing, please open an issue/pull request on github: https://github.com/dzns/DZNetworking
  */
 @interface DZURLSession : NSObject
 
@@ -76,6 +76,11 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *  An example could be, adding authentication query parameters to the URL which are dynamically generated (Flickr oAuth API).
  */
 @property (nonatomic, copy) requestModifierBlock requestModifier;
+
+/**
+ *  DZURLSession automatically uses the DZActivityIndicatorManager class by default to show a network activity indicator in the status bar. This is usually desired, however, in some usecases, this may be an undesired effect. The default value is YES, however, when initiating your DZURLSession object, you can set this to NO. During runtime, you can update this value to YES and all subsequent network requests will display the activityIndicator. This isn't recommended though because if you set it to NO afterwards, you may end up with a constantly spinning network activity indicator. Thus, it is strongly recommended you set this value when instansiating the session, and never touch it again. You can simply create a new session with an alternate value and use that where ever necessary.
+ */
+@property (nonatomic, assign) BOOL useActivityManager;
 
 /**
  *  Trigger a GET request

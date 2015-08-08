@@ -29,6 +29,7 @@
 //
 
 #import "DZURLSession.h"
+#import <DZNetworking/DZActivityIndicatorManager.h>
 
 @interface DZURLSession() <NSURLSessionDelegate>
 
@@ -375,6 +376,9 @@
         
         __block NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             
+            // we simply decrement it. No harm, since we ensure the value never drops below 0.
+            [[DZActivityIndicatorManager shared] decrementCount];
+            
             if(error)
             {
                 resolve(error);
@@ -424,6 +428,8 @@
         }];
         
         [task resume];
+        
+        if(self.useActivityManager) [[DZActivityIndicatorManager shared] incrementCount];
         
     }];
 

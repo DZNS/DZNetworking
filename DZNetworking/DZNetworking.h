@@ -47,3 +47,4 @@ FOUNDATION_EXPORT const unsigned char DZNetworkingVersionString[];
 #import <DZNetworking/DZS3CredentialsManager.h>
 #import <DZNetworking/DZS3UploadSession.h>
 #import <DZNetworking/NSString+URLExtended.h>
+#import <DZNetworking/DZActivityIndicatorManager.h>
