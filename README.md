@@ -1,17 +1,16 @@
 # DZNetworking
---
 <img src="https://api.travis-ci.org/DZNS/DZNetworking.svg" /> 
 <img src="https://camo.githubusercontent.com/81fef85a8b1266b3890108413ab62ee96d8d39c9/68747470733a2f2f696d672e736869656c64732e696f2f636f636f61706f64732f6c2f496e7374616772616d4b69742e7376673f7374796c653d666c6174" /> 
 <img src="https://camo.githubusercontent.com/c748fef80a903c7b5237f215139f9791c2d6cf8e/68747470733a2f2f696d672e736869656c64732e696f2f636f636f61706f64732f702f496e7374616772616d4b69742e7376673f7374796c653d666c6174" />
 
-NSURLSession based networking for REST APIs using PromiseKit.
+NSURLSession based networking using PromiseKit.
 
 DZNetworking exposes simple APIs that make networking with REST APIs simple. The API is straight-forward, well tested and extensible. DZNetworking utilizes PromiseKit to provide a promises based API and OMGHTTPURLRQ for creating `NSURLRequests`. Thus, DZNetworking should be treated as a simple wrapper around NSURLSession for PromiseKit.
 
 Here's a quick example of a `GET` request, right from the test suite:  
 ````obj-c
 [_session GET:@"/posts/1" parameters:nil]
-.thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+.thenInBackground(^(DZResponse *responded) {
     
     // ... handle the response
         
@@ -30,17 +29,17 @@ As you will see, Promises vastly reduce the possibility of introducting Spaghett
 ````obj-c
 
 [_session GET:@"/resource"]
-.thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+.thenInBackground(^(DZResponse *responded) {
 	
 	return [_session POST:@"/resource/new"]
 	
 })
-.thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+.thenInBackground(^(DZResponse *responded) {
 	
 	return [_session PATCH:@"/resource/200"]
 	
 })
-.thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
+.thenInBackground(^(DZResponse *responded) {
 	
 	// ... handle the response of the previous PATCH request.
 	
@@ -54,11 +53,57 @@ As you will see, Promises vastly reduce the possibility of introducting Spaghett
 
 Chaining is not limited to networking requests and methods provided by DZNetworking. Any method that returns a `AnyPromise` is ready to be chained. 
 
---
-### Autocompletion
-The `.thenInBackground()` method is from PromiseKit. PromiseKit allows resolving with Tuples which is what DZNetworking uses. However, typing the success syntax: `.thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {})` can quickly become tiresome. To aide you, we've also included two autocomplete snippets, one for the success and the other for the error block. You can find them in the `Autocomplete Snippets` folder.   
+### Instantiating
 
-To install, simply copy them over to the `~/Library/Developer/Xcode/UserData/CodeSnippets/` folder.  
+DZURLSession makes it really easy to get started. Here's a sample:
+
+````obj-c
+self.session = [[DZURLSession alloc] init];
+self.session.baseURL = [NSURL URLWithString:@"http://api.myapp.com/"];
+self.session.responseParser = [DZJSONResponseParser new];
+```` 
+--
+The `DZJSONResponseParser` is a subclass of `DZResponseParser` which handles parsing JSON responses. You can implement your own response parsers (example: XML, YAML, etc.) by subclassing `DZResponseParser` and implementing the following two compulsory methods:
+
+````obj-c
+- (id)parseResponse:(NSData *)responseData :(NSHTTPURLResponse *)response error:(NSError **)error;
+- (NSSet *)contentTypes;
+````
+
+You must then assign that response parser to the DZURLSession before making network requests. 
+
+--
+  
+The `DZURLSession` class has been configured to automatically use the `DZActivityIndicatorManager`. You can turn this off by setting NO on the `useActivityManager` property.
+  
+--
+
+The `DZURLSession` class also comes with `requestModifier` block. This is useful when you need to modify all or most requests in a similar fashion before they are sent over the wire. A good use-case would be appending oAuth headers/query parameters to requests. This leaves your networking methods in your subclass clean and easibly debuggable. 
+
+--
+
+### Documentation
+
+We've tried our best to document most headers properly. If you believe you require clarifcation on something, please open an issue, appropriately tagged, and we'll try to either:
+- include documentation, if missing.
+- improve documentation, if incorrect.
+- try to answer the issue in the thread, if already correctly documented.
+
+--
+
+You can also generate HTML documentation using `AppleDocs`.
+
+- First, [install appledocs][1] if you haven't already.
+- Run the gendocs command file in terminal. 
+
+When running `gendocs`, it'll automatically open the generated documentation in the default browser. If this behaviour is undesirable, you can pass the `-n` or `--no-open` flag to prevent that.
+
+--
+
+### Autocompletion
+The `.thenInBackground()` method is from PromiseKit. PromiseKit allows resolving with Tuples which is what DZNetworking uses. However, typing the success syntax: `.thenInBackground(^(DZResponse *responded) {})` can quickly become tiresome. To aide you, we've also included two autocomplete snippets, one for the success and the other for the error block. You can find them in the `Autocomplete Snippets` folder.   
+
+To install, simply copy them over to the `~/Library/Developer/Xcode/UserData/CodeSnippets/` folder. If the `CodeSnippets` folder does not exist, simply create it.
 
 The success handle can be triggered by the `thenOnSuccess` shortcut and the error handler by the `catchError` shortcut.
 
@@ -77,9 +122,9 @@ The success handle can be triggered by the `thenOnSuccess` shortcut and the erro
 --
 ### ToDo
 
-- File Uploads
+- ~~File Uploads~~
 - Multi-part POST
-- Authentication challenge handling (possibly as a Promise, to enable chaining)
+- ~~Authentication challenge handling~~
 
 --
 ### Pull Requests & Issues
@@ -89,3 +134,5 @@ If you'd like to contribute, please open a Pull Request. If you have any issues,
 
 ### LICENSE
 DZNetworking is licensed under the MIT License. Complete information can be found in the License file.
+
+[1]: https://github.com/tomaz/appledoc#quick-install

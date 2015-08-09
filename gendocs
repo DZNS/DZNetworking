@@ -25,8 +25,10 @@ done
 # parse the arguments
 
 # delete the folder if it already exists
-rm -r docs
-
+if ls -d | grep docs | wc -l
+then
+    rm -r docs
+fi
 # enter the code dir
 cd DZNetworking
 # generate the docs
