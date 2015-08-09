@@ -1,4 +1,5 @@
 # DZNetworking
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 <img src="https://api.travis-ci.org/DZNS/DZNetworking.svg" /> 
 <img src="https://camo.githubusercontent.com/81fef85a8b1266b3890108413ab62ee96d8d39c9/68747470733a2f2f696d672e736869656c64732e696f2f636f636f61706f64732f6c2f496e7374616772616d4b69742e7376673f7374796c653d666c6174" /> 
 <img src="https://camo.githubusercontent.com/c748fef80a903c7b5237f215139f9791c2d6cf8e/68747470733a2f2f696d672e736869656c64732e696f2f636f636f61706f64732f702f496e7374616772616d4b69742e7376673f7374796c653d666c6174" />
@@ -52,6 +53,17 @@ As you will see, Promises vastly reduce the possibility of introducting Spaghett
 ````
 
 Chaining is not limited to networking requests and methods provided by DZNetworking. Any method that returns a `AnyPromise` is ready to be chained. 
+
+### Installing
+
+The recomended method to install DZNetworking is via Carthage.
+
+Add the following to your Cartfile
+````
+github "dzns/DZNetworking" 
+````
+
+Don't forget to run `carthage update` and then following the [instructions here][2] to add DZNetworking under the frameworks path.
 
 ### Instantiating
 
@@ -136,3 +148,4 @@ If you'd like to contribute, please open a Pull Request. If you have any issues,
 DZNetworking is licensed under the MIT License. Complete information can be found in the License file.
 
 [1]: https://github.com/tomaz/appledoc#quick-install
+[2]: https://github.com/Carthage/Carthage#adding-frameworks-to-an-application
