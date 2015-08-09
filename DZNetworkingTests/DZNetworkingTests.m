@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import <DZNetworking/DZURLSession.h>
+#import <DZNetworking/DZJSONResponseParser.h>
 
 /*
  * Thanks to Typicode for the REST Testing API (https://github.com/typicode/jsonplaceholder#how-to)
@@ -37,7 +38,7 @@
     {
         _session = [DZURLSession shared];
         _session.baseURL = [NSURL URLWithString:@"http://jsonplaceholder.typicode.com"];
-        
+        _session.responseParser = [DZJSONResponseParser new];
         _session.requestModifier = ^(NSURLRequest *request) {
           
             NSMutableURLRequest *req = request.mutableCopy;

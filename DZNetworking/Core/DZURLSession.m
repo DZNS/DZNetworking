@@ -389,8 +389,8 @@
             
             NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
             
-            NSError *jsonError;
-            id responseObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+            NSError *parsingError;
+            id responseObject = [self.responseParser parseResponse:data :res error:&parsingError];
             
             if(res.statusCode > self.maximumSuccessStatusCode)
             {
@@ -417,9 +417,9 @@
                 return;
             }
             
-            if(jsonError)
+            if(parsingError)
             {
-                resolve(jsonError);
+                resolve(parsingError);
                 return;
             }
             

@@ -28,10 +28,6 @@
 // SOFTWARE.
 //
 
-/*
- * Major props to Mohd Iftekhar Qurashi (http://stackoverflow.com/questions/27484997/how-to-create-an-umbrella-framework-in-ios-sdk) for explaining how to create an Umbrella framework.
- */
-
 #import <Foundation/Foundation.h>
 
 //! Project version number for DZNetworking.
@@ -48,3 +44,5 @@ FOUNDATION_EXPORT const unsigned char DZNetworkingVersionString[];
 #import <DZNetworking/DZS3UploadSession.h>
 #import <DZNetworking/NSString+URLExtended.h>
 #import <DZNetworking/DZActivityIndicatorManager.h>
+#import <DZNetworking/DZResponseParser.h>
+#import <DZNetworking/DZJSONResponseParser.h>
