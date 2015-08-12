@@ -31,8 +31,8 @@
 #import "DZS3CredentialsManager.h"
 #import <CommonCrypto/CommonCrypto.h>
 
-NSString *const kDZACLPrivate = @"public";
-NSString *const kDZACLPublic = @"private";
+NSString *const kDZACLPrivate = @"private";
+NSString *const kDZACLPublic = @"public";
 
 NSString *const kDZEncryptionAES256 = @"AES256";
 
@@ -140,7 +140,7 @@ NSString *const kDZEncryptionAES256 = @"AES256";
     NSAssert(method, @"The method type was not provided");
     
     // for the following two requests, these are not required.
-    if(!([method isEqualToString:@"PUT"] || [method isEqualToString:@"POST"]))
+    if(!([method isEqualToString:@"PUT"] || ![method isEqualToString:@"POST"]))
     {
         data        = nil;
         ACL         = nil;
