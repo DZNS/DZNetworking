@@ -113,7 +113,7 @@
             id queryString = OMGFormURLEncode(query);
             if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
             
-            NSMutableURLRequest *req = [OMGHTTPURLRQ POST:url :params];
+            NSMutableURLRequest *req = [OMGHTTPURLRQ POST:url :params error:nil];
             
             if(self.requestModifier)
             {
@@ -158,7 +158,7 @@
             id queryString = OMGFormURLEncode(query);
             if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
             
-            NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url :params];
+            NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url :params error:nil];
             
             if(self.requestModifier)
             {
@@ -303,7 +303,7 @@
                        params:(NSDictionary *)params
 {
     
-    return [PMKPromise promiseWithResolverBlock:^(PMKResolver resolve) {
+    return [AnyPromise promiseWithResolverBlock:^(PMKResolver resolve) {
         
         NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
         
@@ -311,23 +311,23 @@
         
         if([method isEqualToString:@"GET"])
         {
-            mutableRequest = [OMGHTTPURLRQ GET:url :params];
+            mutableRequest = [OMGHTTPURLRQ GET:url :params error:nil];
         }
         else if([method isEqualToString:@"POST"])
         {
-            mutableRequest = [OMGHTTPURLRQ POST:url :params];
+            mutableRequest = [OMGHTTPURLRQ POST:url :params error:nil];
         }
         else if([method isEqualToString:@"PUT"])
         {
-            mutableRequest = [OMGHTTPURLRQ PUT:url :params];
+            mutableRequest = [OMGHTTPURLRQ PUT:url :params error:nil];
         }
         else if([method isEqualToString:@"DELETE"])
         {
-            mutableRequest = [OMGHTTPURLRQ DELETE:url :params];
+            mutableRequest = [OMGHTTPURLRQ DELETE:url :params error:nil];
         }
         else
         {
-            mutableRequest = [OMGHTTPURLRQ GET:url :params];
+            mutableRequest = [OMGHTTPURLRQ GET:url :params error:nil];
             mutableRequest.HTTPMethod = method;
         }
         

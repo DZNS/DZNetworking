@@ -90,7 +90,7 @@
             [processed addParameters:params];
         }
         
-        NSMutableURLRequest *request = [OMGHTTPURLRQ POST:URL :processed];
+        NSMutableURLRequest *request = [OMGHTTPURLRQ POST:URL :processed error:nil];
         
         resolve(request);
         
