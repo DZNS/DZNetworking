@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		F00D50541B75D5F100845897 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F00D50551B75D5F100845897 /* DZActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F00D50531B75D5F100845897 /* DZActivityIndicatorManager.m */; };
+		F014D9471BBE9D1300E4F203 /* NSDictionary+Extend.h in Headers */ = {isa = PBXBuildFile; fileRef = F014D9451BBE9D1300E4F203 /* NSDictionary+Extend.h */; settings = {ASSET_TAGS = (); }; };
+		F014D9481BBE9D1300E4F203 /* NSDictionary+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = F014D9461BBE9D1300E4F203 /* NSDictionary+Extend.m */; settings = {ASSET_TAGS = (); }; };
+		F014D94B1BBE9F6D00E4F203 /* NSString+Coders.h in Headers */ = {isa = PBXBuildFile; fileRef = F014D9491BBE9F6D00E4F203 /* NSString+Coders.h */; settings = {ASSET_TAGS = (); }; };
+		F014D94C1BBE9F6D00E4F203 /* NSString+Coders.m in Sources */ = {isa = PBXBuildFile; fileRef = F014D94A1BBE9F6D00E4F203 /* NSString+Coders.m */; settings = {ASSET_TAGS = (); }; };
 		F024470E1B612564004C65F9 /* DZUploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F024470C1B612564004C65F9 /* DZUploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F024470F1B612564004C65F9 /* DZUploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F024470D1B612564004C65F9 /* DZUploadSession.m */; };
 		F024471D1B6125AC004C65F9 /* DZCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = F024471B1B6125AC004C65F9 /* DZCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -20,6 +24,8 @@
 		F02DC60F1B6A66E000656FDE /* URLCategoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F02DC60E1B6A66E000656FDE /* URLCategoryTests.m */; };
 		F038A8961B6773B000349EA8 /* DZResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = F038A8941B6773B000349EA8 /* DZResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F038A8971B6773B000349EA8 /* DZResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F038A8951B6773B000349EA8 /* DZResponse.m */; };
+		F03B1EFB1BBE5607000C3CFC /* DZOAuthSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F03B1EFC1BBE5607000C3CFC /* DZOAuthSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */; settings = {ASSET_TAGS = (); }; };
 		F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C59C1B7760C3002F8395 /* DZResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
@@ -45,6 +51,10 @@
 /* Begin PBXFileReference section */
 		F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZActivityIndicatorManager.h; path = Utilities/DZActivityIndicatorManager.h; sourceTree = "<group>"; };
 		F00D50531B75D5F100845897 /* DZActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZActivityIndicatorManager.m; path = Utilities/DZActivityIndicatorManager.m; sourceTree = "<group>"; };
+		F014D9451BBE9D1300E4F203 /* NSDictionary+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+Extend.h"; path = "Utilities/NSDictionary+Extend.h"; sourceTree = "<group>"; };
+		F014D9461BBE9D1300E4F203 /* NSDictionary+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+Extend.m"; path = "Utilities/NSDictionary+Extend.m"; sourceTree = "<group>"; };
+		F014D9491BBE9F6D00E4F203 /* NSString+Coders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Coders.h"; path = "Core/NSString+Coders.h"; sourceTree = "<group>"; };
+		F014D94A1BBE9F6D00E4F203 /* NSString+Coders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Coders.m"; path = "Core/NSString+Coders.m"; sourceTree = "<group>"; };
 		F024470C1B612564004C65F9 /* DZUploadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZUploadSession.h; path = Core/DZUploadSession.h; sourceTree = "<group>"; };
 		F024470D1B612564004C65F9 /* DZUploadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZUploadSession.m; path = Core/DZUploadSession.m; sourceTree = "<group>"; };
 		F024471B1B6125AC004C65F9 /* DZCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZCommon.h; path = Utilities/DZCommon.h; sourceTree = "<group>"; };
@@ -56,6 +66,8 @@
 		F02DC60E1B6A66E000656FDE /* URLCategoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLCategoryTests.m; sourceTree = "<group>"; };
 		F038A8941B6773B000349EA8 /* DZResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZResponse.h; path = Core/DZResponse.h; sourceTree = "<group>"; };
 		F038A8951B6773B000349EA8 /* DZResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZResponse.m; path = Core/DZResponse.m; sourceTree = "<group>"; };
+		F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZOAuthSession.h; path = Core/DZOAuthSession.h; sourceTree = "<group>"; };
+		F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZOAuthSession.m; path = Core/DZOAuthSession.m; sourceTree = "<group>"; };
 		F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZURLSessionProtocol.h; path = Core/DZURLSessionProtocol.h; sourceTree = "<group>"; };
 		F060C59C1B7760C3002F8395 /* DZResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZResponseParser.h; path = "Core/Response Parsers/DZResponseParser.h"; sourceTree = "<group>"; };
 		F060C59D1B7760C3002F8395 /* DZResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZResponseParser.m; path = "Core/Response Parsers/DZResponseParser.m"; sourceTree = "<group>"; };
@@ -116,6 +128,10 @@
 				F02DC60B1B6A665500656FDE /* NSString+URLExtended.m */,
 				F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */,
 				F00D50531B75D5F100845897 /* DZActivityIndicatorManager.m */,
+				F014D9451BBE9D1300E4F203 /* NSDictionary+Extend.h */,
+				F014D9461BBE9D1300E4F203 /* NSDictionary+Extend.m */,
+				F014D9491BBE9F6D00E4F203 /* NSString+Coders.h */,
+				F014D94A1BBE9F6D00E4F203 /* NSString+Coders.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -204,6 +220,8 @@
 				F024470D1B612564004C65F9 /* DZUploadSession.m */,
 				F0D0E2411B63EA900077F186 /* DZS3UploadSession.h */,
 				F0D0E2421B63EA900077F186 /* DZS3UploadSession.m */,
+				F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */,
+				F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -216,16 +234,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				F060C5A21B776302002F8395 /* DZJSONResponseParser.h in Headers */,
+				F014D9471BBE9D1300E4F203 /* NSDictionary+Extend.h in Headers */,
 				F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */,
 				F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */,
 				F00D50541B75D5F100845897 /* DZActivityIndicatorManager.h in Headers */,
 				F0FC8E6E1B4FB22600FDA46C /* DZURLSession.h in Headers */,
 				F024470E1B612564004C65F9 /* DZUploadSession.h in Headers */,
+				F014D94B1BBE9F6D00E4F203 /* NSString+Coders.h in Headers */,
 				F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */,
 				F0D0E2431B63EA900077F186 /* DZS3UploadSession.h in Headers */,
 				F0D0E2471B63F0700077F186 /* DZS3CredentialsManager.h in Headers */,
 				F024471D1B6125AC004C65F9 /* DZCommon.h in Headers */,
 				F038A8961B6773B000349EA8 /* DZResponse.h in Headers */,
+				F03B1EFB1BBE5607000C3CFC /* DZOAuthSession.h in Headers */,
 				F02DC60C1B6A665500656FDE /* NSString+URLExtended.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,13 +386,16 @@
 				F0D0E2481B63F0700077F186 /* DZS3CredentialsManager.m in Sources */,
 				F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */,
 				F00D50551B75D5F100845897 /* DZActivityIndicatorManager.m in Sources */,
+				F03B1EFC1BBE5607000C3CFC /* DZOAuthSession.m in Sources */,
 				F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */,
 				F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */,
+				F014D9481BBE9D1300E4F203 /* NSDictionary+Extend.m in Sources */,
 				F024470F1B612564004C65F9 /* DZUploadSession.m in Sources */,
 				F02DC60D1B6A665500656FDE /* NSString+URLExtended.m in Sources */,
 				F038A8971B6773B000349EA8 /* DZResponse.m in Sources */,
 				F0D0E2441B63EA900077F186 /* DZS3UploadSession.m in Sources */,
 				F060C5A31B776302002F8395 /* DZJSONResponseParser.m in Sources */,
+				F014D94C1BBE9F6D00E4F203 /* NSString+Coders.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

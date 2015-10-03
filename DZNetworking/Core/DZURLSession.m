@@ -411,7 +411,7 @@
             if(res.statusCode == 200 && !responseObject)
             {
                 // our request succeeded but returned no data. Treat valid.
-                DZResponse *obj = [[DZResponse alloc] initWithData:responseObject :res :task];
+                DZResponse *obj = [[DZResponse alloc] initWithData:responseObject?:data :res :task];
                 
                 resolve(obj);
                 return;
