@@ -29,8 +29,9 @@
 //
 
 #import "DZURLSession.h"
+#ifndef DZAPPKIT
 #import <DZNetworking/DZActivityIndicatorManager.h>
-
+#endif
 @interface DZURLSession() <NSURLSessionDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
@@ -377,10 +378,10 @@
     return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
         
         __block NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            
+#ifndef DZAPPKIT
             // we simply decrement it. No harm, since we ensure the value never drops below 0.
             [[DZActivityIndicatorManager shared] decrementCount];
-            
+#endif
             if(error)
             {
                 resolve(error);
@@ -430,9 +431,9 @@
         }];
         
         [task resume];
-        
+#ifndef DZAPPKIT
         if(self.useActivityManager) [[DZActivityIndicatorManager shared] incrementCount];
-        
+#endif
     }];
 
 }

@@ -30,7 +30,11 @@
 
 #import "DZUploadSession.h"
 #import <DZNetworking/DZURLSession.h>
+#ifdef DZAPPKIT
+#import <CoreServices/CoreServices.h>
+#elif
 #import <MobileCoreServices/MobileCoreServices.h>
+#endif
 
 @interface DZUploadSession () <NSURLSessionTaskDelegate>
 

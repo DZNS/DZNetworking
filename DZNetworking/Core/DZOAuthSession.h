@@ -11,6 +11,11 @@
 @interface DZOAuthSession : NSObject
 
 /**
+ *  The DZURLSession interally used by DZOAuthSession.
+ */
+@property (nonatomic, strong, readonly) DZURLSession * _Nonnull session;
+
+/**
  *  The base URL for the OAuth Service Provider
  */
 @property (nonatomic, copy, readonly) NSURL * _Nonnull baseURL;
@@ -60,6 +65,13 @@
 #pragma mark - Overrides
 
 /**
+ *  A list of extra paramaters to include in every outgoing request. It's recommended you set a static dictionary as the return value to reduce overhead as this can be called multiple times. The core implementation returns an empty dictionary. If you need to pass common parameters, override this method in your subclass and do not call super.
+ *
+ *  @return A NSDictionary of common parameters.
+ */
+- (NSDictionary *_Nonnull)commonParameters;
+
+/**
  *  Subclasses should implement this method and return the appropriate signing key. Do not call super from your method.
  *
  *  @return The signing key. (this could be contextual)
@@ -70,13 +82,13 @@
 
 - (instancetype _Nullable)initWithConsumerKey:(NSString *_Nonnull)consumerKey
                                consumerSecret:(NSString *_Nonnull)consumerSecret
-                                       baseURL:(NSURL *_Nonnull)baseURL;
+                                      baseURL:(NSURL *_Nonnull)baseURL;
 
 
 - (DZPromise * _Nonnull)beginAuthWithAdditionParams:(NSDictionary *_Nullable)params;
 
 - (DZPromise * _Nonnull)finishAuthWithToken:(NSString * _Nonnull)token
-                          verifier:(NSString * _Nonnull)verifier;
+                                   verifier:(NSString * _Nonnull)verifier;
 
 #pragma mark - HTTP
 

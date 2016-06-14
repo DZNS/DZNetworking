@@ -28,6 +28,11 @@
 
 #pragma mark - Overrides
 
+- (NSDictionary *)commonParameters
+{
+    return @{};
+}
+
 -(NSString *)signingKey
 {
     
@@ -291,6 +296,14 @@
             params = [params dz_extend:@{@"oauth_token" : self.accessToken}];
         }
         
+        if([[self commonParameters] count])
+        {
+            NSMutableDictionary *dict = [self commonParameters].mutableCopy;
+            [dict addEntriesFromDictionary:params];
+            
+            params = dict.copy;
+        }
+        
     }
     
     components.queryItems = [self queryItemsFromParams:params];
@@ -300,7 +313,7 @@
     *C = [components.query encodeURI];
     
     NSString *stringToSign = [NSString stringWithFormat:@"%@&%@&%@", A, B, C];
-    NSLog(@"%@", stringToSign);
+//    NSLog(@"%@", stringToSign);
     NSString *signature = [self hashedValueWithKey:[self signingKey] andData:stringToSign];
     
     components.queryItems = [components.queryItems arrayByAddingObject:[[NSURLQueryItem alloc] initWithName:@"oauth_signature" value:signature]];

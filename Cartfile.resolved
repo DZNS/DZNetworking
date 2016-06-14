@@ -1,2 +1,2 @@
 github "mxcl/OMGHTTPURLRQ" "3.0.2"
-github "mxcl/PromiseKit" "3.0.0"
+github "mxcl/PromiseKit" "c90cfc1c578ed09b5d3d21e0ac71aa5020be0899"

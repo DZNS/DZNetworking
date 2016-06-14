@@ -9,9 +9,24 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>DZNetworkingMacOS.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>F0B2C6731D1001BA00944F5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F0B2C6801D10024C00944F5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F0FC8E4F1B4FB1D300FDA46C</key>
 		<dict>
 			<key>primary</key>

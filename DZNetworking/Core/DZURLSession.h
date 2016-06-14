@@ -219,6 +219,15 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
                               method:(NSString *)method
                               params:(NSDictionary *)params;
 
+/**
+ *  Triggers network request with the provided NSURLRequest. This method is the final method that gets called from most of the above methods. You should never have to call this method directly, but if you need to, ensure your parameters are correctly encoded and the required HTTPMethod is set.
+ *
+ *  @param request The request object
+ *
+ *  @return DZPromise (resolves to DZResponse if it succeeds)
+ */
+- (DZPromise *)requestWithReq:(NSURLRequest *)request;
+
 #pragma mark - 
 
 // The following methods make two assumptions:
