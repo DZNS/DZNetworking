@@ -89,6 +89,7 @@
 		F02DC60A1B6A665500656FDE /* NSString+URLExtended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+URLExtended.h"; path = "Utilities/NSString+URLExtended.h"; sourceTree = "<group>"; };
 		F02DC60B1B6A665500656FDE /* NSString+URLExtended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+URLExtended.m"; path = "Utilities/NSString+URLExtended.m"; sourceTree = "<group>"; };
 		F02DC60E1B6A66E000656FDE /* URLCategoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLCategoryTests.m; sourceTree = "<group>"; };
+		F02E59021D4227D000BD0AD7 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/CoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		F038A8941B6773B000349EA8 /* DZResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZResponse.h; path = Core/DZResponse.h; sourceTree = "<group>"; };
 		F038A8951B6773B000349EA8 /* DZResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZResponse.m; path = Core/DZResponse.m; sourceTree = "<group>"; };
 		F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZOAuthSession.h; path = Core/DZOAuthSession.h; sourceTree = "<group>"; };
@@ -176,6 +177,14 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		F02E59011D4227D000BD0AD7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F02E59021D4227D000BD0AD7 /* CoreServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F060C59B1B776099002F8395 /* Response Parsers */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +214,7 @@
 				F0FC8E5F1B4FB1D300FDA46C /* DZNetworkingTests */,
 				F0B2C6821D10024C00944F5D /* DZNetworkingMacOS */,
 				F0FC8E511B4FB1D300FDA46C /* Products */,
+				F02E59011D4227D000BD0AD7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -781,6 +791,7 @@
 				F0B2C6881D10024C00944F5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F0FC8E4A1B4FB1D300FDA46C /* Build configuration list for PBXProject "DZNetworking" */ = {
 			isa = XCConfigurationList;

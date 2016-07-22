@@ -1,0 +1,622 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F03B1EB51BBE55B8000C3CFC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EB41BBE55B8000C3CFC /* main.m */; };
+		F03B1EB81BBE55B8000C3CFC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EB71BBE55B8000C3CFC /* AppDelegate.m */; };
+		F03B1EBB1BBE55B8000C3CFC /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EBA1BBE55B8000C3CFC /* MasterViewController.m */; };
+		F03B1EBE1BBE55B8000C3CFC /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EBD1BBE55B8000C3CFC /* DetailViewController.m */; };
+		F03B1EC11BBE55B8000C3CFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F03B1EBF1BBE55B8000C3CFC /* Main.storyboard */; };
+		F03B1EC31BBE55B8000C3CFC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F03B1EC21BBE55B8000C3CFC /* Assets.xcassets */; };
+		F03B1EC61BBE55B8000C3CFC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F03B1EC41BBE55B8000C3CFC /* LaunchScreen.storyboard */; };
+		F03B1ED11BBE55B8000C3CFC /* DZNetworking_ExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1ED01BBE55B8000C3CFC /* DZNetworking_ExampleTests.m */; };
+		F03B1EDC1BBE55B8000C3CFC /* DZNetworking_ExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EDB1BBE55B8000C3CFC /* DZNetworking_ExampleUITests.m */; };
+		F03B1EF41BBE55D2000C3CFC /* DZNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F03B1EEF1BBE55C5000C3CFC /* DZNetworking.framework */; };
+		F03B1EF51BBE55D2000C3CFC /* DZNetworking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F03B1EEF1BBE55C5000C3CFC /* DZNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F03B1ECD1BBE55B8000C3CFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F03B1EA81BBE55B8000C3CFC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F03B1EAF1BBE55B8000C3CFC;
+			remoteInfo = "DZNetworking Example";
+		};
+		F03B1ED81BBE55B8000C3CFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F03B1EA81BBE55B8000C3CFC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F03B1EAF1BBE55B8000C3CFC;
+			remoteInfo = "DZNetworking Example";
+		};
+		F03B1EEE1BBE55C5000C3CFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F03B1EE91BBE55C5000C3CFC /* DZNetworking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F0FC8E501B4FB1D300FDA46C;
+			remoteInfo = DZNetworking;
+		};
+		F03B1EF01BBE55C5000C3CFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F03B1EE91BBE55C5000C3CFC /* DZNetworking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F0FC8E5B1B4FB1D300FDA46C;
+			remoteInfo = DZNetworkingTests;
+		};
+		F03B1EF21BBE55CC000C3CFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F03B1EE91BBE55C5000C3CFC /* DZNetworking.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F0FC8E4F1B4FB1D300FDA46C;
+			remoteInfo = DZNetworking;
+		};
+		F03B1EF61BBE55D2000C3CFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F03B1EE91BBE55C5000C3CFC /* DZNetworking.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F0FC8E4F1B4FB1D300FDA46C;
+			remoteInfo = DZNetworking;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F03B1EF81BBE55D2000C3CFC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F03B1EF51BBE55D2000C3CFC /* DZNetworking.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F03B1EB01BBE55B8000C3CFC /* DZNetworking Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DZNetworking Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F03B1EB41BBE55B8000C3CFC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F03B1EB61BBE55B8000C3CFC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F03B1EB71BBE55B8000C3CFC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F03B1EB91BBE55B8000C3CFC /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		F03B1EBA1BBE55B8000C3CFC /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		F03B1EBC1BBE55B8000C3CFC /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		F03B1EBD1BBE55B8000C3CFC /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		F03B1EC01BBE55B8000C3CFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F03B1EC21BBE55B8000C3CFC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F03B1EC51BBE55B8000C3CFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F03B1EC71BBE55B8000C3CFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F03B1ECC1BBE55B8000C3CFC /* DZNetworking ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DZNetworking ExampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F03B1ED01BBE55B8000C3CFC /* DZNetworking_ExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DZNetworking_ExampleTests.m; sourceTree = "<group>"; };
+		F03B1ED21BBE55B8000C3CFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F03B1ED71BBE55B8000C3CFC /* DZNetworking ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DZNetworking ExampleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F03B1EDB1BBE55B8000C3CFC /* DZNetworking_ExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DZNetworking_ExampleUITests.m; sourceTree = "<group>"; };
+		F03B1EDD1BBE55B8000C3CFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F03B1EE91BBE55C5000C3CFC /* DZNetworking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DZNetworking.xcodeproj; path = ../../../DZNetworking.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F03B1EAD1BBE55B8000C3CFC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F03B1EF41BBE55D2000C3CFC /* DZNetworking.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F03B1EC91BBE55B8000C3CFC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F03B1ED41BBE55B8000C3CFC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F03B1EA71BBE55B8000C3CFC = {
+			isa = PBXGroup;
+			children = (
+				F03B1EB21BBE55B8000C3CFC /* DZNetworking Example */,
+				F03B1ECF1BBE55B8000C3CFC /* DZNetworking ExampleTests */,
+				F03B1EDA1BBE55B8000C3CFC /* DZNetworking ExampleUITests */,
+				F03B1EB11BBE55B8000C3CFC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F03B1EB11BBE55B8000C3CFC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F03B1EB01BBE55B8000C3CFC /* DZNetworking Example.app */,
+				F03B1ECC1BBE55B8000C3CFC /* DZNetworking ExampleTests.xctest */,
+				F03B1ED71BBE55B8000C3CFC /* DZNetworking ExampleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F03B1EB21BBE55B8000C3CFC /* DZNetworking Example */ = {
+			isa = PBXGroup;
+			children = (
+				F03B1EB61BBE55B8000C3CFC /* AppDelegate.h */,
+				F03B1EB71BBE55B8000C3CFC /* AppDelegate.m */,
+				F03B1EB91BBE55B8000C3CFC /* MasterViewController.h */,
+				F03B1EBA1BBE55B8000C3CFC /* MasterViewController.m */,
+				F03B1EBC1BBE55B8000C3CFC /* DetailViewController.h */,
+				F03B1EBD1BBE55B8000C3CFC /* DetailViewController.m */,
+				F03B1EBF1BBE55B8000C3CFC /* Main.storyboard */,
+				F03B1EC21BBE55B8000C3CFC /* Assets.xcassets */,
+				F03B1EC41BBE55B8000C3CFC /* LaunchScreen.storyboard */,
+				F03B1EC71BBE55B8000C3CFC /* Info.plist */,
+				F03B1EE91BBE55C5000C3CFC /* DZNetworking.xcodeproj */,
+				F03B1EB31BBE55B8000C3CFC /* Supporting Files */,
+			);
+			path = "DZNetworking Example";
+			sourceTree = "<group>";
+		};
+		F03B1EB31BBE55B8000C3CFC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F03B1EB41BBE55B8000C3CFC /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F03B1ECF1BBE55B8000C3CFC /* DZNetworking ExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				F03B1ED01BBE55B8000C3CFC /* DZNetworking_ExampleTests.m */,
+				F03B1ED21BBE55B8000C3CFC /* Info.plist */,
+			);
+			path = "DZNetworking ExampleTests";
+			sourceTree = "<group>";
+		};
+		F03B1EDA1BBE55B8000C3CFC /* DZNetworking ExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F03B1EDB1BBE55B8000C3CFC /* DZNetworking_ExampleUITests.m */,
+				F03B1EDD1BBE55B8000C3CFC /* Info.plist */,
+			);
+			path = "DZNetworking ExampleUITests";
+			sourceTree = "<group>";
+		};
+		F03B1EEA1BBE55C5000C3CFC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F03B1EEF1BBE55C5000C3CFC /* DZNetworking.framework */,
+				F03B1EF11BBE55C5000C3CFC /* DZNetworkingTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F03B1EAF1BBE55B8000C3CFC /* DZNetworking Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F03B1EE01BBE55B8000C3CFC /* Build configuration list for PBXNativeTarget "DZNetworking Example" */;
+			buildPhases = (
+				F03B1EAC1BBE55B8000C3CFC /* Sources */,
+				F03B1EAD1BBE55B8000C3CFC /* Frameworks */,
+				F03B1EAE1BBE55B8000C3CFC /* Resources */,
+				F03B1EF81BBE55D2000C3CFC /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F03B1EF31BBE55CC000C3CFC /* PBXTargetDependency */,
+				F03B1EF71BBE55D2000C3CFC /* PBXTargetDependency */,
+			);
+			name = "DZNetworking Example";
+			productName = "DZNetworking Example";
+			productReference = F03B1EB01BBE55B8000C3CFC /* DZNetworking Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F03B1ECB1BBE55B8000C3CFC /* DZNetworking ExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F03B1EE31BBE55B8000C3CFC /* Build configuration list for PBXNativeTarget "DZNetworking ExampleTests" */;
+			buildPhases = (
+				F03B1EC81BBE55B8000C3CFC /* Sources */,
+				F03B1EC91BBE55B8000C3CFC /* Frameworks */,
+				F03B1ECA1BBE55B8000C3CFC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F03B1ECE1BBE55B8000C3CFC /* PBXTargetDependency */,
+			);
+			name = "DZNetworking ExampleTests";
+			productName = "DZNetworking ExampleTests";
+			productReference = F03B1ECC1BBE55B8000C3CFC /* DZNetworking ExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F03B1ED61BBE55B8000C3CFC /* DZNetworking ExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F03B1EE61BBE55B8000C3CFC /* Build configuration list for PBXNativeTarget "DZNetworking ExampleUITests" */;
+			buildPhases = (
+				F03B1ED31BBE55B8000C3CFC /* Sources */,
+				F03B1ED41BBE55B8000C3CFC /* Frameworks */,
+				F03B1ED51BBE55B8000C3CFC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F03B1ED91BBE55B8000C3CFC /* PBXTargetDependency */,
+			);
+			name = "DZNetworking ExampleUITests";
+			productName = "DZNetworking ExampleUITests";
+			productReference = F03B1ED71BBE55B8000C3CFC /* DZNetworking ExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F03B1EA81BBE55B8000C3CFC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Dezine Zync Studios LLP.";
+				TargetAttributes = {
+					F03B1EAF1BBE55B8000C3CFC = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					F03B1ECB1BBE55B8000C3CFC = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = F03B1EAF1BBE55B8000C3CFC;
+					};
+					F03B1ED61BBE55B8000C3CFC = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = F03B1EAF1BBE55B8000C3CFC;
+					};
+				};
+			};
+			buildConfigurationList = F03B1EAB1BBE55B8000C3CFC /* Build configuration list for PBXProject "DZNetworking Example" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F03B1EA71BBE55B8000C3CFC;
+			productRefGroup = F03B1EB11BBE55B8000C3CFC /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F03B1EEA1BBE55C5000C3CFC /* Products */;
+					ProjectRef = F03B1EE91BBE55C5000C3CFC /* DZNetworking.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F03B1EAF1BBE55B8000C3CFC /* DZNetworking Example */,
+				F03B1ECB1BBE55B8000C3CFC /* DZNetworking ExampleTests */,
+				F03B1ED61BBE55B8000C3CFC /* DZNetworking ExampleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F03B1EEF1BBE55C5000C3CFC /* DZNetworking.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DZNetworking.framework;
+			remoteRef = F03B1EEE1BBE55C5000C3CFC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F03B1EF11BBE55C5000C3CFC /* DZNetworkingTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = DZNetworkingTests.xctest;
+			remoteRef = F03B1EF01BBE55C5000C3CFC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F03B1EAE1BBE55B8000C3CFC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F03B1EC61BBE55B8000C3CFC /* LaunchScreen.storyboard in Resources */,
+				F03B1EC31BBE55B8000C3CFC /* Assets.xcassets in Resources */,
+				F03B1EC11BBE55B8000C3CFC /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F03B1ECA1BBE55B8000C3CFC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F03B1ED51BBE55B8000C3CFC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F03B1EAC1BBE55B8000C3CFC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F03B1EB81BBE55B8000C3CFC /* AppDelegate.m in Sources */,
+				F03B1EBB1BBE55B8000C3CFC /* MasterViewController.m in Sources */,
+				F03B1EB51BBE55B8000C3CFC /* main.m in Sources */,
+				F03B1EBE1BBE55B8000C3CFC /* DetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F03B1EC81BBE55B8000C3CFC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F03B1ED11BBE55B8000C3CFC /* DZNetworking_ExampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F03B1ED31BBE55B8000C3CFC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F03B1EDC1BBE55B8000C3CFC /* DZNetworking_ExampleUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F03B1ECE1BBE55B8000C3CFC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F03B1EAF1BBE55B8000C3CFC /* DZNetworking Example */;
+			targetProxy = F03B1ECD1BBE55B8000C3CFC /* PBXContainerItemProxy */;
+		};
+		F03B1ED91BBE55B8000C3CFC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F03B1EAF1BBE55B8000C3CFC /* DZNetworking Example */;
+			targetProxy = F03B1ED81BBE55B8000C3CFC /* PBXContainerItemProxy */;
+		};
+		F03B1EF31BBE55CC000C3CFC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DZNetworking;
+			targetProxy = F03B1EF21BBE55CC000C3CFC /* PBXContainerItemProxy */;
+		};
+		F03B1EF71BBE55D2000C3CFC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DZNetworking;
+			targetProxy = F03B1EF61BBE55D2000C3CFC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F03B1EBF1BBE55B8000C3CFC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F03B1EC01BBE55B8000C3CFC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F03B1EC41BBE55B8000C3CFC /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F03B1EC51BBE55B8000C3CFC /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F03B1EDE1BBE55B8000C3CFC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F03B1EDF1BBE55B8000C3CFC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F03B1EE11BBE55B8000C3CFC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "DZNetworking Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.DZNetworking-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F03B1EE21BBE55B8000C3CFC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "DZNetworking Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.DZNetworking-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		F03B1EE41BBE55B8000C3CFC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "DZNetworking ExampleTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.DZNetworking-ExampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DZNetworking Example.app/DZNetworking Example";
+			};
+			name = Debug;
+		};
+		F03B1EE51BBE55B8000C3CFC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "DZNetworking ExampleTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.DZNetworking-ExampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DZNetworking Example.app/DZNetworking Example";
+			};
+			name = Release;
+		};
+		F03B1EE71BBE55B8000C3CFC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "DZNetworking ExampleUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.DZNetworking-ExampleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "DZNetworking Example";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		F03B1EE81BBE55B8000C3CFC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "DZNetworking ExampleUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.DZNetworking-ExampleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "DZNetworking Example";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F03B1EAB1BBE55B8000C3CFC /* Build configuration list for PBXProject "DZNetworking Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F03B1EDE1BBE55B8000C3CFC /* Debug */,
+				F03B1EDF1BBE55B8000C3CFC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F03B1EE01BBE55B8000C3CFC /* Build configuration list for PBXNativeTarget "DZNetworking Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F03B1EE11BBE55B8000C3CFC /* Debug */,
+				F03B1EE21BBE55B8000C3CFC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F03B1EE31BBE55B8000C3CFC /* Build configuration list for PBXNativeTarget "DZNetworking ExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F03B1EE41BBE55B8000C3CFC /* Debug */,
+				F03B1EE51BBE55B8000C3CFC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F03B1EE61BBE55B8000C3CFC /* Build configuration list for PBXNativeTarget "DZNetworking ExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F03B1EE71BBE55B8000C3CFC /* Debug */,
+				F03B1EE81BBE55B8000C3CFC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F03B1EA81BBE55B8000C3CFC /* Project object */;
+}
