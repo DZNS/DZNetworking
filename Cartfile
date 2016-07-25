@@ -1,2 +1,2 @@
-github "mxcl/PromiseKit" "Xcode-8-beta"
+github "mxcl/PromiseKit" "swift-3.0"
 github "mxcl/OMGHTTPURLRQ" "3.0.2"
