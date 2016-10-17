@@ -1,2 +1,2 @@
-github "mxcl/PromiseKit" "swift-3.0"
+github "mxcl/PromiseKit" ~> 4.0
 github "mxcl/OMGHTTPURLRQ" "3.0.2"
