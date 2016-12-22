@@ -37,14 +37,28 @@ FOUNDATION_EXPORT double DZNetworkingVersionNumber;
 FOUNDATION_EXPORT const unsigned char DZNetworkingVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <DZNetworking/PublicHeader.h>
-#import <DZNetworking/DZResponse.h>
-#import <DZNetworking/DZURLSession.h>
-#import <DZNetworking/DZUploadSession.h>
-#import <DZNetworking/DZS3CredentialsManager.h>
-#import <DZNetworking/DZS3UploadSession.h>
-#import <DZNetworking/NSString+URLExtended.h>
-#import <DZNetworking/DZActivityIndicatorManager.h>
-#import <DZNetworking/DZResponseParser.h>
-#import <DZNetworking/DZJSONResponseParser.h>
+#ifndef DZAPPKIT
+    #import <DZNetworking/DZResponse.h>
+    #import <DZNetworking/DZURLSession.h>
+    #import <DZNetworking/DZUploadSession.h>
+    #import <DZNetworking/DZS3CredentialsManager.h>
+    #import <DZNetworking/DZS3UploadSession.h>
+    #import <DZNetworking/NSString+URLExtended.h>
+    #import <DZNetworking/DZActivityIndicatorManager.h>
+    #import <DZNetworking/DZResponseParser.h>
+    #import <DZNetworking/DZJSONResponseParser.h>
 
-#import <DZNetworking/DZOAuthSession.h>
+    #import <DZNetworking/DZOAuthSession.h>
+#else
+    #import <DZNetworkingMacOS/DZResponse.h>
+    #import <DZNetworkingMacOS/DZURLSession.h>
+    #import <DZNetworkingMacOS/DZUploadSession.h>
+    #import <DZNetworkingMacOS/DZS3CredentialsManager.h>
+    #import <DZNetworkingMacOS/DZS3UploadSession.h>
+    #import <DZNetworkingMacOS/NSString+URLExtended.h>
+    #import <DZNetworkingMacOS/DZActivityIndicatorManager.h>
+    #import <DZNetworkingMacOS/DZResponseParser.h>
+    #import <DZNetworkingMacOS/DZJSONResponseParser.h>
+
+    #import <DZNetworkingMacOS/DZOAuthSession.h>
+#endif
