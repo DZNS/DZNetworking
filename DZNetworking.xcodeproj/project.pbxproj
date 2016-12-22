@@ -36,6 +36,7 @@
 		F08411041DB495460026DD5A /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F091BE612BC002DB024 /* PromiseKit.framework */; };
 		F08411051DB495490026DD5A /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F081BE612BC002DB024 /* OMGHTTPURLRQ.framework */; };
 		F08E7C431E0BA97D0009BE19 /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F08E7C551E0BACE60009BE19 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C6891D10027300944F5D /* DZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = F024471C1B6125AC004C65F9 /* DZCommon.m */; };
 		F0B2C68A1D10027E00944F5D /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
 		F0B2C68B1D10027E00944F5D /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
@@ -309,6 +310,7 @@
 				F08E7C431E0BA97D0009BE19 /* DZNetworking.h in Headers */,
 				F0B2C69E1D1002BF00944F5D /* DZJSONResponseParser.h in Headers */,
 				F0B2C6981D1002B900944F5D /* DZResponse.h in Headers */,
+				F08E7C551E0BACE60009BE19 /* DZActivityIndicatorManager.h in Headers */,
 				F0B2C6931D10029800944F5D /* DZS3CredentialsManager.h in Headers */,
 				F0B2C69B1D1002B900944F5D /* DZS3UploadSession.h in Headers */,
 				F0B2C69C1D1002B900944F5D /* DZOAuthSession.h in Headers */,

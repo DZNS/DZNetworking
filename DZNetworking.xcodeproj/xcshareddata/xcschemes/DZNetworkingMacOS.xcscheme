@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F0B2C6801D10024C00944F5D"
-               BuildableName = "DZNetworkingMacOS.framework"
+               BuildableName = "DZNetworking.framework"
                BlueprintName = "DZNetworkingMacOS"
                ReferencedContainer = "container:DZNetworking.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F0B2C6801D10024C00944F5D"
-            BuildableName = "DZNetworkingMacOS.framework"
+            BuildableName = "DZNetworking.framework"
             BlueprintName = "DZNetworkingMacOS"
             ReferencedContainer = "container:DZNetworking.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F0B2C6801D10024C00944F5D"
-            BuildableName = "DZNetworkingMacOS.framework"
+            BuildableName = "DZNetworking.framework"
             BlueprintName = "DZNetworkingMacOS"
             ReferencedContainer = "container:DZNetworking.xcodeproj">
          </BuildableReference>
