@@ -35,7 +35,7 @@
 		F060C5A31B776302002F8395 /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
 		F08411041DB495460026DD5A /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F091BE612BC002DB024 /* PromiseKit.framework */; };
 		F08411051DB495490026DD5A /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F081BE612BC002DB024 /* OMGHTTPURLRQ.framework */; };
-		F0B2C6841D10024C00944F5D /* DZNetworkingMacOS.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B2C6831D10024C00944F5D /* DZNetworkingMacOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F08E7C431E0BA97D0009BE19 /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C6891D10027300944F5D /* DZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = F024471C1B6125AC004C65F9 /* DZCommon.m */; };
 		F0B2C68A1D10027E00944F5D /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
 		F0B2C68B1D10027E00944F5D /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
@@ -103,8 +103,7 @@
 		F060C59D1B7760C3002F8395 /* DZResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZResponseParser.m; path = "Core/Response Parsers/DZResponseParser.m"; sourceTree = "<group>"; };
 		F060C5A01B776302002F8395 /* DZJSONResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZJSONResponseParser.h; path = "Core/Response Parsers/DZJSONResponseParser.h"; sourceTree = "<group>"; };
 		F060C5A11B776302002F8395 /* DZJSONResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZJSONResponseParser.m; path = "Core/Response Parsers/DZJSONResponseParser.m"; sourceTree = "<group>"; };
-		F0B2C6811D10024C00944F5D /* DZNetworkingMacOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DZNetworkingMacOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F0B2C6831D10024C00944F5D /* DZNetworkingMacOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNetworkingMacOS.h; sourceTree = "<group>"; };
+		F0B2C6811D10024C00944F5D /* DZNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DZNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0B2C6851D10024C00944F5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0B2C6A41D1003F000944F5D /* OMGHTTPURLRQ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OMGHTTPURLRQ.framework; path = Carthage/Build/Mac/OMGHTTPURLRQ.framework; sourceTree = SOURCE_ROOT; };
 		F0B2C6A51D1003F000944F5D /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/Mac/PromiseKit.framework; sourceTree = SOURCE_ROOT; };
@@ -205,7 +204,6 @@
 			children = (
 				F0B2C6A41D1003F000944F5D /* OMGHTTPURLRQ.framework */,
 				F0B2C6A51D1003F000944F5D /* PromiseKit.framework */,
-				F0B2C6831D10024C00944F5D /* DZNetworkingMacOS.h */,
 				F0B2C6851D10024C00944F5D /* Info.plist */,
 			);
 			path = DZNetworkingMacOS;
@@ -227,7 +225,7 @@
 			children = (
 				F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */,
 				F0FC8E5B1B4FB1D300FDA46C /* DZNetworkingTests.xctest */,
-				F0B2C6811D10024C00944F5D /* DZNetworkingMacOS.framework */,
+				F0B2C6811D10024C00944F5D /* DZNetworking.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -300,7 +298,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0B2C6841D10024C00944F5D /* DZNetworkingMacOS.h in Headers */,
 				F0B2C6961D10029800944F5D /* NSDictionary+Extend.h in Headers */,
 				F0B2C6971D10029800944F5D /* NSString+Coders.h in Headers */,
 				F0B2C6911D10029800944F5D /* DZCommon.h in Headers */,
@@ -309,6 +306,7 @@
 				F0B2C69D1D1002BF00944F5D /* DZResponseParser.h in Headers */,
 				F0B2C6991D1002B900944F5D /* DZURLSession.h in Headers */,
 				F0B2C6941D10029800944F5D /* NSString+URLExtended.h in Headers */,
+				F08E7C431E0BA97D0009BE19 /* DZNetworking.h in Headers */,
 				F0B2C69E1D1002BF00944F5D /* DZJSONResponseParser.h in Headers */,
 				F0B2C6981D1002B900944F5D /* DZResponse.h in Headers */,
 				F0B2C6931D10029800944F5D /* DZS3CredentialsManager.h in Headers */,
@@ -357,7 +355,7 @@
 			);
 			name = DZNetworkingMacOS;
 			productName = DZNetworkingMacOS;
-			productReference = F0B2C6811D10024C00944F5D /* DZNetworkingMacOS.framework */;
+			productReference = F0B2C6811D10024C00944F5D /* DZNetworking.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		F0FC8E4F1B4FB1D300FDA46C /* DZNetworking */ = {
@@ -542,7 +540,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
@@ -555,7 +552,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.DZNetworkingMacOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = DZNetworking;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -573,7 +570,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
@@ -583,7 +579,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.DZNetworkingMacOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = DZNetworking;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -701,7 +697,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -734,7 +729,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
