@@ -56,17 +56,11 @@ if(error) DZLog(@"%@", error.localizedDescription);\
     
     [DZS3UploadSession shared].credentialsManager = _manager;
     
-    [[DZS3UploadSession shared] UPLOAD:path publicKey:@"foo" bucket:@"bucket" path:@"/sample.txt" ACL:nil encryption:nil expires:3600 signature:nil]
-    .thenInBackground(^(id responseObject, NSHTTPURLResponse *response, NSURLSessionDataTask *task) {
-        
+    [[DZS3UploadSession shared] UPLOAD:path publicKey:@"foo" bucket:@"bucket" path:@"/sample.txt" ACL:nil encryption:nil expires:3600 success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         [expectation fulfill];
-        
-    })
-    .catch(^(NSError *error) {
-        
+    } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         DZLog(@"%@", error);
-        
-    });
+    }];
     
     waitForExpectation;
     

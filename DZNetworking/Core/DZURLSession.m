@@ -84,198 +84,180 @@
 
 #pragma mark - HTTP Methods
 
-- (DZPromise *)GET:(NSString *)URI
-         parameters:(NSDictionary *)params
+- (void)GET:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [self performRequestWithURI:URI method:@"GET" params:params];
+    return [self performRequestWithURI:URI method:@"GET" params:params success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)POST:(NSString *)URI
-         parameters:(NSDictionary *)params
+- (void)POST:(NSString *)URI
+         parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [self POST:URI queryParams:nil parameters:params];
+    return [self POST:URI queryParams:nil parameters:params success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)POST:(NSString *)URI
+- (void)POST:(NSString *)URI
         queryParams:(NSDictionary *)query
-         parameters:(NSDictionary *)params
+         parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
 
-    return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
-       
-        if(query)
+    if(query)
+    {
+        NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
+        
+        id queryString = OMGFormURLEncode(query);
+        if (queryString)
+            url = [url stringByAppendingFormat:@"?%@", queryString];
+        
+        NSMutableURLRequest *req = [OMGHTTPURLRQ POST:url :params error:nil];
+        
+        if(self.requestModifier)
         {
-            NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
-            
-            id queryString = OMGFormURLEncode(query);
-            if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
-            
-            NSMutableURLRequest *req = [OMGHTTPURLRQ POST:url :params error:nil];
-            
-            if(self.requestModifier)
-            {
-                req = [self.requestModifier(req) mutableCopy];
-            }
-            
-            resolve([self requestWithReq:req]);
-        }
-        else
-        {
-            resolve([self performRequestWithURI:URI method:@"POST" params:params]);
+            req = [self.requestModifier(req) mutableCopy];
         }
         
-    }]
-    .then(^(DZPromise *promise) {
-    
-        return promise;
-    
-    });
+        return [self requestWithReq:req success:successCB error:errorCB];
+    }
+    else
+    {
+        return [self performRequestWithURI:URI method:@"POST" params:params success:successCB error:errorCB];
+    }
     
 }
 
-- (DZPromise *)PUT:(NSString *)URI
-        parameters:(NSDictionary *)params
+- (void)PUT:(NSString *)URI
+        parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [self performRequestWithURI:URI method:@"PUT" params:params];
+    return [self performRequestWithURI:URI method:@"PUT" params:params success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)PUT:(NSString *)URI
+- (void)PUT:(NSString *)URI
        queryParams:(NSDictionary *)query
-        parameters:(NSDictionary *)params
+        parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
+    if(query)
+    {
+        NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
         
-        if(query)
+        id queryString = OMGFormURLEncode(query);
+        if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
+        
+        NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url :params error:nil];
+        
+        if(self.requestModifier)
         {
-            NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
-            
-            id queryString = OMGFormURLEncode(query);
-            if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
-            
-            NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url :params error:nil];
-            
-            if(self.requestModifier)
-            {
-                req = [self.requestModifier(req) mutableCopy];
-            }
-            
-            resolve([self requestWithReq:req.copy]);
-        }
-        else
-        {
-            resolve([self performRequestWithURI:URI method:@"PUT" params:params]);
+            req = [self.requestModifier(req) mutableCopy];
         }
         
-    }]
-    .then(^(DZPromise *promise) {
-        
-        return promise;
-        
-    });
+        return [self requestWithReq:req.copy success:successCB error:errorCB];
+    }
+    else
+    {
+        return [self performRequestWithURI:URI method:@"PUT" params:params success:successCB error:errorCB];
+    }
     
 }
 
-- (DZPromise *)PATCH:(NSString *)URI
-          parameters:(NSDictionary *)params
+- (void)PATCH:(NSString *)URI
+          parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [self performRequestWithURI:URI method:@"PATCH" params:params];
+    return [self performRequestWithURI:URI method:@"PATCH" params:params success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)DELETE:(NSString *)URI
-           parameters:(NSDictionary *)params
+- (void)DELETE:(NSString *)URI
+           parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [self performRequestWithURI:URI method:@"DELETE" params:params];
+    return [self performRequestWithURI:URI method:@"DELETE" params:params success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)HEAD:(NSString *)URI
-         parameters:(NSDictionary *)params
+- (void)HEAD:(NSString *)URI
+         parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [self performRequestWithURI:URI method:@"HEAD" params:params];
+    return [self performRequestWithURI:URI method:@"HEAD" params:params success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)OPTIONS:(NSString *)URI
-            parameters:(NSDictionary *)params
+- (void)OPTIONS:(NSString *)URI
+            parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [self performRequestWithURI:URI method:@"OPTIONS" params:params];
+    return [self performRequestWithURI:URI method:@"OPTIONS" params:params success:successCB error:errorCB];
     
 }
 
 #pragma mark - 
 
-- (DZPromise *)GET:(NSURLRequest *)req
+- (void)GET:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"GET" onRequest:req];
     
-    return [self requestWithReq:req];
+    return [self requestWithReq:req success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)PUT:(NSURLRequest *)req
+- (void)PUT:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"PUT" onRequest:req];
     
-    return [self requestWithReq:req];
+    return [self requestWithReq:req success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)POST:(NSURLRequest *)req
+- (void)POST:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"POST" onRequest:req];
     
-    return [self requestWithReq:req];
+    return [self requestWithReq:req success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)PATCH:(NSURLRequest *)req
+- (void)PATCH:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"PATCH" onRequest:req];
     
-    return [self requestWithReq:req];
+    return [self requestWithReq:req success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)DELETE:(NSURLRequest *)req
+- (void)DELETE:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"DELETE" onRequest:req];
     
-    return [self requestWithReq:req];
+    return [self requestWithReq:req success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)OPTIONS:(NSURLRequest *)req
+- (void)OPTIONS:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"OPTIONS" onRequest:req];
     
-    return [self requestWithReq:req];
+    return [self requestWithReq:req success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)HEAD:(NSURLRequest *)req
+- (void)HEAD:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"HEAD" onRequest:req];
     
-    return [self requestWithReq:req];
+    return [self requestWithReq:req success:successCB error:errorCB];
     
 }
 
@@ -299,143 +281,130 @@
     
 }
 
-- (DZPromise *)requestWithURI:(NSString *)URI
+- (NSURLRequest *)requestWithURI:(NSString *)URI
                        method:(NSString *)method
                        params:(NSDictionary *)params
 {
     
-    return [AnyPromise promiseWithResolverBlock:^(PMKResolver resolve) {
+    NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
+    
+    NSMutableURLRequest *mutableRequest;
+    
+    if([method isEqualToString:@"GET"])
+    {
+        mutableRequest = [OMGHTTPURLRQ GET:url :params error:nil];
+    }
+    else if([method isEqualToString:@"POST"])
+    {
+        mutableRequest = [OMGHTTPURLRQ POST:url :params error:nil];
+    }
+    else if([method isEqualToString:@"PUT"])
+    {
+        mutableRequest = [OMGHTTPURLRQ PUT:url :params error:nil];
+    }
+    else if([method isEqualToString:@"DELETE"])
+    {
+        mutableRequest = [OMGHTTPURLRQ DELETE:url :params error:nil];
+    }
+    else
+    {
+        mutableRequest = [OMGHTTPURLRQ GET:url :params error:nil];
+        mutableRequest.HTTPMethod = method;
+    }
+    
+    NSURLRequest *request = mutableRequest.copy;
+    
+    if(self.requestModifier)
+    {
         
-        NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
+        request = self.requestModifier(request);
         
-        NSMutableURLRequest *mutableRequest;
-        
-        if([method isEqualToString:@"GET"])
-        {
-            mutableRequest = [OMGHTTPURLRQ GET:url :params error:nil];
-        }
-        else if([method isEqualToString:@"POST"])
-        {
-            mutableRequest = [OMGHTTPURLRQ POST:url :params error:nil];
-        }
-        else if([method isEqualToString:@"PUT"])
-        {
-            mutableRequest = [OMGHTTPURLRQ PUT:url :params error:nil];
-        }
-        else if([method isEqualToString:@"DELETE"])
-        {
-            mutableRequest = [OMGHTTPURLRQ DELETE:url :params error:nil];
-        }
-        else
-        {
-            mutableRequest = [OMGHTTPURLRQ GET:url :params error:nil];
-            mutableRequest.HTTPMethod = method;
-        }
-        
-        NSURLRequest *request = mutableRequest.copy;
-        
-        if(self.requestModifier)
+        if(!request)
         {
             
-            request = self.requestModifier(request);
+            NSError *modifierError = [[NSError alloc] initWithDomain:DZErrorDomain code:DZUnusableRequestError userInfo:nil];
             
-            if(!request)
-            {
-                
-                NSError *modifierError = [[NSError alloc] initWithDomain:DZErrorDomain code:DZUnusableRequestError userInfo:nil];
-                
-                resolve(modifierError);
-                
-                return;
-                
-            }
+            @throw modifierError;
             
         }
         
-        resolve(request);
-        
-    }];
+    }
+    
+    return request;
     
 }
 
-- (DZPromise *)performRequestWithURI:(NSString *)URI
+- (void)performRequestWithURI:(NSString *)URI
                               method:(NSString *)method
-                              params:(NSDictionary *)params
+                              params:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [self requestWithURI:URI method:method params:params]
-    .then(^(NSURLRequest *request) {
-        
-        return [self requestWithReq:request];
-        
-    });
+    NSURLRequest *req = [self requestWithURI:URI method:method params:params];
     
+    [self requestWithReq:req success:successCB error:errorCB];
 }
 
-- (DZPromise *)requestWithReq:(NSURLRequest *)request
+- (void)requestWithReq:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB
 {
-    
-    return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
-        
-        __block NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    __block NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 #ifndef DZAPPKIT
-            // we simply decrement it. No harm, since we ensure the value never drops below 0.
-            [[DZActivityIndicatorManager shared] decrementCount];
+        // we simply decrement it. No harm, since we ensure the value never drops below 0.
+        [[DZActivityIndicatorManager shared] decrementCount];
 #endif
-            if(error)
-            {
-                resolve(error);
-                return;
-            }
-            
-            NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
-            
-            NSError *parsingError;
-            id responseObject = [self.responseParser parseResponse:data :res error:&parsingError];
-            
-            if(res.statusCode > self.maximumSuccessStatusCode)
-            {
-                
-                // Treat this as an error.
-                
-                NSDictionary *userInfo = @{DZErrorData : data ?: [NSData data],
-                                           DZErrorResponse : responseObject ?: @{},
-                                           DZErrorTask : task};
-                
-                NSError *error = [NSError errorWithDomain:DZErrorDomain code:res.statusCode userInfo:userInfo];
-                
-                resolve(error);
-                return;
-                
-            }
-            
-            if(res.statusCode == 200 && !responseObject)
-            {
-                // our request succeeded but returned no data. Treat valid.
-                DZResponse *obj = [[DZResponse alloc] initWithData:responseObject?:data :res :task];
-                
-                resolve(obj);
-                return;
-            }
-            
-            if(parsingError)
-            {
-                resolve(parsingError);
-                return;
-            }
-            
-            DZResponse *obj = [[DZResponse alloc] initWithData:responseObject :res :task];
-            
-            resolve(obj);
-            
-        }];
         
-        [task resume];
-#ifndef DZAPPKIT
-        if(self.useActivityManager) [[DZActivityIndicatorManager shared] incrementCount];
-#endif
+        NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
+        
+        if(error)
+        {
+            if (errorCB)
+                errorCB(error, res, task);
+            return;
+        }
+        
+        NSError *parsingError;
+        id responseObject = [self.responseParser parseResponse:data :res error:&parsingError];
+        
+        if(res.statusCode > self.maximumSuccessStatusCode)
+        {
+            
+            // Treat this as an error.
+            
+            NSDictionary *userInfo = @{DZErrorData : data ?: [NSData data],
+                                       DZErrorResponse : responseObject ?: @{},
+                                       DZErrorTask : task};
+            
+            error = [NSError errorWithDomain:DZErrorDomain code:res.statusCode userInfo:userInfo];
+            
+            if (errorCB)
+                errorCB(error, res, task);
+            return;
+            
+        }
+        
+        if(res.statusCode == 200 && !responseObject)
+        {
+            // our request succeeded but returned no data. Treat valid.
+            if (successCB)
+                successCB(responseObject ?: data, res, task);
+            return;
+        }
+        
+        if (parsingError) {
+            if (errorCB)
+                errorCB(parsingError, res, task);
+            return;
+        }
+        
+        if (successCB)
+            successCB(responseObject, res, task);
+        return;
+        
     }];
-
+    
+    [task resume];
+#ifndef DZAPPKIT
+    if(self.useActivityManager) [[DZActivityIndicatorManager shared] incrementCount];
+#endif
 }
 
 #pragma mark - NSURLSessionDelegate

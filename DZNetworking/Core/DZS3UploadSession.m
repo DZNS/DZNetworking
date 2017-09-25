@@ -64,14 +64,15 @@
     
 }
 
-- (DZPromise *)UPLOAD:(NSString *)filePath
+- (void)UPLOAD:(NSString *)filePath
             publicKey:(NSString *)key
                bucket:(NSString *)bucket
                  path:(NSString *)path
                   ACL:(NSString *)ACL
            encryption:(NSString *)encryption
               expires:(NSTimeInterval)expiry
-            signature:(DZPromise *)signaturePromise
+              success:(successBlock)successCB
+                error:(errorBlock)errorCB
 {
     
     NSData *data = [[NSData alloc] initWithContentsOfFile:filePath];
@@ -84,48 +85,37 @@
     NSDate *date = [NSDate date];
     NSString *expires = [formatter stringFromDate:date];
     
-    return signaturePromise ?: [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
-        
-        if(!self.credentialsManager)
-        {
-            NSError *error = [NSError errorWithDomain:@"DZError" code:0 userInfo:kNilOptions];
-            resolve(error);
-            return;
-        }
-        
-        resolve([self.credentialsManager authorizationWithMethod:@"PUT"
-                                                          bucket:bucket
-                                                            path:path
-                                                         content:data
-                                                             ACL:ACL
-                                                      encryption:encryption
-                                                     contentType:contentType
-                                                         expires:expires]);
-        
-    }]
-    .then(^(NSString *authorizationHeader) {
-        
-        NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://s3.amazonaws.com/%@%@", bucket, path]];
-        
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-        
-        [request setValue:authorizationHeader forHTTPHeaderField:@"Authorization"];
-        [request setValue:ACL forHTTPHeaderField:@"X-Amz-Acl"];
-        [request setValue:encryption forHTTPHeaderField:@"X-amz-server-side-encryption"];
-        [request setValue:@"s3.amazonaws.com" forHTTPHeaderField:@"Host"];
-        [request setValue:expires forHTTPHeaderField:@"Date"];
-        [request setValue:[@([data length]) stringValue] forHTTPHeaderField:@"Content-Length"];
-        [request setHTTPBody:data];
-        [request setHTTPMethod:@"PUT"];
-        
-        return request.copy;
-        
-    })
-    .then(^(NSURLRequest *request) {
-        
-        return [self.session PUT:request];
-        
-    });
+    if(!self.credentialsManager)
+    {
+        NSError *error = [NSError errorWithDomain:@"DZError" code:0 userInfo:@{}];
+        if (errorCB)
+            errorCB(error, nil, nil);
+        return;
+    }
+    
+    NSString *authorizationHeader = [self.credentialsManager authorizationWithMethod:@"PUT"
+                                                                              bucket:bucket
+                                                                                path:path
+                                                                             content:data
+                                                                                 ACL:ACL
+                                                                          encryption:encryption
+                                                                         contentType:contentType
+                                                                             expires:expires];
+    
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://s3.amazonaws.com/%@%@", bucket, path]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    
+    [request setValue:authorizationHeader forHTTPHeaderField:@"Authorization"];
+    [request setValue:ACL forHTTPHeaderField:@"X-Amz-Acl"];
+    [request setValue:encryption forHTTPHeaderField:@"X-amz-server-side-encryption"];
+    [request setValue:@"s3.amazonaws.com" forHTTPHeaderField:@"Host"];
+    [request setValue:expires forHTTPHeaderField:@"Date"];
+    [request setValue:[@([data length]) stringValue] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:data];
+    [request setHTTPMethod:@"PUT"];
+    
+    [self.session PUT:request.copy success:successCB error:errorCB];
     
 }
 

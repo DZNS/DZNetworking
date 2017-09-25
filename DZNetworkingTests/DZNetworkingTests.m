@@ -78,22 +78,13 @@
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET:/post/1"];
     
-    [_session GET:@"/posts/1" parameters:nil]
-    .thenInBackground(^(DZResponse *responded) {
-        
-        NSURLSessionTask *task = responded.task;
-        
-        if([task.response.URL.absoluteString containsString:extraQueryParams])
-        {
+    [_session GET:@"/posts/1" parameters:nil success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+        if ([task.response.URL.absoluteString containsString:extraQueryParams]) {
             [expectation fulfill];
         }
-        
-    })
-    .catch(^(NSError *error) {
-        
+    } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         DZLog(@"%@", error.localizedDescription);
-        
-    });
+    }];
     
     waitForExpectation;
     
@@ -104,11 +95,7 @@
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET:/post/1"];
     
-    [_session GET:@"/posts/1" parameters:nil]
-    .thenInBackground(^(DZResponse *responded) {
-        
-        id responseObject = responded.responseObject;
-        
+    [_session GET:@"/posts/1" parameters:nil success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         if(responseObject &&
            [responseObject isKindOfClass:[NSDictionary class]])
         {
@@ -121,11 +108,9 @@
             }
             
         }
-        
-    })
-    .catch(^(NSError *error) {
+    } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         DZLog(@"%@", error.localizedDescription);
-    });
+    }];
     
     waitForExpectation;
     
@@ -140,32 +125,24 @@
                                           @"title": @"foo",
                                           @"body": @"bar",
                                           @"userId" : @1
-                                          }]
-    .thenInBackground(^(DZResponse *responded) {
-        
-        id responseObject = responded.responseObject;
-        
-        if(responseObject &&
-           [responseObject isKindOfClass:[NSDictionary class]])
-        {
-            
-            id userId = [responseObject valueForKey:@"userId"];
-            
-            DZLog(@"Created post with ID: %@", [responseObject valueForKey:@"id"]);
-            
-            if(userId && [userId integerValue] == 1)
-            {
-                [expectation fulfill];
-            }
-            
-        }
-        
-    })
-    .catch(^(NSError *error) {
-        
-        DZLog(@"%@", error.localizedDescription);
-        
-    });
+                                          } success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+                                              if(responseObject &&
+                                                 [responseObject isKindOfClass:[NSDictionary class]])
+                                              {
+                                                  
+                                                  id userId = [responseObject valueForKey:@"userId"];
+                                                  
+                                                  DZLog(@"Created post with ID: %@", [responseObject valueForKey:@"id"]);
+                                                  
+                                                  if(userId && [userId integerValue] == 1)
+                                                  {
+                                                      [expectation fulfill];
+                                                  }
+                                                  
+                                              }
+                                          } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+                                              DZLog(@"%@", error.localizedDescription);
+                                          }];
     
     waitForExpectation;
     
@@ -181,32 +158,24 @@
                      @"title": @"foo",
                      @"body": @"bar",
                      @"userId" : @1
-                     }]
-    .thenInBackground(^(DZResponse *responded) {
-        
-        id responseObject = responded.responseObject;
-        
-        if(responseObject &&
-           [responseObject isKindOfClass:[NSDictionary class]])
-        {
-            
-            id userId = [responseObject valueForKey:@"userId"];
-            
-            DZLog(@"Created post with ID: %@", [responseObject valueForKey:@"id"]);
-            
-            if(userId && [userId integerValue] == 1)
-            {
-                [expectation fulfill];
-            }
-            
-        }
-        
-    })
-    .catch(^(NSError *error) {
-        
-        DZLog(@"%@", error.localizedDescription);
-        
-    });
+                     } success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+                         if(responseObject &&
+                            [responseObject isKindOfClass:[NSDictionary class]])
+                         {
+                             
+                             id userId = [responseObject valueForKey:@"userId"];
+                             
+                             DZLog(@"Created post with ID: %@", [responseObject valueForKey:@"id"]);
+                             
+                             if(userId && [userId integerValue] == 1)
+                             {
+                                 [expectation fulfill];
+                             }
+                             
+                         }
+                     } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+                         DZLog(@"%@", error.localizedDescription);
+                     }];
     
     waitForExpectation;
 
@@ -223,26 +192,17 @@
                                            @"body": @"bar",
                                            @"userId" : @1,
                                            @"id" : @1
-                                           }]
-    .thenInBackground(^(DZResponse *responded) {
-        
-        id responseObject = responded.responseObject;
-        
-        if(responseObject &&
-           [responseObject isKindOfClass:[NSDictionary class]])
-        {
-         
-            [expectation fulfill];
-            
-        }
-        
-    })
-    .catch(^(NSError *error) {
-        
-        DZLog(@"%@", error.localizedDescription);
-        
-    });
-    
+                                           } success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+                                               if(responseObject &&
+                                                  [responseObject isKindOfClass:[NSDictionary class]])
+                                               {
+                                                   
+                                                   [expectation fulfill];
+                                                   
+                                               }
+                                           } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+                                               DZLog(@"%@", error.localizedDescription);
+                                           }];
     waitForExpectation;
     
 }
@@ -259,29 +219,19 @@
                     @"body": @"bar",
                     @"userId" : @1,
                     @"id" : @1
-                    }]
-    .thenInBackground(^(DZResponse *responded) {
-        
-        id responseObject = responded.responseObject;
-        
-        if(responseObject &&
-           [responseObject isKindOfClass:[NSDictionary class]])
-        {
-            
-            [expectation fulfill];
-            
-        }
-        
-    })
-    .catch(^(NSError *error) {
-        
-        DZLog(@"%@", error.localizedDescription);
-        
-    });
+                    } success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+                        if(responseObject &&
+                           [responseObject isKindOfClass:[NSDictionary class]])
+                        {
+                            
+                            [expectation fulfill];
+                            
+                        }
+                    } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+                        DZLog(@"%@", error.localizedDescription);
+                    }];
     
     waitForExpectation;
-
-    
 }
 
 - (void)testPATCH
@@ -291,25 +241,17 @@
     
     [_session PUT:@"/posts/1"
       queryParams:@{@"foo" : @"bar"}
-       parameters:@{@"title": @"foo"}]
-    .thenInBackground(^(DZResponse *responded) {
-        
-        id responseObject = responded.responseObject;
-        
-        if(responseObject &&
-           [responseObject isKindOfClass:[NSDictionary class]])
-        {
-            
-            [expectation fulfill];
-            
-        }
-        
-    })
-    .catch(^(NSError *error) {
-        
-        DZLog(@"%@", error.localizedDescription);
-        
-    });
+       parameters:@{@"title": @"foo"} success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+           if(responseObject &&
+              [responseObject isKindOfClass:[NSDictionary class]])
+           {
+               
+               [expectation fulfill];
+               
+           }
+       } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+           DZLog(@"%@", error.localizedDescription);
+       }];
     
     waitForExpectation;
     
@@ -320,22 +262,14 @@
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"DELETE:/posts/1"];
     
-    [_session DELETE:@"/posts/1" parameters:nil]
-    .thenInBackground(^(DZResponse *responded) {
-        
-        NSHTTPURLResponse *response = responded.response;
-        
+    [_session DELETE:@"/posts/1" parameters:nil success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         if(response.statusCode <= 204)
         {
             [expectation fulfill];
         }
-        
-    })
-    .catch(^(NSError *error) {
-        
+    } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         DZLog(@"%@", error.localizedDescription);
-        
-    });
+    }];
     
     waitForExpectation;
     

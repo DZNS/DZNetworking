@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 #import <DZNetworking/DZURLSessionProtocol.h>
-#import <PromiseKit/PromiseKit.h>
 #import <OMGHTTPURLRQ/OMGHTTPURLRQ.h>
 #import <DZNetworking/DZResponse.h>
 #import <DZNetworking/NSString+URLExtended.h>
@@ -33,3 +32,7 @@ extern NSString *const DZErrorData;
 extern NSString *const DZErrorResponse;
 extern NSString *const DZErrorTask;
 extern NSInteger const DZUnusableRequestError;
+
+typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
+typedef void (^successBlock)(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task);
+typedef void (^errorBlock)(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task);

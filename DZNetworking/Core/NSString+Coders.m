@@ -12,20 +12,21 @@
 
 - (NSString *_Nonnull)encodeURI
 {
-    return CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                     (__bridge CFStringRef)self,
-                                                                     NULL,
-                                                                     CFSTR("!*'();:@&=+$,/?%#[]"),
-                                                                     kCFStringEncodingUTF8));
+    return [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"!*'();:@&=+$,/?%#[]"]];
+//    return CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+//                                                                     (__bridge CFStringRef)self,
+//                                                                     NULL,
+//                                                                     CFSTR("!*'();:@&=+$,/?%#[]"),
+//                                                                     kCFStringEncodingUTF8));
 }
 
 - (NSString *_Nonnull)decodeURI
 {
-    
-    return (__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL,
-                                                                                                 (__bridge CFStringRef)self,
-                                                                                                 CFSTR(""),
-                                                                                                 kCFStringEncodingUTF8);
+    return [self stringByRemovingPercentEncoding];
+//    return (__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL,
+//                                                                                                 (__bridge CFStringRef)self,
+//                                                                                                 CFSTR(""),
+//                                                                                                 kCFStringEncodingUTF8);
     
 }
 

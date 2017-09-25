@@ -73,84 +73,69 @@
     
 }
 
-- (DZPromise *)UPLOAD:(NSString *)path
+- (void)UPLOAD:(NSString *)path
             fieldName:(NSString *)fieldName
                   URL:(NSString *)URL
-           parameters:(NSDictionary *)params
+           parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
-        
-        NSString *contentType = [[self class] mimeTypeForFileAtPath:path];
-        
-        OMGMultipartFormData *processed = [[OMGMultipartFormData alloc] init];
-        
-        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-        
-        [processed addFile:data parameterName:fieldName filename:[path lastPathComponent] contentType:contentType];
-        
-        if(params)
-        {
-            [processed addParameters:params];
-        }
-        
-        NSMutableURLRequest *request = [OMGHTTPURLRQ POST:URL :processed error:nil];
-        
-        resolve(request);
-        
-    }]
-    .then(^(NSURLRequest *request) {
-     
-        return [self.session POST:request];
-        
-    });
+    NSString *contentType = [[self class] mimeTypeForFileAtPath:path];
+    
+    OMGMultipartFormData *processed = [[OMGMultipartFormData alloc] init];
+    
+    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+    
+    [processed addFile:data parameterName:fieldName filename:[path lastPathComponent] contentType:contentType];
+    
+    if(params)
+    {
+        [processed addParameters:params];
+    }
+    
+    NSMutableURLRequest *request = [OMGHTTPURLRQ POST:URL :processed error:nil];
+    
+    [self.session POST:request success:successCB error:errorCB];
     
 }
 
-- (DZPromise *)UPLOAD:(NSData *)data
+- (void)UPLOAD:(NSData *)data
                  name:(NSString *)name
             fieldName:(NSString *)fieldName
                   URL:(NSString *)URL
-           parameters:(NSDictionary *)params
+           parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    return [DZPromise promiseWithResolverBlock:^(PMKResolver resolve) {
-       
-        //create a temporary file from the data.
-        NSFileManager *fileManager = [NSFileManager defaultManager];
+    //create a temporary file from the data.
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+    
+    if([fileManager fileExistsAtPath:path])
+    {
         
-        NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+        NSError *error = nil;
         
-        if([fileManager fileExistsAtPath:path])
+        if(![fileManager removeItemAtPath:path error:&error])
         {
-            
-            NSError *error = nil;
-            
-            if(![fileManager removeItemAtPath:path error:&error])
-            {
-                resolve(error);
-                return;
-            }
-            
-        }
-        
-        if(![data writeToFile:path atomically:YES])
-        {
-            
-            NSError *error = [NSError errorWithDomain:DZErrorDomain code:2000 userInfo:nil];
-            resolve(error);
+           if (errorCB)
+               errorCB(error, nil, nil);
             return;
-            
         }
         
-        resolve(path);
+    }
+    
+    if(![data writeToFile:path atomically:YES])
+    {
         
-    }]
-    .then(^(NSString *path) {
+        NSError *error = [NSError errorWithDomain:DZErrorDomain code:2000 userInfo:nil];
+        if (errorCB)
+            errorCB(error, nil, nil);
+        return;
         
-        return [self UPLOAD:path fieldName:fieldName URL:URL parameters:params];
-        
-    });
+    }
+    
+    
+    [self UPLOAD:path fieldName:fieldName URL:URL parameters:params success:successCB error:errorCB];
     
 }
 

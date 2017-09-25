@@ -38,13 +38,14 @@
 
 + (DZS3UploadSession *)shared;
 
-- (DZPromise *)UPLOAD:(NSString *)filePath
-            publicKey:(NSString *)key
-               bucket:(NSString *)bucket
-                 path:(NSString *)path
-                  ACL:(NSString *)ACL
-           encryption:(NSString *)encryption
-              expires:(NSTimeInterval)expiry
-            signature:(DZPromise *)signaturePromise;
+- (void)UPLOAD:(NSString *)filePath
+     publicKey:(NSString *)key
+        bucket:(NSString *)bucket
+          path:(NSString *)path
+           ACL:(NSString *)ACL
+    encryption:(NSString *)encryption
+       expires:(NSTimeInterval)expiry
+       success:(successBlock)successCB
+         error:(errorBlock)errorCB;
 
 @end

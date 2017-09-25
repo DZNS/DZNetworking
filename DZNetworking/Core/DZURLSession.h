@@ -32,8 +32,6 @@
 #import <DZNetworking/DZCommon.h>
 #import <DZNetworking/DZResponseParser.h>
 
-typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
-
 /**
  *  The base class for all REST API networking. This class should satisfy all your REST API networking requirements. If you believe we've missed something, or perhaps something needs fixing, please open an issue/pull request on github: https://github.com/dzns/DZNetworking
  */
@@ -93,8 +91,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *
  *  @return DZPromise
  */
-- (DZPromise *)GET:(NSString *)URI
-         parameters:(NSDictionary *)params;
+- (void)GET:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a POST request
@@ -104,8 +101,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *
  *  @return DZPromise
  */
-- (DZPromise *)POST:(NSString *)URI
-         parameters:(NSDictionary *)params;
+- (void)POST:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a POST request
@@ -116,9 +112,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *
  *  @return DZPromise
  */
-- (DZPromise *)POST:(NSString *)URI
-        queryParams:(NSDictionary *)query
-         parameters:(NSDictionary *)params;
+- (void)POST:(NSString *)URI queryParams:(NSDictionary *)query parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a PUT request
@@ -128,8 +122,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *
  *  @return DZPromise
  */
-- (DZPromise *)PUT:(NSString *)URI
-        parameters:(NSDictionary *)params;
+- (void)PUT:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a PUT request
@@ -140,9 +133,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *
  *  @return DZPromise
  */
-- (DZPromise *)PUT:(NSString *)URI
-       queryParams:(NSDictionary *)query
-        parameters:(NSDictionary *)params;
+- (void)PUT:(NSString *)URI queryParams:(NSDictionary *)query parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a PATCH request
@@ -152,8 +143,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *
  *  @return DZPromise
  */
-- (DZPromise *)PATCH:(NSString *)URI
-          parameters:(NSDictionary *)params;
+- (void)PATCH:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a DELETE request. The response for such requests may not include a responseObject from the server. Check for the statusCode on the response object instead.
@@ -163,8 +153,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *
  *  @return DZPromise
  */
-- (DZPromise *)DELETE:(NSString *)URI
-           parameters:(NSDictionary *)params;
+- (void)DELETE:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a HEAD request.
@@ -175,8 +164,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *  @discussion The response for such requests does not include a responseObject from the server. Check the response object for the desired information.
  *  @return DZPromise
  */
-- (DZPromise *)HEAD:(NSString *)URI
-         parameters:(NSDictionary *)params;
+- (void)HEAD:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 
 /**
@@ -188,8 +176,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *  @discussion The response for such requests may not include a responseObject from the server. Check the response object for the desired information.
  *  @return DZPromise
  */
-- (DZPromise *)OPTIONS:(NSString *)URI
-            parameters:(NSDictionary *)params;
+- (void)OPTIONS:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 #pragma mark - 
 
@@ -200,11 +187,9 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *  @param method The HTTP request method to be used for the request.
  *  @param params For PUT, POST, PATCH and DELETE requests, the params will be set on the HTTPBody. For all other request types, the parameters will be set on the query.
  *
- *  @return DZPromise (resolves to NSURLRequest if it succeeds)
+ *  @return NSURLRequest
  */
-- (DZPromise *)requestWithURI:(NSString *)URI
-                       method:(NSString *)method
-                       params:(NSDictionary *)params;
+- (NSURLRequest *)requestWithURI:(NSString *)URI method:(NSString *)method params:(NSDictionary *)params;
 
 /**
  *  Build an NSURLRequest using requestWithURI:method:params and then trigger that request.
@@ -215,9 +200,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *
  *  @return DZPromise (resolves to DZResponse if it succeeds)
  */
-- (DZPromise *)performRequestWithURI:(NSString *)URI
-                              method:(NSString *)method
-                              params:(NSDictionary *)params;
+- (void)performRequestWithURI:(NSString *)URI method:(NSString *)method params:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Triggers network request with the provided NSURLRequest. This method is the final method that gets called from most of the above methods. You should never have to call this method directly, but if you need to, ensure your parameters are correctly encoded and the required HTTPMethod is set.
@@ -226,7 +209,7 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
  *
  *  @return DZPromise (resolves to DZResponse if it succeeds)
  */
-- (DZPromise *)requestWithReq:(NSURLRequest *)request;
+- (void)requestWithReq:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB;
 
 #pragma mark - 
 
@@ -237,12 +220,12 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
 // The following methods will however:
 // 1. Correctly set the HTTPMethod for you incase it is incorrect.
 
-- (DZPromise *)GET:(NSURLRequest *)req;
-- (DZPromise *)PUT:(NSURLRequest *)req;
-- (DZPromise *)POST:(NSURLRequest *)req;
-- (DZPromise *)PATCH:(NSURLRequest *)req;
-- (DZPromise *)DELETE:(NSURLRequest *)req;
-- (DZPromise *)OPTIONS:(NSURLRequest *)req;
-- (DZPromise *)HEAD:(NSURLRequest *)req;
+- (void)GET:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (void)PUT:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (void)POST:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (void)PATCH:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (void)DELETE:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (void)OPTIONS:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (void)HEAD:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
 
 @end

@@ -61,17 +61,11 @@
         return;
     }
     
-    [_session UPLOAD:path fieldName:@"file" URL:URL parameters:nil]
-    .thenInBackground(^(DZResponse *responded) {
-        
+    [_session UPLOAD:path fieldName:@"file" URL:URL parameters:nil success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         [expectation fulfill];
-        
-    })
-    .catch(^(NSError *error) {
-        
+    } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         DZLog(@"%@", error.localizedDescription);
-        
-    });
+    }];
     
     waitForExpectation;
     
@@ -90,17 +84,11 @@
     NSString *str = @"This is some text";
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     
-    [_session UPLOAD:data name:@"sample.txt" fieldName:@"file" URL:URL parameters:nil]
-    .thenInBackground(^(DZResponse *responded) {
-        
+    [_session UPLOAD:data name:@"sample.txt" fieldName:@"file" URL:URL parameters:nil success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         [expectation fulfill];
-        
-    })
-    .catch(^(NSError *error) {
-        
+    } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         DZLog(@"%@", error.localizedDescription);
-        
-    });
+    }];
     
     waitForExpectation;
     

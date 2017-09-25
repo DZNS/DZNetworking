@@ -76,7 +76,7 @@
  *
  *  @return The signing key. (this could be contextual)
  */
--(NSString *_Nonnull)signingKey;
+- (NSString *_Nonnull)signingKey;
 
 #pragma mark -
 
@@ -85,10 +85,9 @@
                                       baseURL:(NSURL *_Nonnull)baseURL;
 
 
-- (DZPromise * _Nonnull)beginAuthWithAdditionParams:(NSDictionary *_Nullable)params;
+- (void)beginAuthWithAdditionParams:(NSDictionary *_Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
-- (DZPromise * _Nonnull)finishAuthWithToken:(NSString * _Nonnull)token
-                                   verifier:(NSString * _Nonnull)verifier;
+- (void)finishAuthWithToken:(NSString * _Nonnull)token verifier:(NSString * _Nonnull)verifier success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 #pragma mark - HTTP
 
@@ -105,8 +104,7 @@
  *
  *  @return DZPromise
  */
-- (DZPromise * _Nonnull)GET:(NSString * _Nonnull)URI
-        parameters:(NSDictionary * _Nullable)params;
+- (void)GET:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a POST request
@@ -116,8 +114,7 @@
  *
  *  @return DZPromise
  */
-- (DZPromise * _Nonnull)POST:(NSString * _Nonnull)URI
-         parameters:(NSDictionary * _Nullable)params;
+- (void)POST:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a POST request
@@ -128,9 +125,7 @@
  *
  *  @return DZPromise
  */
-- (DZPromise * _Nonnull)POST:(NSString * _Nonnull)URI
-        queryParams:(NSDictionary * _Nullable)query
-         parameters:(NSDictionary * _Nullable)params;
+- (void)POST:(NSString * _Nonnull)URI queryParams:(NSDictionary * _Nullable)query parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a PUT request
@@ -140,8 +135,7 @@
  *
  *  @return DZPromise
  */
-- (DZPromise * _Nonnull)PUT:(NSString * _Nonnull)URI
-        parameters:(NSDictionary * _Nullable)params;
+- (void)PUT:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a PUT request
@@ -152,9 +146,7 @@
  *
  *  @return DZPromise
  */
-- (DZPromise * _Nonnull)PUT:(NSString * _Nonnull)URI
-       queryParams:(NSDictionary * _Nullable)query
-        parameters:(NSDictionary * _Nullable)params;
+- (void)PUT:(NSString * _Nonnull)URI queryParams:(NSDictionary * _Nullable)query parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a PATCH request
@@ -164,8 +156,7 @@
  *
  *  @return DZPromise
  */
-- (DZPromise * _Nonnull)PATCH:(NSString * _Nonnull)URI
-          parameters:(NSDictionary * _Nullable)params;
+- (void)PATCH:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a DELETE request. The response for such requests may not include a responseObject from the server. Check for the statusCode on the response object instead.
@@ -175,8 +166,7 @@
  *
  *  @return DZPromise
  */
-- (DZPromise * _Nonnull)DELETE:(NSString * _Nonnull)URI
-           parameters:(NSDictionary * _Nullable)params;
+- (void)DELETE:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a HEAD request.
@@ -187,8 +177,7 @@
  *  @discussion The response for such requests does not include a responseObject from the server. Check the response object for the desired information.
  *  @return DZPromise
  */
-- (DZPromise * _Nonnull)HEAD:(NSString * _Nonnull)URI
-         parameters:(NSDictionary * _Nullable)params;
+- (void)HEAD:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 
 /**
@@ -200,8 +189,7 @@
  *  @discussion The response for such requests may not include a responseObject from the server. Check the response object for the desired information.
  *  @return DZPromise
  */
-- (DZPromise * _Nonnull)OPTIONS:(NSString * _Nonnull)URI
-            parameters:(NSDictionary * _Nonnull)params;
+- (void)OPTIONS:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nonnull)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 
 #pragma mark - Internal Methods

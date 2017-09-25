@@ -47,10 +47,10 @@
  *
  *  @return DZPromise.
  */
-- (DZPromise *)UPLOAD:(NSString *)filePath
+- (void)UPLOAD:(NSString *)filePath
             fieldName:(NSString *)fieldName
                   URL:(NSString *)URL
-           parameters:(NSDictionary *)params;
+           parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Upload a file with the provided data and mime-type.
@@ -63,11 +63,11 @@
  *
  *  @return DZPromise.
  */
-- (DZPromise *)UPLOAD:(NSData *)data
+- (void)UPLOAD:(NSData *)data
                  name:(NSString *)name
             fieldName:(NSString *)fieldName
                   URL:(NSString *)URL
-           parameters:(NSDictionary *)params;
+           parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 #pragma mark - Internal
 

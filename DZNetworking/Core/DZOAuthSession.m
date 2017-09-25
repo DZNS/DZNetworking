@@ -75,19 +75,25 @@
     
 }
 
-- (DZPromise *)beginAuthWithAdditionParams:(NSDictionary *_Nullable)params
+- (void)beginAuthWithAdditionParams:(NSDictionary *_Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
     if(!self.requestTokenURL)
     {
         // ToDo: provide better info in the error.
-        return [DZPromise promiseWithValue:[NSError errorWithDomain:@"com.dzoauth" code:-1 userInfo:@{}]];
-        
+        if (errorCB) {
+            NSError *error = [NSError errorWithDomain:@"com.dzoauth" code:-1 userInfo:@{}];
+            errorCB(error, nil, nil);
+        }
+            
+        return;
     }
     
-    if(!params) params = @{};
+    if(!params)
+        params = @{};
     
-    if(self.oAuthCallback) params = [params dz_extend:@{@"oauth_callback" : [self.oAuthCallback encodeURI]}];
+    if(self.oAuthCallback)
+        params = [params dz_extend:@{@"oauth_callback" : [self.oAuthCallback encodeURI]}];
     
     NSMutableDictionary *signedParams = [self sign:self.requestTokenURL method:@"GET" parameters:params].mutableCopy;
     
@@ -101,18 +107,22 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
-    return [self.session GET:request]
-    .thenInBackground(^(DZResponse *responded) {
+    return [self.session GET:request success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         
-        NSString *response = [[NSString alloc] initWithData:responded.responseObject encoding:NSUTF8StringEncoding];
+        NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         NSURLComponents *components = [NSURLComponents new];
-        components.query = response;
+        components.query = responseStr;
         
         if(!components.queryItems || !components.queryItems.count)
         {
             //todo: better error information
-            return [DZPromise promiseWithValue:[NSError errorWithDomain:@"com.dzoauth" code:1 userInfo:@{}]];
+            if (errorCB) {
+                NSError *error = [NSError errorWithDomain:@"com.dzoauth" code:1 userInfo:@{}];
+                errorCB(error, response, task);
+            }
+            
+            return;
         }
         
         NSDictionary *params = [self dictionaryRepresentationForQueryItems:components.queryItems];
@@ -127,14 +137,15 @@
         NSURLComponents *authComponents = [[NSURLComponents alloc] initWithString:self.userAuthorizationURL.absoluteString];
         authComponents.query = [NSString stringWithFormat:@"oauth_token=%@", tempAccessToken];
         
-        return [DZPromise promiseWithValue:authComponents.URL];
+        if (successCB)
+            successCB(authComponents.URL, response, task);
         
-    });
+    } error:errorCB];
     
 }
 
-- (DZPromise *)finishAuthWithToken:(NSString *)token
-                          verifier:(NSString *)verifier
+- (void)finishAuthWithToken:(NSString *)token
+                          verifier:(NSString *)verifier success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
     NSDictionary *params = @{@"oauth_token" : token,
@@ -152,92 +163,92 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
-    return [self.session GET:request]
-    .thenInBackground(^(DZResponse *responded) {
+    [self.session GET:request success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         
         NSURLComponents *components = [NSURLComponents new];
-        components.query = [[NSString alloc] initWithData:responded.responseObject encoding:NSUTF8StringEncoding];
+        components.query = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
-        return [self dictionaryRepresentationForQueryItems:[components queryItems]];
+        if (successCB)
+            successCB([self dictionaryRepresentationForQueryItems:[components queryItems]], response, task);
         
-    });
+    } error:errorCB];
     
 }
 
 #pragma mark -
 
-- (DZPromise * _Nonnull)GET:(NSString * _Nonnull)URI
-                 parameters:(NSDictionary * _Nullable)params
+- (void)GET:(NSString * _Nonnull)URI
+                 parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
-    return [self.session GET:URI parameters:[self sign:URI method:@"GET" parameters:params]];
+    return [self.session GET:URI parameters:[self sign:URI method:@"GET" parameters:params] success:successCB error:errorCB];
     
 }
 
-- (DZPromise * _Nonnull)POST:(NSString * _Nonnull)URI
-                  parameters:(NSDictionary * _Nullable)params
+- (void)POST:(NSString * _Nonnull)URI
+                  parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
-    return [self.session POST:URI parameters:[self sign:URI method:@"POST" parameters:params]];
+    return [self.session POST:URI parameters:[self sign:URI method:@"POST" parameters:params] success:successCB error:errorCB];
     
 }
 
-- (DZPromise * _Nonnull)POST:(NSString * _Nonnull)URI
+- (void)POST:(NSString * _Nonnull)URI
                  queryParams:(NSDictionary * _Nullable)query
-                  parameters:(NSDictionary * _Nullable)params
+                  parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
-    return [self.session POST:URI queryParams:query parameters:[self sign:URI method:@"POST" parameters:params]];
+    return [self.session POST:URI queryParams:query parameters:[self sign:URI method:@"POST" parameters:params] success:successCB error:errorCB];
     
 }
 
-- (DZPromise * _Nonnull)PUT:(NSString * _Nonnull)URI
-                 parameters:(NSDictionary * _Nullable)params
+- (void)PUT:(NSString * _Nonnull)URI
+                 parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
-    return [self.session PUT:URI parameters:[self sign:URI method:@"PUT" parameters:params]];
+    return [self.session PUT:URI parameters:[self sign:URI method:@"PUT" parameters:params] success:successCB error:errorCB];
     
 }
 
-- (DZPromise * _Nonnull)PUT:(NSString * _Nonnull)URI
+- (void)PUT:(NSString * _Nonnull)URI
                 queryParams:(NSDictionary * _Nullable)query
-                 parameters:(NSDictionary * _Nullable)params
+                 parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
-    return [self.session PUT:URI queryParams:query parameters:[self sign:URI method:@"PUT" parameters:params]];
+    return [self.session PUT:URI queryParams:query parameters:[self sign:URI method:@"PUT" parameters:params] success:successCB error:errorCB];
     
 }
 
-- (DZPromise * _Nonnull)PATCH:(NSString * _Nonnull)URI
-                   parameters:(NSDictionary * _Nullable)params
+- (void)PATCH:(NSString * _Nonnull)URI
+                   parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
-    return [self.session PATCH:URI parameters:[self sign:URI method:@"PATCH" parameters:params]];
+    return [self.session PATCH:URI parameters:[self sign:URI method:@"PATCH" parameters:params] success:successCB error:errorCB];
     
 }
 
-- (DZPromise * _Nonnull)DELETE:(NSString * _Nonnull)URI
-                    parameters:(NSDictionary * _Nullable)params
+- (void)DELETE:(NSString * _Nonnull)URI
+                    parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
-    return [self.session GET:URI parameters:[self sign:URI method:@"GET" parameters:params]];
+    return [self.session GET:URI parameters:[self sign:URI method:@"GET" parameters:params] success:successCB error:errorCB];
     
 }
 
-- (DZPromise * _Nonnull)HEAD:(NSString * _Nonnull)URI
-                  parameters:(NSDictionary * _Nullable)params
+- (void)HEAD:(NSString * _Nonnull)URI
+                  parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
-    return [self.session HEAD:URI parameters:[self sign:URI method:@"HEAD" parameters:params]];
+    return [self.session HEAD:URI parameters:[self sign:URI method:@"HEAD" parameters:params] success:successCB error:errorCB];
     
 }
 
 
-- (DZPromise * _Nonnull)OPTIONS:(NSString * _Nonnull)URI
-                     parameters:(NSDictionary * _Nonnull)params
+- (void)OPTIONS:(NSString * _Nonnull)URI
+                     parameters:(NSDictionary * _Nonnull)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
-    return [self.session OPTIONS:URI parameters:[self sign:URI method:@"OPTIONS" parameters:params]];
+    return [self.session OPTIONS:URI parameters:[self sign:URI method:@"OPTIONS" parameters:params] success:successCB error:errorCB];
     
 }
 
@@ -309,8 +320,8 @@
     components.queryItems = [self queryItemsFromParams:params];
     
     NSString *A = [method uppercaseString],
-    *B = [[URL absoluteString] encodeURI],
-    *C = [components.query encodeURI];
+             *B = [[URL absoluteString] encodeURI],
+             *C = [components.query encodeURI];
     
     NSString *stringToSign = [NSString stringWithFormat:@"%@&%@&%@", A, B, C];
 //    NSLog(@"%@", stringToSign);

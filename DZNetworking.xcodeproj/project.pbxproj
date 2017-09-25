@@ -7,14 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F0018F551F792947004227B5 /* DZUploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F024470C1B612564004C65F9 /* DZUploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0018F561F792947004227B5 /* DZUploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F024470D1B612564004C65F9 /* DZUploadSession.m */; };
+		F0018F571F792947004227B5 /* DZUploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F024470C1B612564004C65F9 /* DZUploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0018F581F792947004227B5 /* DZUploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F024470D1B612564004C65F9 /* DZUploadSession.m */; };
+		F0018F5A1F7929FC004227B5 /* DZS3UploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2411B63EA900077F186 /* DZS3UploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0018F5B1F7929FC004227B5 /* DZS3UploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2411B63EA900077F186 /* DZS3UploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0018F5C1F792A06004227B5 /* DZS3UploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E2421B63EA900077F186 /* DZS3UploadSession.m */; };
+		F0018F5E1F792A06004227B5 /* DZS3UploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E2421B63EA900077F186 /* DZS3UploadSession.m */; };
+		F0018F5F1F792B45004227B5 /* DZOAuthSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0018F601F792B45004227B5 /* DZOAuthSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0018F611F792B4A004227B5 /* DZOAuthSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */; };
+		F0018F631F792B4A004227B5 /* DZOAuthSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */; };
 		F00D50541B75D5F100845897 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F00D50551B75D5F100845897 /* DZActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F00D50531B75D5F100845897 /* DZActivityIndicatorManager.m */; };
 		F014D9471BBE9D1300E4F203 /* NSDictionary+Extend.h in Headers */ = {isa = PBXBuildFile; fileRef = F014D9451BBE9D1300E4F203 /* NSDictionary+Extend.h */; };
 		F014D9481BBE9D1300E4F203 /* NSDictionary+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = F014D9461BBE9D1300E4F203 /* NSDictionary+Extend.m */; };
 		F014D94B1BBE9F6D00E4F203 /* NSString+Coders.h in Headers */ = {isa = PBXBuildFile; fileRef = F014D9491BBE9F6D00E4F203 /* NSString+Coders.h */; };
 		F014D94C1BBE9F6D00E4F203 /* NSString+Coders.m in Sources */ = {isa = PBXBuildFile; fileRef = F014D94A1BBE9F6D00E4F203 /* NSString+Coders.m */; };
-		F024470E1B612564004C65F9 /* DZUploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F024470C1B612564004C65F9 /* DZUploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F024470F1B612564004C65F9 /* DZUploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F024470D1B612564004C65F9 /* DZUploadSession.m */; };
 		F024471D1B6125AC004C65F9 /* DZCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = F024471B1B6125AC004C65F9 /* DZCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = F024471C1B6125AC004C65F9 /* DZCommon.m */; };
 		F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02447201B61278A004C65F9 /* MobileCoreServices.framework */; };
@@ -24,16 +34,12 @@
 		F02DC60F1B6A66E000656FDE /* URLCategoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F02DC60E1B6A66E000656FDE /* URLCategoryTests.m */; };
 		F038A8961B6773B000349EA8 /* DZResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = F038A8941B6773B000349EA8 /* DZResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F038A8971B6773B000349EA8 /* DZResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F038A8951B6773B000349EA8 /* DZResponse.m */; };
-		F03B1EFB1BBE5607000C3CFC /* DZOAuthSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F03B1EFC1BBE5607000C3CFC /* DZOAuthSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */; };
 		F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0596F0A1BE612BC002DB024 /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F081BE612BC002DB024 /* OMGHTTPURLRQ.framework */; };
-		F0596F0B1BE612BC002DB024 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F091BE612BC002DB024 /* PromiseKit.framework */; };
 		F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C59C1B7760C3002F8395 /* DZResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
 		F060C5A21B776302002F8395 /* DZJSONResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C5A01B776302002F8395 /* DZJSONResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F060C5A31B776302002F8395 /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
-		F08411041DB495460026DD5A /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F091BE612BC002DB024 /* PromiseKit.framework */; };
 		F08411051DB495490026DD5A /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F081BE612BC002DB024 /* OMGHTTPURLRQ.framework */; };
 		F08E7C431E0BA97D0009BE19 /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F08E7C551E0BACE60009BE19 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -42,9 +48,6 @@
 		F0B2C68B1D10027E00944F5D /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
 		F0B2C68C1D10027E00944F5D /* DZResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F038A8951B6773B000349EA8 /* DZResponse.m */; };
 		F0B2C68D1D10027E00944F5D /* DZURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E6D1B4FB22600FDA46C /* DZURLSession.m */; };
-		F0B2C68E1D10027E00944F5D /* DZUploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F024470D1B612564004C65F9 /* DZUploadSession.m */; };
-		F0B2C68F1D10027E00944F5D /* DZS3UploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E2421B63EA900077F186 /* DZS3UploadSession.m */; };
-		F0B2C6901D10027E00944F5D /* DZOAuthSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */; };
 		F0B2C6911D10029800944F5D /* DZCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = F024471B1B6125AC004C65F9 /* DZCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C6921D10029800944F5D /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C6931D10029800944F5D /* DZS3CredentialsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2451B63F0700077F186 /* DZS3CredentialsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -53,18 +56,12 @@
 		F0B2C6971D10029800944F5D /* NSString+Coders.h in Headers */ = {isa = PBXBuildFile; fileRef = F014D9491BBE9F6D00E4F203 /* NSString+Coders.h */; };
 		F0B2C6981D1002B900944F5D /* DZResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = F038A8941B6773B000349EA8 /* DZResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C6991D1002B900944F5D /* DZURLSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E6C1B4FB22600FDA46C /* DZURLSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F0B2C69A1D1002B900944F5D /* DZUploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F024470C1B612564004C65F9 /* DZUploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F0B2C69B1D1002B900944F5D /* DZS3UploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2411B63EA900077F186 /* DZS3UploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F0B2C69C1D1002B900944F5D /* DZOAuthSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C69D1D1002BF00944F5D /* DZResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C59C1B7760C3002F8395 /* DZResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C69E1D1002BF00944F5D /* DZJSONResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C5A01B776302002F8395 /* DZJSONResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C6A21D1002E500944F5D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D0E24D1B63F4900077F186 /* Security.framework */; };
 		F0B2C6A61D1003F000944F5D /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0B2C6A41D1003F000944F5D /* OMGHTTPURLRQ.framework */; };
-		F0B2C6A71D1003F000944F5D /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0B2C6A51D1003F000944F5D /* PromiseKit.framework */; };
 		F0CA67E11BE1DE9F00963967 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D0E24D1B63F4900077F186 /* Security.framework */; };
 		F0CA67E21BE1DEA300963967 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02447201B61278A004C65F9 /* MobileCoreServices.framework */; };
-		F0D0E2431B63EA900077F186 /* DZS3UploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2411B63EA900077F186 /* DZS3UploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F0D0E2441B63EA900077F186 /* DZS3UploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E2421B63EA900077F186 /* DZS3UploadSession.m */; };
 		F0D0E2471B63F0700077F186 /* DZS3CredentialsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2451B63F0700077F186 /* DZS3CredentialsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0D0E2481B63F0700077F186 /* DZS3CredentialsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E2461B63F0700077F186 /* DZS3CredentialsManager.m */; };
 		F0D0E24E1B63F4900077F186 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D0E24D1B63F4900077F186 /* Security.framework */; };
@@ -129,7 +126,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0B2C6A71D1003F000944F5D /* PromiseKit.framework in Frameworks */,
 				F0B2C6A21D1002E500944F5D /* Security.framework in Frameworks */,
 				F0B2C6A61D1003F000944F5D /* OMGHTTPURLRQ.framework in Frameworks */,
 			);
@@ -142,7 +138,6 @@
 				F0D0E24E1B63F4900077F186 /* Security.framework in Frameworks */,
 				F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */,
 				F0596F0A1BE612BC002DB024 /* OMGHTTPURLRQ.framework in Frameworks */,
-				F0596F0B1BE612BC002DB024 /* PromiseKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +149,6 @@
 				F0CA67E21BE1DEA300963967 /* MobileCoreServices.framework in Frameworks */,
 				F08411051DB495490026DD5A /* OMGHTTPURLRQ.framework in Frameworks */,
 				F0FC8E5C1B4FB1D300FDA46C /* DZNetworking.framework in Frameworks */,
-				F08411041DB495460026DD5A /* PromiseKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,9 +294,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0B2C6961D10029800944F5D /* NSDictionary+Extend.h in Headers */,
+				F0018F601F792B45004227B5 /* DZOAuthSession.h in Headers */,
 				F0B2C6971D10029800944F5D /* NSString+Coders.h in Headers */,
 				F0B2C6911D10029800944F5D /* DZCommon.h in Headers */,
-				F0B2C69A1D1002B900944F5D /* DZUploadSession.h in Headers */,
+				F0018F571F792947004227B5 /* DZUploadSession.h in Headers */,
+				F0018F5B1F7929FC004227B5 /* DZS3UploadSession.h in Headers */,
 				F0B2C6921D10029800944F5D /* DZURLSessionProtocol.h in Headers */,
 				F0B2C69D1D1002BF00944F5D /* DZResponseParser.h in Headers */,
 				F0B2C6991D1002B900944F5D /* DZURLSession.h in Headers */,
@@ -312,8 +308,6 @@
 				F0B2C6981D1002B900944F5D /* DZResponse.h in Headers */,
 				F08E7C551E0BACE60009BE19 /* DZActivityIndicatorManager.h in Headers */,
 				F0B2C6931D10029800944F5D /* DZS3CredentialsManager.h in Headers */,
-				F0B2C69B1D1002B900944F5D /* DZS3UploadSession.h in Headers */,
-				F0B2C69C1D1002B900944F5D /* DZOAuthSession.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,19 +316,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				F060C5A21B776302002F8395 /* DZJSONResponseParser.h in Headers */,
+				F0018F5F1F792B45004227B5 /* DZOAuthSession.h in Headers */,
 				F014D9471BBE9D1300E4F203 /* NSDictionary+Extend.h in Headers */,
 				F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */,
+				F0018F551F792947004227B5 /* DZUploadSession.h in Headers */,
+				F0018F5A1F7929FC004227B5 /* DZS3UploadSession.h in Headers */,
 				F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */,
 				F00D50541B75D5F100845897 /* DZActivityIndicatorManager.h in Headers */,
 				F0FC8E6E1B4FB22600FDA46C /* DZURLSession.h in Headers */,
-				F024470E1B612564004C65F9 /* DZUploadSession.h in Headers */,
 				F014D94B1BBE9F6D00E4F203 /* NSString+Coders.h in Headers */,
 				F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */,
-				F0D0E2431B63EA900077F186 /* DZS3UploadSession.h in Headers */,
 				F0D0E2471B63F0700077F186 /* DZS3CredentialsManager.h in Headers */,
 				F024471D1B6125AC004C65F9 /* DZCommon.h in Headers */,
 				F038A8961B6773B000349EA8 /* DZResponse.h in Headers */,
-				F03B1EFB1BBE5607000C3CFC /* DZOAuthSession.h in Headers */,
 				F02DC60C1B6A665500656FDE /* NSString+URLExtended.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,18 +396,21 @@
 		F0FC8E471B4FB1D300FDA46C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Dezine Zync Studios LLP.";
 				TargetAttributes = {
 					F0B2C6801D10024C00944F5D = {
 						CreatedOnToolsVersion = 7.3;
+						ProvisioningStyle = Automatic;
 					};
 					F0FC8E4F1B4FB1D300FDA46C = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 3TLN858B23;
+						ProvisioningStyle = Automatic;
 					};
 					F0FC8E5A1B4FB1D300FDA46C = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 3TLN858B23;
 					};
 				};
 			};
@@ -489,9 +486,9 @@
 				F0B2C6891D10027300944F5D /* DZCommon.m in Sources */,
 				F0B2C68B1D10027E00944F5D /* DZJSONResponseParser.m in Sources */,
 				F0B2C68A1D10027E00944F5D /* DZResponseParser.m in Sources */,
-				F0B2C68F1D10027E00944F5D /* DZS3UploadSession.m in Sources */,
-				F0B2C6901D10027E00944F5D /* DZOAuthSession.m in Sources */,
-				F0B2C68E1D10027E00944F5D /* DZUploadSession.m in Sources */,
+				F0018F5E1F792A06004227B5 /* DZS3UploadSession.m in Sources */,
+				F0018F631F792B4A004227B5 /* DZOAuthSession.m in Sources */,
+				F0018F581F792947004227B5 /* DZUploadSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,17 +496,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0018F561F792947004227B5 /* DZUploadSession.m in Sources */,
 				F0D0E2481B63F0700077F186 /* DZS3CredentialsManager.m in Sources */,
 				F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */,
 				F00D50551B75D5F100845897 /* DZActivityIndicatorManager.m in Sources */,
-				F03B1EFC1BBE5607000C3CFC /* DZOAuthSession.m in Sources */,
 				F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */,
+				F0018F611F792B4A004227B5 /* DZOAuthSession.m in Sources */,
 				F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */,
 				F014D9481BBE9D1300E4F203 /* NSDictionary+Extend.m in Sources */,
-				F024470F1B612564004C65F9 /* DZUploadSession.m in Sources */,
+				F0018F5C1F792A06004227B5 /* DZS3UploadSession.m in Sources */,
 				F02DC60D1B6A665500656FDE /* NSString+URLExtended.m in Sources */,
 				F038A8971B6773B000349EA8 /* DZResponse.m in Sources */,
-				F0D0E2441B63EA900077F186 /* DZS3UploadSession.m in Sources */,
 				F060C5A31B776302002F8395 /* DZJSONResponseParser.m in Sources */,
 				F014D94C1BBE9F6D00E4F203 /* NSString+Coders.m in Sources */,
 			);
@@ -533,10 +530,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -555,6 +554,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.DZNetworkingMacOS;
 				PRODUCT_NAME = DZNetworking;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -564,9 +564,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -582,6 +584,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.DZNetworkingMacOS;
 				PRODUCT_NAME = DZNetworking;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -596,14 +599,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -629,7 +638,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -648,14 +657,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -674,7 +689,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -688,10 +703,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -702,7 +720,7 @@
 				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -712,6 +730,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -720,10 +739,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -734,7 +756,7 @@
 				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -743,6 +765,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -752,6 +775,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3TLN858B23;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -775,6 +799,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3TLN858B23;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
