@@ -68,6 +68,10 @@
 - (void)updateIndicatorVisibility
 {
     
+    if (![NSThread isMainThread]) {
+        return [self performSelectorOnMainThread:@selector(updateIndicatorVisibility) withObject:nil waitUntilDone:NO];
+    }
+    
     BOOL show = [self isShowingActivityIndicator];
     
     BOOL isShowing = [[UIApplication sharedApplication] isNetworkActivityIndicatorVisible];
