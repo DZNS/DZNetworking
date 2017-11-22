@@ -9,6 +9,29 @@
 #import "UIImageView+ImageLoading.h"
 #import <objc/runtime.h>
 
+#ifndef weakify
+    #define weakify(var) __weak typeof(var) AHKWeak_##var = var;
+#endif
+
+#ifndef strongify
+#define strongify(var) \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wshadow\"") \
+    __strong typeof(var) var = AHKWeak_##var; \
+_Pragma("clang diagnostic pop")
+#endif
+
+#ifndef asyncMain
+#define asyncMain(block) {\
+    if([NSThread isMainThread]) {\
+        block();\
+    }\
+    else {\
+        dispatch_async(dispatch_get_main_queue(), block);\
+    }\
+};
+#endif
+
 static char DOWNLOAD_TASK;
 
 @implementation UIImageView (ImageLoading)
@@ -16,9 +39,9 @@ static char DOWNLOAD_TASK;
 - (void)il_setImageWithURL:(id)url
 {
     if (self.task)
-        [self.task cancel];
+        [self il_cancelImageLoading];
     
-    __weak typeof(self) weakSelf = self;
+    weakify(self);
     
     if ([url rangeOfString:@"?"].location != NSNotFound) {
         url = [url substringToIndex:[url rangeOfString:@"?"].location];
@@ -26,19 +49,19 @@ static char DOWNLOAD_TASK;
     
     self.task = [SharedImageLoader downloadImageForURL:url success:^(UIImage *image, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         
-        typeof(weakSelf) strongSelf = weakSelf;
+        strongify(self);
         
-        strongSelf.image = image;
-        [strongSelf setNeedsDisplay];
+        self.image = image;
+        [self setNeedsDisplay];
         
-        CGRect frame = strongSelf.frame;
+        CGRect frame = self.frame;
         CGFloat height = (image.size.height / image.size.width) * frame.size.width;
         
         frame.size.height = height;
         
-        if (strongSelf.constraints.count) {
+        if (self.constraints.count) {
             BOOL found = NO;
-            for (NSLayoutConstraint *constraint in strongSelf.constraints) {
+            for (NSLayoutConstraint *constraint in self.constraints) {
                 if (constraint.firstAttribute == NSLayoutAttributeHeight) {
                     found = YES;
                     constraint.constant = height;
@@ -50,13 +73,13 @@ static char DOWNLOAD_TASK;
             if (found)
                 return;
         }
-        else if ([strongSelf.superview isKindOfClass:UIStackView.class]) {
+        else if ([self.superview isKindOfClass:UIStackView.class]) {
             // inside a stackview but no height constraint
-            [strongSelf.heightAnchor constraintEqualToConstant:height].active = YES;
+            [self.heightAnchor constraintEqualToConstant:height].active = YES;
             return;
         }
         
-        strongSelf.frame = frame;
+        self.frame = frame;
         
     } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
 #ifdef DEBUG
@@ -69,6 +92,7 @@ static char DOWNLOAD_TASK;
 {
     if (self.task) {
         [self.task cancel];
+        self.task = nil;
     }
 }
 
@@ -76,7 +100,7 @@ static char DOWNLOAD_TASK;
 
 -(void)setTask:(NSURLSessionTask *)task
 {
-    objc_setAssociatedObject(self, &DOWNLOAD_TASK, task, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &DOWNLOAD_TASK, task, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 -(NSURLSessionTask *)task
