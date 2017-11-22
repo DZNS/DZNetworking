@@ -66,6 +66,12 @@
 		F0D0E2481B63F0700077F186 /* DZS3CredentialsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E2461B63F0700077F186 /* DZS3CredentialsManager.m */; };
 		F0D0E24E1B63F4900077F186 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D0E24D1B63F4900077F186 /* Security.framework */; };
 		F0D0E2501B63F60C0077F186 /* DZS3UploadSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E24F1B63F60C0077F186 /* DZS3UploadSessionTests.m */; };
+		F0E1027B1FC583BA007C7140 /* ImageResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E102741FC583BA007C7140 /* ImageResponseParser.m */; };
+		F0E1027C1FC583BA007C7140 /* ImageResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E102751FC583BA007C7140 /* ImageResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0E1027E1FC583BA007C7140 /* ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E102771FC583BA007C7140 /* ImageLoader.m */; };
+		F0E1027F1FC583BA007C7140 /* UIImageView+ImageLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E102781FC583BA007C7140 /* UIImageView+ImageLoading.m */; };
+		F0E102801FC583BA007C7140 /* UIImageView+ImageLoading.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E102791FC583BA007C7140 /* UIImageView+ImageLoading.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0E102811FC583BA007C7140 /* ImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E1027A1FC583BA007C7140 /* ImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FC8E5C1B4FB1D300FDA46C /* DZNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */; };
 		F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E621B4FB1D400FDA46C /* DZNetworkingTests.m */; };
@@ -111,6 +117,12 @@
 		F0D0E2461B63F0700077F186 /* DZS3CredentialsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZS3CredentialsManager.m; path = Utilities/DZS3CredentialsManager.m; sourceTree = "<group>"; };
 		F0D0E24D1B63F4900077F186 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F0D0E24F1B63F60C0077F186 /* DZS3UploadSessionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZS3UploadSessionTests.m; sourceTree = "<group>"; };
+		F0E102741FC583BA007C7140 /* ImageResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageResponseParser.m; path = ImageLoading/ImageResponseParser.m; sourceTree = "<group>"; };
+		F0E102751FC583BA007C7140 /* ImageResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageResponseParser.h; path = ImageLoading/ImageResponseParser.h; sourceTree = "<group>"; };
+		F0E102771FC583BA007C7140 /* ImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageLoader.m; path = ImageLoading/ImageLoader.m; sourceTree = "<group>"; };
+		F0E102781FC583BA007C7140 /* UIImageView+ImageLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+ImageLoading.m"; path = "ImageLoading/UIImageView+ImageLoading.m"; sourceTree = "<group>"; };
+		F0E102791FC583BA007C7140 /* UIImageView+ImageLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+ImageLoading.h"; path = "ImageLoading/UIImageView+ImageLoading.h"; sourceTree = "<group>"; };
+		F0E1027A1FC583BA007C7140 /* ImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageLoader.h; path = ImageLoading/ImageLoader.h; sourceTree = "<group>"; };
 		F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DZNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0FC8E541B4FB1D300FDA46C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNetworking.h; sourceTree = "<group>"; };
@@ -204,6 +216,19 @@
 			path = DZNetworkingMacOS;
 			sourceTree = "<group>";
 		};
+		F0E102731FC583A5007C7140 /* ImageLoading */ = {
+			isa = PBXGroup;
+			children = (
+				F0E1027A1FC583BA007C7140 /* ImageLoader.h */,
+				F0E102771FC583BA007C7140 /* ImageLoader.m */,
+				F0E102751FC583BA007C7140 /* ImageResponseParser.h */,
+				F0E102741FC583BA007C7140 /* ImageResponseParser.m */,
+				F0E102791FC583BA007C7140 /* UIImageView+ImageLoading.h */,
+				F0E102781FC583BA007C7140 /* UIImageView+ImageLoading.m */,
+			);
+			name = ImageLoading;
+			sourceTree = "<group>";
+		};
 		F0FC8E461B4FB1D300FDA46C = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +256,7 @@
 				F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */,
 				F024471F1B6125B1004C65F9 /* Utilities */,
 				F0FC8E701B4FB22900FDA46C /* Core */,
+				F0E102731FC583A5007C7140 /* ImageLoading */,
 				F0FC8E531B4FB1D300FDA46C /* Supporting Files */,
 			);
 			path = DZNetworking;
@@ -319,13 +345,16 @@
 				F0018F5F1F792B45004227B5 /* DZOAuthSession.h in Headers */,
 				F014D9471BBE9D1300E4F203 /* NSDictionary+Extend.h in Headers */,
 				F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */,
+				F0E102801FC583BA007C7140 /* UIImageView+ImageLoading.h in Headers */,
 				F0018F551F792947004227B5 /* DZUploadSession.h in Headers */,
 				F0018F5A1F7929FC004227B5 /* DZS3UploadSession.h in Headers */,
 				F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */,
 				F00D50541B75D5F100845897 /* DZActivityIndicatorManager.h in Headers */,
 				F0FC8E6E1B4FB22600FDA46C /* DZURLSession.h in Headers */,
 				F014D94B1BBE9F6D00E4F203 /* NSString+Coders.h in Headers */,
+				F0E1027C1FC583BA007C7140 /* ImageResponseParser.h in Headers */,
 				F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */,
+				F0E102811FC583BA007C7140 /* ImageLoader.h in Headers */,
 				F0D0E2471B63F0700077F186 /* DZS3CredentialsManager.h in Headers */,
 				F024471D1B6125AC004C65F9 /* DZCommon.h in Headers */,
 				F038A8961B6773B000349EA8 /* DZResponse.h in Headers */,
@@ -478,13 +507,16 @@
 			files = (
 				F0018F561F792947004227B5 /* DZUploadSession.m in Sources */,
 				F0D0E2481B63F0700077F186 /* DZS3CredentialsManager.m in Sources */,
+				F0E1027E1FC583BA007C7140 /* ImageLoader.m in Sources */,
 				F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */,
+				F0E1027B1FC583BA007C7140 /* ImageResponseParser.m in Sources */,
 				F00D50551B75D5F100845897 /* DZActivityIndicatorManager.m in Sources */,
 				F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */,
 				F0018F611F792B4A004227B5 /* DZOAuthSession.m in Sources */,
 				F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */,
 				F014D9481BBE9D1300E4F203 /* NSDictionary+Extend.m in Sources */,
 				F0018F5C1F792A06004227B5 /* DZS3UploadSession.m in Sources */,
+				F0E1027F1FC583BA007C7140 /* UIImageView+ImageLoading.m in Sources */,
 				F02DC60D1B6A665500656FDE /* NSString+URLExtended.m in Sources */,
 				F038A8971B6773B000349EA8 /* DZResponse.m in Sources */,
 				F060C5A31B776302002F8395 /* DZJSONResponseParser.m in Sources */,
