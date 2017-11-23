@@ -43,9 +43,9 @@ static char DOWNLOAD_TASK;
     
     weakify(self);
     
-    if ([url rangeOfString:@"?"].location != NSNotFound) {
-        url = [url substringToIndex:[url rangeOfString:@"?"].location];
-    }
+//    if ([url rangeOfString:@"?"].location != NSNotFound) {
+//        url = [url substringToIndex:[url rangeOfString:@"?"].location];
+//    }
     
     self.task = [SharedImageLoader downloadImageForURL:url success:^(UIImage *image, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         
