@@ -64,9 +64,15 @@ static char DOWNLOAD_TASK;
             for (NSLayoutConstraint *constraint in self.constraints) {
                 if (constraint.firstAttribute == NSLayoutAttributeHeight) {
                     found = YES;
-                    constraint.constant = height;
                     
-                    [self layoutIfNeeded];
+                    weakify(self);
+                    
+                    asyncMain(^{
+                        constraint.constant = height;
+                        strongify(self);
+                        [self layoutIfNeeded];
+                    });
+                    
                 }
             }
             
@@ -75,11 +81,19 @@ static char DOWNLOAD_TASK;
         }
         else if ([self.superview isKindOfClass:UIStackView.class]) {
             // inside a stackview but no height constraint
-            [self.heightAnchor constraintEqualToConstant:height].active = YES;
+            weakify(self);
+            asyncMain(^{
+                strongify(self);
+                [self.heightAnchor constraintEqualToConstant:height].active = YES;
+            })
             return;
         }
         
-        self.frame = frame;
+        weakify(self);
+        asyncMain(^{
+            strongify(self);
+            self.frame = frame;
+        });
         
     } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
 #ifdef DEBUG
