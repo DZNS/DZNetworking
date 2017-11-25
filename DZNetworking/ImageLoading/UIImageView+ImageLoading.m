@@ -51,8 +51,10 @@ static char DOWNLOAD_TASK;
         
         strongify(self);
         
-        self.image = image;
-        [self setNeedsDisplay];
+        asyncMain(^{
+            self.image = image;
+            [self setNeedsDisplay];
+        });
         
         CGRect frame = self.frame;
         CGFloat height = (image.size.height / image.size.width) * frame.size.width;
