@@ -36,6 +36,8 @@
 		F038A8971B6773B000349EA8 /* DZResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F038A8951B6773B000349EA8 /* DZResponse.m */; };
 		F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0596F0A1BE612BC002DB024 /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F081BE612BC002DB024 /* OMGHTTPURLRQ.framework */; };
+		F0608B4E1FD8F64F00FC42BB /* PurgingDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = F0608B4C1FD8F64F00FC42BB /* PurgingDiskCache.h */; };
+		F0608B4F1FD8F64F00FC42BB /* PurgingDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F0608B4D1FD8F64F00FC42BB /* PurgingDiskCache.m */; };
 		F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C59C1B7760C3002F8395 /* DZResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
 		F060C5A21B776302002F8395 /* DZJSONResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C5A01B776302002F8395 /* DZJSONResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -103,6 +105,8 @@
 		F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZURLSessionProtocol.h; path = Core/DZURLSessionProtocol.h; sourceTree = "<group>"; };
 		F0596F081BE612BC002DB024 /* OMGHTTPURLRQ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OMGHTTPURLRQ.framework; path = Carthage/Build/iOS/OMGHTTPURLRQ.framework; sourceTree = SOURCE_ROOT; };
 		F0596F091BE612BC002DB024 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/iOS/PromiseKit.framework; sourceTree = SOURCE_ROOT; };
+		F0608B4C1FD8F64F00FC42BB /* PurgingDiskCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PurgingDiskCache.h; path = ImageLoading/PurgingDiskCache.h; sourceTree = "<group>"; };
+		F0608B4D1FD8F64F00FC42BB /* PurgingDiskCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PurgingDiskCache.m; path = ImageLoading/PurgingDiskCache.m; sourceTree = "<group>"; };
 		F060C59C1B7760C3002F8395 /* DZResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZResponseParser.h; path = "Core/Response Parsers/DZResponseParser.h"; sourceTree = "<group>"; };
 		F060C59D1B7760C3002F8395 /* DZResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZResponseParser.m; path = "Core/Response Parsers/DZResponseParser.m"; sourceTree = "<group>"; };
 		F060C5A01B776302002F8395 /* DZJSONResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZJSONResponseParser.h; path = "Core/Response Parsers/DZJSONResponseParser.h"; sourceTree = "<group>"; };
@@ -225,6 +229,8 @@
 				F0E102741FC583BA007C7140 /* ImageResponseParser.m */,
 				F0E102791FC583BA007C7140 /* UIImageView+ImageLoading.h */,
 				F0E102781FC583BA007C7140 /* UIImageView+ImageLoading.m */,
+				F0608B4C1FD8F64F00FC42BB /* PurgingDiskCache.h */,
+				F0608B4D1FD8F64F00FC42BB /* PurgingDiskCache.m */,
 			);
 			name = ImageLoading;
 			sourceTree = "<group>";
@@ -345,6 +351,7 @@
 				F0018F5F1F792B45004227B5 /* DZOAuthSession.h in Headers */,
 				F014D9471BBE9D1300E4F203 /* NSDictionary+Extend.h in Headers */,
 				F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */,
+				F0608B4E1FD8F64F00FC42BB /* PurgingDiskCache.h in Headers */,
 				F0E102801FC583BA007C7140 /* UIImageView+ImageLoading.h in Headers */,
 				F0018F551F792947004227B5 /* DZUploadSession.h in Headers */,
 				F0018F5A1F7929FC004227B5 /* DZS3UploadSession.h in Headers */,
@@ -424,7 +431,7 @@
 		F0FC8E471B4FB1D300FDA46C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Dezine Zync Studios LLP.";
 				TargetAttributes = {
 					F0B2C6801D10024C00944F5D = {
@@ -514,6 +521,7 @@
 				F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */,
 				F0018F611F792B4A004227B5 /* DZOAuthSession.m in Sources */,
 				F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */,
+				F0608B4F1FD8F64F00FC42BB /* PurgingDiskCache.m in Sources */,
 				F014D9481BBE9D1300E4F203 /* NSDictionary+Extend.m in Sources */,
 				F0018F5C1F792A06004227B5 /* DZS3UploadSession.m in Sources */,
 				F0E1027F1FC583BA007C7140 /* UIImageView+ImageLoading.m in Sources */,
@@ -542,7 +550,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -576,7 +584,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -718,7 +726,7 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -754,7 +762,7 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";

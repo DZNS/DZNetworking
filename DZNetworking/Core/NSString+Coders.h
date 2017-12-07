@@ -10,7 +10,9 @@
 
 @interface NSString (Coders)
 
-- (NSString *_Nonnull)encodeURI;
-- (NSString *_Nonnull)decodeURI;
+- (NSString * _Nonnull)encodeURI;
+- (NSString * _Nonnull)decodeURI;
+
+- (NSString * _Nonnull)md5;
 
 @end

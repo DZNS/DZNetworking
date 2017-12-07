@@ -32,11 +32,27 @@ _Pragma("clang diagnostic pop")
 };
 #endif
 
+#ifndef syncMain
+#define syncMain(block) {\
+    if ([NSThread isMainThread]) {\
+        block();\
+    }\
+    else {\
+        dispatch_sync(dispatch_get_main_queue(), block);\
+    }\
+};
+#endif
+
 static char DOWNLOAD_TASK;
 
 @implementation UIImageView (ImageLoading)
 
 - (void)il_setImageWithURL:(id)url
+{
+    [self il_setImageWithURL:url success:nil error:nil];
+}
+
+- (void)il_setImageWithURL:(id)url success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success error:(void (^ _Nullable)(NSError * _Nonnull))error
 {
     if (self.task)
         [self il_cancelImageLoading];
@@ -63,7 +79,14 @@ static char DOWNLOAD_TASK;
         
         if (self.constraints.count) {
             BOOL found = NO;
-            for (NSLayoutConstraint *constraint in self.constraints) {
+            
+            __block NSArray *constraints = nil;
+            
+            syncMain(^{
+                constraints = self.constraints;
+            });
+            
+            for (NSLayoutConstraint *constraint in constraints) {
                 if (constraint.firstAttribute == NSLayoutAttributeHeight) {
                     found = YES;
                     

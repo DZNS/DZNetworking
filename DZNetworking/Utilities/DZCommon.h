@@ -14,18 +14,13 @@
 #import <DZNetworking/NSString+URLExtended.h>
 
 #ifdef DEBUG
-
-#define DZLog(fmt,...) {\
-NSLog((@"(%s - Line: %d) " fmt),__func__,__LINE__,##__VA_ARGS__);\
-}
-
+    #define DZLog(fmt,...) {\
+        NSLog((@"(%s - Line: %d) " fmt),__func__,__LINE__,##__VA_ARGS__);\
+    }
 #else
-
-#define DZLog(fmt,...) {}
-
+    #define DZLog(fmt,...) {}
 #endif
 
-#define DZPromise AnyPromise
 
 extern NSString *const DZErrorDomain;
 extern NSString *const DZErrorData;

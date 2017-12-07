@@ -8,6 +8,7 @@
 
 #import "ImageLoader.h"
 #import "ImageResponseParser.h"
+#import "PurgingDiskCache.h"
 
 ImageLoader *SharedImageLoader;
 
@@ -21,7 +22,7 @@ ImageLoader *SharedImageLoader;
 
 @interface ImageLoader ()
 
-@property (nonatomic, strong) NSCache *cache;
+@property (nonatomic, strong) PurgingDiskCache *cache;
 
 @end
 
@@ -39,11 +40,22 @@ ImageLoader *SharedImageLoader;
 {
     if (self = [super init]) {
         self.responseParser = [ImageResponseParser new];
-        self.cache = [[NSCache alloc] init];
+        self.cache = [[PurgingDiskCache alloc] init];
         self.cache.name = @"imageCache";
+        
+#ifndef DZAPPKIT
+      [NSNotificationCenter.defaultCenter addObserver:self.cache selector:@selector(removeAllObjects) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+#endif
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+#ifndef DZAPPKIT
+    [NSNotificationCenter.defaultCenter addObserver:self.cache selector:@selector(removeAllObjects) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+#endif
 }
 
 - (NSURLSessionTask *)downloadImageForURL:(id)url success:(successBlock)successCB error:(errorBlock)errorCB
@@ -66,86 +78,99 @@ ImageLoader *SharedImageLoader;
 - (NSURLSessionTask *)il_performRequest:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    UIImage *cached = [self.cache objectForKey:request.URL.absoluteString];
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
     
-    if (cached) {
-        if (successCB)
-            successCB(cached, nil, nil);
-        return nil;
-    }
+    __block NSURLSessionDataTask *task = nil;
     
     __weak typeof(self) weakSelf = self;
     
-    __block NSURLSessionDataTask *task = [(NSURLSession *)[self valueForKeyPath:@"session"] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    [self.cache objectforKey:request.URL.absoluteString callback:^(UIImage * _Nullable cached) {
+       
+        if (cached) {
+            if (successCB)
+                successCB(cached, nil, nil);
+            
+            dispatch_semaphore_signal(sema);
+            return;
+        }
+        
+        task = [(NSURLSession *)[self valueForKeyPath:@"session"] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 #ifndef DZAPPKIT
-        // we simply decrement it. No harm, since we ensure the value never drops below 0.
-        [[DZActivityIndicatorManager shared] decrementCount];
+            // we simply decrement it. No harm, since we ensure the value never drops below 0.
+            [[DZActivityIndicatorManager shared] decrementCount];
 #endif
-        
-        NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
-        
-        if(error)
-        {
-            if (errorCB)
-                errorCB(error, res, task);
-            return;
-        }
-        
-        typeof(self) strongSelf = weakSelf;
-        
-        NSError *parsingError;
-        UIImage *responseObject = [strongSelf.responseParser parseResponse:data :res error:&parsingError];
-        
-        if (responseObject) {
-            [strongSelf.cache setObject:responseObject forKey:request.URL.absoluteString];
-        }
-        
-        if(res.statusCode > strongSelf.maximumSuccessStatusCode)
-        {
             
-            // Treat this as an error.
+            NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
             
-            NSDictionary *userInfo = @{DZErrorData : data ?: [NSData data],
-                                       DZErrorResponse : responseObject ?: @{},
-                                       DZErrorTask : task};
+            if(error)
+            {
+                if (errorCB)
+                    errorCB(error, res, task);
+                return;
+            }
             
-            error = [NSError errorWithDomain:DZErrorDomain code:res.statusCode userInfo:userInfo];
+            typeof(self) strongSelf = weakSelf;
             
-            if (errorCB)
-                errorCB(error, res, task);
-            return;
+            NSError *parsingError;
+            UIImage *responseObject = [strongSelf.responseParser parseResponse:data :res error:&parsingError];
             
-        }
-        
-        if(res.statusCode == 200 && !responseObject)
-        {
-            // our request succeeded but returned no data. Treat valid.
+            if (responseObject) {
+                [strongSelf.cache setObject:responseObject data:data forKey:request.URL.absoluteString];
+            }
+            
+            if(res.statusCode > strongSelf.maximumSuccessStatusCode)
+            {
+                
+                // Treat this as an error.
+                
+                NSDictionary *userInfo = @{DZErrorData : data ?: [NSData data],
+                                           DZErrorResponse : responseObject ?: @{},
+                                           DZErrorTask : task};
+                
+                error = [NSError errorWithDomain:DZErrorDomain code:res.statusCode userInfo:userInfo];
+                
+                if (errorCB)
+                    errorCB(error, res, task);
+                return;
+                
+            }
+            
+            if(res.statusCode == 200 && !responseObject)
+            {
+                // our request succeeded but returned no data. Treat valid.
+                if (successCB)
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        successCB(responseObject ?: data, res, task);
+                    });
+                return;
+            }
+            
+            if (parsingError) {
+                if (errorCB)
+                    errorCB(parsingError, res, task);
+                return;
+            }
+            
             if (successCB)
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    successCB(responseObject ?: data, res, task);
+                    successCB(responseObject, res, task);
                 });
             return;
-        }
+            
+        }];
         
-        if (parsingError) {
-            if (errorCB)
-                errorCB(parsingError, res, task);
-            return;
-        }
+        dispatch_semaphore_signal(sema);
         
-        if (successCB)
-            dispatch_async(dispatch_get_main_queue(), ^{
-                successCB(responseObject, res, task);
-            });
-        return;
+        [task resume];
+#ifndef DZAPPKIT
+        if(self.useActivityManager)
+            [[DZActivityIndicatorManager shared] incrementCount];
+#endif
         
     }];
     
-    [task resume];
-#ifndef DZAPPKIT
-    if(self.useActivityManager)
-        [[DZActivityIndicatorManager shared] incrementCount];
-#endif
+    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    dispatch_semaphore_signal(sema);
     
     return task;
 }

@@ -69,7 +69,6 @@ NSString *const kDZEncryptionAES256 = @"AES256";
 @interface NSString (DZ)
 
 - (NSData *)hmacSha1:(NSString *)secret;
-- (NSString *)URLEncode;
 
 @end
 
@@ -87,17 +86,6 @@ NSString *const kDZEncryptionAES256 = @"AES256";
     NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
     
     return HMAC;
-    
-}
-
-- (NSString *)URLEncode
-{
-    
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                                 (__bridge CFStringRef)[self stringByRemovingPercentEncoding],
-                                                                                 NULL,
-                                                                                 (CFStringRef)@"!*'\();:@&=+$,/?%#[] ",
-                                                                                 kCFStringEncodingUTF8));
     
 }
 
