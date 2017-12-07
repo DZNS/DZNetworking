@@ -29,6 +29,7 @@
 		F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = F024471C1B6125AC004C65F9 /* DZCommon.m */; };
 		F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02447201B61278A004C65F9 /* MobileCoreServices.framework */; };
 		F02447241B612873004C65F9 /* DZUploadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F02447231B612873004C65F9 /* DZUploadTests.m */; };
+		F02D4D191FD9164200A77E3F /* ImageLoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D4D181FD9164200A77E3F /* ImageLoaderTests.m */; };
 		F02DC60C1B6A665500656FDE /* NSString+URLExtended.h in Headers */ = {isa = PBXBuildFile; fileRef = F02DC60A1B6A665500656FDE /* NSString+URLExtended.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F02DC60D1B6A665500656FDE /* NSString+URLExtended.m in Sources */ = {isa = PBXBuildFile; fileRef = F02DC60B1B6A665500656FDE /* NSString+URLExtended.m */; };
 		F02DC60F1B6A66E000656FDE /* URLCategoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F02DC60E1B6A66E000656FDE /* URLCategoryTests.m */; };
@@ -94,6 +95,7 @@
 		F024471C1B6125AC004C65F9 /* DZCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZCommon.m; path = Utilities/DZCommon.m; sourceTree = "<group>"; };
 		F02447201B61278A004C65F9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F02447231B612873004C65F9 /* DZUploadTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZUploadTests.m; sourceTree = "<group>"; };
+		F02D4D181FD9164200A77E3F /* ImageLoaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageLoaderTests.m; sourceTree = "<group>"; };
 		F02DC60A1B6A665500656FDE /* NSString+URLExtended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+URLExtended.h"; path = "Utilities/NSString+URLExtended.h"; sourceTree = "<group>"; };
 		F02DC60B1B6A665500656FDE /* NSString+URLExtended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+URLExtended.m"; path = "Utilities/NSString+URLExtended.m"; sourceTree = "<group>"; };
 		F02DC60E1B6A66E000656FDE /* URLCategoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLCategoryTests.m; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				F02447231B612873004C65F9 /* DZUploadTests.m */,
 				F0D0E24F1B63F60C0077F186 /* DZS3UploadSessionTests.m */,
 				F02DC60E1B6A66E000656FDE /* URLCategoryTests.m */,
+				F02D4D181FD9164200A77E3F /* ImageLoaderTests.m */,
 				F0FC8E601B4FB1D300FDA46C /* Supporting Files */,
 			);
 			path = DZNetworkingTests;
@@ -415,6 +418,7 @@
 				F0FC8E571B4FB1D300FDA46C /* Sources */,
 				F0FC8E581B4FB1D300FDA46C /* Frameworks */,
 				F0FC8E591B4FB1D300FDA46C /* Resources */,
+				F02D4D1A1FD9174400A77E3F /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -492,6 +496,25 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		F02D4D1A1FD9174400A77E3F /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/OMGHTTPURLRQ.framework",
+			);
+			name = Carthage;
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/OMGHTTPURLRQ.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F0B2C67C1D10024C00944F5D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -537,6 +560,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F02447241B612873004C65F9 /* DZUploadTests.m in Sources */,
+				F02D4D191FD9164200A77E3F /* ImageLoaderTests.m in Sources */,
 				F02DC60F1B6A66E000656FDE /* URLCategoryTests.m in Sources */,
 				F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */,
 				F0D0E2501B63F60C0077F186 /* DZS3UploadSessionTests.m in Sources */,

@@ -83,7 +83,7 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
     if ([obj isKindOfClass:UIImage.class]) {
         UIImage *image = (UIImage *)obj;
         NSUInteger cost = CacheCostForImage(image);
-        [self setObject:obj forKey:key cost:cost];
+        [self setObject:obj data:data forKey:key cost:cost];
         stored = YES;
     }
 #endif
@@ -112,7 +112,7 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
     
     // set inside our disk cache
     if (!data && obj)
-        data = UIImagePNGRepresentation(obj);
+        data = UIImagePNGRepresentation(obj); //assume PNG if we dont have the source
     
     [self setObjectToDisk:data forKey:key];
 }
