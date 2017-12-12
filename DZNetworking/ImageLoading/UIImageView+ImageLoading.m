@@ -59,10 +59,6 @@ static char DOWNLOAD_TASK;
     
     weakify(self);
     
-//    if ([url rangeOfString:@"?"].location != NSNotFound) {
-//        url = [url substringToIndex:[url rangeOfString:@"?"].location];
-//    }
-    
     self.task = [SharedImageLoader downloadImageForURL:url success:^(UIImage *image, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         
         strongify(self);
@@ -72,19 +68,28 @@ static char DOWNLOAD_TASK;
             [self setNeedsDisplay];
         });
         
-        CGRect frame = self.frame;
-        CGFloat height = (image.size.height / image.size.width) * frame.size.width;
+        __block CGRect frame;
+        __block CGSize imageSize;
+        __block NSArray <NSLayoutConstraint *> *constraints;
+        
+        if (NSThread.isMainThread) {
+            frame = self.frame;
+            imageSize = image.size;
+            constraints = self.constraints;
+        }
+        else
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                frame = self.frame;
+                imageSize = image.size;
+                constraints = self.constraints;
+            });
+        
+        CGFloat height = (imageSize.height / imageSize.width) * frame.size.width;
         
         frame.size.height = height;
         
-        if (self.constraints.count) {
+        if (constraints.count) {
             BOOL found = NO;
-            
-            __block NSArray *constraints = nil;
-            
-            syncMain(^{
-                constraints = self.constraints;
-            });
             
             for (NSLayoutConstraint *constraint in constraints) {
                 if (constraint.firstAttribute == NSLayoutAttributeHeight) {
