@@ -44,10 +44,9 @@ _Pragma("clang diagnostic pop")
 #endif
 
 static char DOWNLOAD_TASK;
+static char AUTO_UPDATING_FRAME;
 
 @implementation UIImageView (ImageLoading)
-
-@dynamic autoUpdateFrameOrConstraints;
 
 - (void)il_setImageWithURL:(id)url
 {
@@ -162,9 +161,19 @@ static char DOWNLOAD_TASK;
     objc_setAssociatedObject(self, &DOWNLOAD_TASK, task, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+-(void)setAutoUpdateFrameOrConstraints:(BOOL)autoUpdateFrameOrConstraints
+{
+    objc_setAssociatedObject(self, &AUTO_UPDATING_FRAME, @(autoUpdateFrameOrConstraints), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 -(NSURLSessionTask *)task
 {
     return (NSURLSessionTask *)objc_getAssociatedObject(self, &DOWNLOAD_TASK);
+}
+
+-(BOOL)autoUpdateFrameOrConstraints
+{
+    return (BOOL)[objc_getAssociatedObject(self, &AUTO_UPDATING_FRAME) boolValue];
 }
 
 
