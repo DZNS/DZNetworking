@@ -47,6 +47,8 @@ static char DOWNLOAD_TASK;
 
 @implementation UIImageView (ImageLoading)
 
+@dynamic autoUpdateFrameOrConstraints;
+
 - (void)il_setImageWithURL:(id)url
 {
     [self il_setImageWithURL:url success:nil error:nil];
@@ -68,6 +70,9 @@ static char DOWNLOAD_TASK;
             [self setNeedsDisplay];
         });
         
+        if (!self.autoUpdateFrameOrConstraints)
+            return;
+        
         __block CGRect frame;
         __block CGSize imageSize;
         __block NSArray <NSLayoutConstraint *> *constraints;
@@ -87,6 +92,8 @@ static char DOWNLOAD_TASK;
         CGFloat height = (imageSize.height / imageSize.width) * frame.size.width;
         
         frame.size.height = height;
+        
+        __block BOOL exitEarly = NO;
         
         if (constraints.count) {
             BOOL found = NO;
@@ -109,15 +116,23 @@ static char DOWNLOAD_TASK;
             if (found)
                 return;
         }
-        else if ([self.superview isKindOfClass:UIStackView.class]) {
-            // inside a stackview but no height constraint
-            weakify(self);
-            asyncMain(^{
-                strongify(self);
-                [self.heightAnchor constraintEqualToConstant:height].active = YES;
-            })
-            return;
+        else {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                if ([self.superview isKindOfClass:UIStackView.class]) {
+                    // inside a stackview but no height constraint
+                    weakify(self);
+                    asyncMain(^{
+                        strongify(self);
+                        [self.heightAnchor constraintEqualToConstant:height].active = YES;
+                    });
+                    
+                    exitEarly = YES;
+                }
+            });
         }
+        
+        if (exitEarly)
+            return;
         
         weakify(self);
         asyncMain(^{
