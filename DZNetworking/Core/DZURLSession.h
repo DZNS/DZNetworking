@@ -71,10 +71,15 @@
 @property (nonatomic, assign) BOOL useOMGUserAgent;
 
 /**
- *  The request modifier block, if provided, is called before the NSURLRequest is actually used in a request. You can utilize this block to add additional data to the request if required..
+ *  The request modifier block, if provided, is called before the NSURLRequest is actually used in a request. You can utilize this block to add additional data to the request if required.
  *  An example could be, adding authentication query parameters to the URL which are dynamically generated (Flickr oAuth API).
  */
 @property (nonatomic, copy) requestModifierBlock requestModifier;
+
+/**
+ *  The redirect modifier block, if provided, is called when a redirection is occuring. You can utilize this block to add additional data to the request if required or simply inspect it.
+ */
+@property (nonatomic, copy) redirectModifierBlock redirectModifier;
 
 /**
  *  DZURLSession automatically uses the DZActivityIndicatorManager class by default to show a network activity indicator in the status bar. This is usually desired, however, in some usecases, this may be an undesired effect. The default value is YES, however, when initiating your DZURLSession object, you can set this to NO. During runtime, you can update this value to YES and all subsequent network requests will display the activityIndicator. This isn't recommended though because if you set it to NO afterwards, you may end up with a constantly spinning network activity indicator. Thus, it is strongly recommended you set this value when instansiating the session, and never touch it again. You can simply create a new session with an alternate value and use that where ever necessary.
@@ -89,7 +94,7 @@
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the URL as query parameters.
  *
- *  @return DZPromise
+
  */
 - (void)GET:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
@@ -99,7 +104,7 @@
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
+
  */
 - (void)POST:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
@@ -110,7 +115,7 @@
  *  @param query  Parameters for the URL query.
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
+
  */
 - (void)POST:(NSString *)URI queryParams:(NSDictionary *)query parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
@@ -120,7 +125,7 @@
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
+
  */
 - (void)PUT:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
@@ -131,7 +136,7 @@
  *  @param query  Parameters for the URL query.
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
+
  */
 - (void)PUT:(NSString *)URI queryParams:(NSDictionary *)query parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
@@ -141,7 +146,7 @@
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
+
  */
 - (void)PATCH:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
@@ -151,7 +156,7 @@
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
+
  */
 - (void)DELETE:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
@@ -162,7 +167,7 @@
  *  @param params Parameters for the request. These will be included in the URL as query parameters.
  *
  *  @discussion The response for such requests does not include a responseObject from the server. Check the response object for the desired information.
- *  @return DZPromise
+
  */
 - (void)HEAD:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
@@ -174,7 +179,7 @@
  *  @param params Parameters for the request. These will be included in the URL as query parameters.
  *
  *  @discussion The response for such requests may not include a responseObject from the server. Check the response object for the desired information.
- *  @return DZPromise
+
  */
 - (void)OPTIONS:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
@@ -198,7 +203,6 @@
  *  @param method The HTTP request method to be used for the request.
  *  @param params For PUT, POST, PATCH and DELETE requests, the params will be set on the HTTPBody. For all other request types, the parameters will be set on the query.
  *
- *  @return DZPromise (resolves to DZResponse if it succeeds)
  */
 - (void)performRequestWithURI:(NSString *)URI method:(NSString *)method params:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
@@ -207,7 +211,6 @@
  *
  *  @param request The request object
  *
- *  @return DZPromise (resolves to DZResponse if it succeeds)
  */
 - (void)requestWithReq:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB;
 

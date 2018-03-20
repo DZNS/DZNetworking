@@ -423,4 +423,24 @@
     
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)redirectResponse newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest *))completionHandler
+{
+    NSURLRequest *newRequest = nil;
+    
+    if (self.redirectModifier) {
+        newRequest = self.redirectModifier(request, redirectResponse);
+        if (redirectResponse) {
+            newRequest = nil;
+        }
+    }
+    else {
+        newRequest = request;
+        if (redirectResponse) {
+            newRequest = nil;
+        }
+    }
+    
+    completionHandler(newRequest);
+}
+
 @end
