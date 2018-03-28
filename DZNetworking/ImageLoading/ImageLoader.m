@@ -71,7 +71,7 @@ ImageLoader *SharedImageLoader;
         return nil;
     }
     
-    NSURLRequest *req = [self requestWithURI:[(NSURL *)url absoluteString] method:@"GET" params:@{}];
+    NSURLRequest *req = [self requestWithURI:[(NSURL *)url absoluteString] method:@"GET" params:nil];
     return [self il_performRequest:req success:successCB error:errorCB];
 }
 
@@ -101,6 +101,12 @@ ImageLoader *SharedImageLoader;
 #endif
             
             NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
+            
+            NSInteger statusCode = res.statusCode;
+            
+            if (statusCode > 399 && !error) {
+                error = [[NSError alloc] initWithDomain:@"ImageLoader" code:statusCode userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"An error occurred when loading %@", request.URL]}];
+            }
             
             if(error)
             {
