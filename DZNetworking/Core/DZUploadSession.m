@@ -30,11 +30,15 @@
 
 #import "DZUploadSession.h"
 #import <DZNetworking/DZURLSession.h>
-#ifdef DZAPPKIT
-#import <CoreServices/CoreServices.h>
-#else
+#if TARGET_OS_IOS == 1
 #import <MobileCoreServices/MobileCoreServices.h>
+#elif TARGET_OS_WATCH
+#import <MobileCoreServices/MobileCoreServices.h>
+#elif TARGET_OS_UNIX == 1
+#import <CoreServices/CoreServices.h>
 #endif
+
+#import "OMGHTTPURLRQ.h"
 
 @interface DZUploadSession () <NSURLSessionTaskDelegate>
 

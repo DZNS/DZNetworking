@@ -176,5 +176,4 @@ static char AUTO_UPDATING_FRAME;
     return (BOOL)[objc_getAssociatedObject(self, &AUTO_UPDATING_FRAME) boolValue];
 }
 
-
 @end

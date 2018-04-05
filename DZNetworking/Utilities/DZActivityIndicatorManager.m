@@ -7,7 +7,12 @@
 //
 
 #import "DZActivityIndicatorManager.h"
+
+#if TARGET_OS_IOS == 1
+
 #import <UIKit/UIApplication.h>
+
+#endif
 
 @interface DZActivityIndicatorManager ()
 
@@ -68,6 +73,8 @@
 - (void)updateIndicatorVisibility
 {
     
+#if TARGET_OS_IOS == 1
+    
     if (![NSThread isMainThread]) {
         return [self performSelectorOnMainThread:@selector(updateIndicatorVisibility) withObject:nil waitUntilDone:NO];
     }
@@ -83,7 +90,7 @@
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:show];
         
     });
-    
+#endif
 }
 
 @end

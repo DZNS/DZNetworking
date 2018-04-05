@@ -10,11 +10,15 @@
 
 @implementation ImageResponseParser
 
+#if TARGET_OS_IOS == 1
+
 - (id)parseResponse:(NSData *)responseData :(NSHTTPURLResponse *)response error:(NSError *__autoreleasing *)error
 {
     UIImage *image = [UIImage imageWithData:responseData];
     return image;
 }
+
+#endif
 
 - (NSSet *)contentTypes
 {

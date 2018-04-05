@@ -19,6 +19,36 @@
 		F0018F601F792B45004227B5 /* DZOAuthSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0018F611F792B4A004227B5 /* DZOAuthSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */; };
 		F0018F631F792B4A004227B5 /* DZOAuthSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */; };
+		F0024C412075E6480011E1A7 /* DZUploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F024470D1B612564004C65F9 /* DZUploadSession.m */; };
+		F0024C422075E6480011E1A7 /* DZS3CredentialsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E2461B63F0700077F186 /* DZS3CredentialsManager.m */; };
+		F0024C442075E6480011E1A7 /* DZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = F024471C1B6125AC004C65F9 /* DZCommon.m */; };
+		F0024C462075E6480011E1A7 /* DZActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F00D50531B75D5F100845897 /* DZActivityIndicatorManager.m */; };
+		F0024C472075E6480011E1A7 /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
+		F0024C482075E6480011E1A7 /* DZOAuthSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */; };
+		F0024C492075E6480011E1A7 /* DZURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E6D1B4FB22600FDA46C /* DZURLSession.m */; };
+		F0024C4A2075E6480011E1A7 /* PurgingDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F0608B4D1FD8F64F00FC42BB /* PurgingDiskCache.m */; };
+		F0024C4B2075E6480011E1A7 /* NSDictionary+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = F014D9461BBE9D1300E4F203 /* NSDictionary+Extend.m */; };
+		F0024C4C2075E6480011E1A7 /* DZS3UploadSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D0E2421B63EA900077F186 /* DZS3UploadSession.m */; };
+		F0024C4E2075E6480011E1A7 /* NSString+URLExtended.m in Sources */ = {isa = PBXBuildFile; fileRef = F02DC60B1B6A665500656FDE /* NSString+URLExtended.m */; };
+		F0024C4F2075E6480011E1A7 /* DZResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F038A8951B6773B000349EA8 /* DZResponse.m */; };
+		F0024C502075E6480011E1A7 /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
+		F0024C512075E6480011E1A7 /* NSString+Coders.m in Sources */ = {isa = PBXBuildFile; fileRef = F014D94A1BBE9F6D00E4F203 /* NSString+Coders.m */; };
+		F0024C572075E6480011E1A7 /* DZJSONResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C5A01B776302002F8395 /* DZJSONResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C582075E6480011E1A7 /* DZOAuthSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C592075E6480011E1A7 /* NSDictionary+Extend.h in Headers */ = {isa = PBXBuildFile; fileRef = F014D9451BBE9D1300E4F203 /* NSDictionary+Extend.h */; };
+		F0024C5A2075E6480011E1A7 /* DZResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C59C1B7760C3002F8395 /* DZResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C5B2075E6480011E1A7 /* PurgingDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = F0608B4C1FD8F64F00FC42BB /* PurgingDiskCache.h */; };
+		F0024C5D2075E6480011E1A7 /* DZUploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F024470C1B612564004C65F9 /* DZUploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C5E2075E6480011E1A7 /* DZS3UploadSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2411B63EA900077F186 /* DZS3UploadSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C5F2075E6480011E1A7 /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C602075E6480011E1A7 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C612075E6480011E1A7 /* DZURLSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E6C1B4FB22600FDA46C /* DZURLSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C622075E6480011E1A7 /* NSString+Coders.h in Headers */ = {isa = PBXBuildFile; fileRef = F014D9491BBE9F6D00E4F203 /* NSString+Coders.h */; };
+		F0024C642075E6480011E1A7 /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C662075E6480011E1A7 /* DZS3CredentialsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2451B63F0700077F186 /* DZS3CredentialsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C672075E6480011E1A7 /* DZCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = F024471B1B6125AC004C65F9 /* DZCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C682075E6480011E1A7 /* DZResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = F038A8941B6773B000349EA8 /* DZResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0024C692075E6480011E1A7 /* NSString+URLExtended.h in Headers */ = {isa = PBXBuildFile; fileRef = F02DC60A1B6A665500656FDE /* NSString+URLExtended.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F00D50541B75D5F100845897 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F00D50551B75D5F100845897 /* DZActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F00D50531B75D5F100845897 /* DZActivityIndicatorManager.m */; };
 		F014D9471BBE9D1300E4F203 /* NSDictionary+Extend.h in Headers */ = {isa = PBXBuildFile; fileRef = F014D9451BBE9D1300E4F203 /* NSDictionary+Extend.h */; };
@@ -36,14 +66,32 @@
 		F038A8961B6773B000349EA8 /* DZResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = F038A8941B6773B000349EA8 /* DZResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F038A8971B6773B000349EA8 /* DZResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F038A8951B6773B000349EA8 /* DZResponse.m */; };
 		F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F0596F0A1BE612BC002DB024 /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F081BE612BC002DB024 /* OMGHTTPURLRQ.framework */; };
+		F05BF88C2075E8BC00273B49 /* OMGUserAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF8862075E8BB00273B49 /* OMGUserAgent.m */; };
+		F05BF88D2075E8BC00273B49 /* OMGUserAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF8862075E8BB00273B49 /* OMGUserAgent.m */; };
+		F05BF88E2075E8BC00273B49 /* OMGUserAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF8862075E8BB00273B49 /* OMGUserAgent.m */; };
+		F05BF88F2075E8BC00273B49 /* OMGFormURLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF8872075E8BC00273B49 /* OMGFormURLEncode.m */; };
+		F05BF8902075E8BC00273B49 /* OMGFormURLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF8872075E8BC00273B49 /* OMGFormURLEncode.m */; };
+		F05BF8912075E8BC00273B49 /* OMGFormURLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF8872075E8BC00273B49 /* OMGFormURLEncode.m */; };
+		F05BF8922075E8BC00273B49 /* OMGUserAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = F05BF8882075E8BC00273B49 /* OMGUserAgent.h */; };
+		F05BF8932075E8BC00273B49 /* OMGUserAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = F05BF8882075E8BC00273B49 /* OMGUserAgent.h */; };
+		F05BF8942075E8BC00273B49 /* OMGUserAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = F05BF8882075E8BC00273B49 /* OMGUserAgent.h */; };
+		F05BF8952075E8BC00273B49 /* OMGFormURLEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = F05BF8892075E8BC00273B49 /* OMGFormURLEncode.h */; };
+		F05BF8962075E8BC00273B49 /* OMGFormURLEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = F05BF8892075E8BC00273B49 /* OMGFormURLEncode.h */; };
+		F05BF8972075E8BC00273B49 /* OMGFormURLEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = F05BF8892075E8BC00273B49 /* OMGFormURLEncode.h */; };
+		F05BF8982075E8BC00273B49 /* OMGHTTPURLRQ.h in Headers */ = {isa = PBXBuildFile; fileRef = F05BF88A2075E8BC00273B49 /* OMGHTTPURLRQ.h */; };
+		F05BF8992075E8BC00273B49 /* OMGHTTPURLRQ.h in Headers */ = {isa = PBXBuildFile; fileRef = F05BF88A2075E8BC00273B49 /* OMGHTTPURLRQ.h */; };
+		F05BF89A2075E8BC00273B49 /* OMGHTTPURLRQ.h in Headers */ = {isa = PBXBuildFile; fileRef = F05BF88A2075E8BC00273B49 /* OMGHTTPURLRQ.h */; };
+		F05BF89B2075E8BC00273B49 /* OMGHTTPURLRQ.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF88B2075E8BC00273B49 /* OMGHTTPURLRQ.m */; };
+		F05BF89C2075E8BC00273B49 /* OMGHTTPURLRQ.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF88B2075E8BC00273B49 /* OMGHTTPURLRQ.m */; };
+		F05BF89D2075E8BC00273B49 /* OMGHTTPURLRQ.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF88B2075E8BC00273B49 /* OMGHTTPURLRQ.m */; };
+		F05BF89F2075E99700273B49 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F05BF89E2075E99700273B49 /* Security.framework */; };
+		F05BF8A12075E99C00273B49 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F05BF8A02075E99C00273B49 /* MobileCoreServices.framework */; };
 		F0608B4E1FD8F64F00FC42BB /* PurgingDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = F0608B4C1FD8F64F00FC42BB /* PurgingDiskCache.h */; };
 		F0608B4F1FD8F64F00FC42BB /* PurgingDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F0608B4D1FD8F64F00FC42BB /* PurgingDiskCache.m */; };
 		F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C59C1B7760C3002F8395 /* DZResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
 		F060C5A21B776302002F8395 /* DZJSONResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C5A01B776302002F8395 /* DZJSONResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F060C5A31B776302002F8395 /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
-		F08411051DB495490026DD5A /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0596F081BE612BC002DB024 /* OMGHTTPURLRQ.framework */; };
 		F08E7C431E0BA97D0009BE19 /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F08E7C551E0BACE60009BE19 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C6891D10027300944F5D /* DZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = F024471C1B6125AC004C65F9 /* DZCommon.m */; };
@@ -62,7 +110,6 @@
 		F0B2C69D1D1002BF00944F5D /* DZResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C59C1B7760C3002F8395 /* DZResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C69E1D1002BF00944F5D /* DZJSONResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C5A01B776302002F8395 /* DZJSONResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0B2C6A21D1002E500944F5D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D0E24D1B63F4900077F186 /* Security.framework */; };
-		F0B2C6A61D1003F000944F5D /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0B2C6A41D1003F000944F5D /* OMGHTTPURLRQ.framework */; };
 		F0CA67E11BE1DE9F00963967 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D0E24D1B63F4900077F186 /* Security.framework */; };
 		F0CA67E21BE1DEA300963967 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02447201B61278A004C65F9 /* MobileCoreServices.framework */; };
 		F0D0E2471B63F0700077F186 /* DZS3CredentialsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2451B63F0700077F186 /* DZS3CredentialsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -83,6 +130,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F0024C6E2075E6480011E1A7 /* DZNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DZNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0024C6F2075E6480011E1A7 /* DZNetworkingWatchOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DZNetworkingWatchOS-Info.plist"; path = "/Volumes/Store/Sites/DZNetworking/DZNetworkingWatchOS-Info.plist"; sourceTree = "<absolute>"; };
 		F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZActivityIndicatorManager.h; path = Utilities/DZActivityIndicatorManager.h; sourceTree = "<group>"; };
 		F00D50531B75D5F100845897 /* DZActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZActivityIndicatorManager.m; path = Utilities/DZActivityIndicatorManager.m; sourceTree = "<group>"; };
 		F014D9451BBE9D1300E4F203 /* NSDictionary+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+Extend.h"; path = "Utilities/NSDictionary+Extend.h"; sourceTree = "<group>"; };
@@ -105,8 +154,14 @@
 		F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZOAuthSession.h; path = Core/DZOAuthSession.h; sourceTree = "<group>"; };
 		F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZOAuthSession.m; path = Core/DZOAuthSession.m; sourceTree = "<group>"; };
 		F04331CC1B5F931900A327C8 /* DZURLSessionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZURLSessionProtocol.h; path = Core/DZURLSessionProtocol.h; sourceTree = "<group>"; };
-		F0596F081BE612BC002DB024 /* OMGHTTPURLRQ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OMGHTTPURLRQ.framework; path = Carthage/Build/iOS/OMGHTTPURLRQ.framework; sourceTree = SOURCE_ROOT; };
-		F0596F091BE612BC002DB024 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/iOS/PromiseKit.framework; sourceTree = SOURCE_ROOT; };
+		F05BF8862075E8BB00273B49 /* OMGUserAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMGUserAgent.m; path = Vendors/OMGUserAgent.m; sourceTree = "<group>"; };
+		F05BF8872075E8BC00273B49 /* OMGFormURLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMGFormURLEncode.m; path = Vendors/OMGFormURLEncode.m; sourceTree = "<group>"; };
+		F05BF8882075E8BC00273B49 /* OMGUserAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMGUserAgent.h; path = Vendors/OMGUserAgent.h; sourceTree = "<group>"; };
+		F05BF8892075E8BC00273B49 /* OMGFormURLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMGFormURLEncode.h; path = Vendors/OMGFormURLEncode.h; sourceTree = "<group>"; };
+		F05BF88A2075E8BC00273B49 /* OMGHTTPURLRQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMGHTTPURLRQ.h; path = Vendors/OMGHTTPURLRQ.h; sourceTree = "<group>"; };
+		F05BF88B2075E8BC00273B49 /* OMGHTTPURLRQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMGHTTPURLRQ.m; path = Vendors/OMGHTTPURLRQ.m; sourceTree = "<group>"; };
+		F05BF89E2075E99700273B49 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS4.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		F05BF8A02075E99C00273B49 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS4.3.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		F0608B4C1FD8F64F00FC42BB /* PurgingDiskCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PurgingDiskCache.h; path = ImageLoading/PurgingDiskCache.h; sourceTree = "<group>"; };
 		F0608B4D1FD8F64F00FC42BB /* PurgingDiskCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PurgingDiskCache.m; path = ImageLoading/PurgingDiskCache.m; sourceTree = "<group>"; };
 		F060C59C1B7760C3002F8395 /* DZResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZResponseParser.h; path = "Core/Response Parsers/DZResponseParser.h"; sourceTree = "<group>"; };
@@ -140,12 +195,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F0024C522075E6480011E1A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F05BF8A12075E99C00273B49 /* MobileCoreServices.framework in Frameworks */,
+				F05BF89F2075E99700273B49 /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0B2C67D1D10024C00944F5D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F0B2C6A21D1002E500944F5D /* Security.framework in Frameworks */,
-				F0B2C6A61D1003F000944F5D /* OMGHTTPURLRQ.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,7 +218,6 @@
 			files = (
 				F0D0E24E1B63F4900077F186 /* Security.framework in Frameworks */,
 				F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */,
-				F0596F0A1BE612BC002DB024 /* OMGHTTPURLRQ.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,7 +227,6 @@
 			files = (
 				F0CA67E11BE1DE9F00963967 /* Security.framework in Frameworks */,
 				F0CA67E21BE1DEA300963967 /* MobileCoreServices.framework in Frameworks */,
-				F08411051DB495490026DD5A /* OMGHTTPURLRQ.framework in Frameworks */,
 				F0FC8E5C1B4FB1D300FDA46C /* DZNetworking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -173,6 +234,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F0024C702075E6E80011E1A7 /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				F05BF8892075E8BC00273B49 /* OMGFormURLEncode.h */,
+				F05BF8872075E8BC00273B49 /* OMGFormURLEncode.m */,
+				F05BF88A2075E8BC00273B49 /* OMGHTTPURLRQ.h */,
+				F05BF88B2075E8BC00273B49 /* OMGHTTPURLRQ.m */,
+				F05BF8882075E8BC00273B49 /* OMGUserAgent.h */,
+				F05BF8862075E8BB00273B49 /* OMGUserAgent.m */,
+			);
+			name = Vendors;
+			sourceTree = "<group>";
+		};
 		F024471F1B6125B1004C65F9 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +270,8 @@
 		F02E59011D4227D000BD0AD7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F05BF8A02075E99C00273B49 /* MobileCoreServices.framework */,
+				F05BF89E2075E99700273B49 /* Security.framework */,
 				F02E59021D4227D000BD0AD7 /* CoreServices.framework */,
 			);
 			name = Frameworks;
@@ -254,6 +330,7 @@
 				F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */,
 				F0FC8E5B1B4FB1D300FDA46C /* DZNetworkingTests.xctest */,
 				F0B2C6811D10024C00944F5D /* DZNetworking.framework */,
+				F0024C6E2075E6480011E1A7 /* DZNetworking.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -261,6 +338,7 @@
 		F0FC8E521B4FB1D300FDA46C /* DZNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				F0024C702075E6E80011E1A7 /* Vendors */,
 				F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */,
 				F024471F1B6125B1004C65F9 /* Utilities */,
 				F0FC8E701B4FB22900FDA46C /* Core */,
@@ -273,11 +351,10 @@
 		F0FC8E531B4FB1D300FDA46C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F0596F081BE612BC002DB024 /* OMGHTTPURLRQ.framework */,
-				F0596F091BE612BC002DB024 /* PromiseKit.framework */,
 				F0D0E24D1B63F4900077F186 /* Security.framework */,
 				F02447201B61278A004C65F9 /* MobileCoreServices.framework */,
 				F0FC8E541B4FB1D300FDA46C /* Info.plist */,
+				F0024C6F2075E6480011E1A7 /* DZNetworkingWatchOS-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -324,6 +401,32 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		F0024C562075E6480011E1A7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0024C572075E6480011E1A7 /* DZJSONResponseParser.h in Headers */,
+				F0024C582075E6480011E1A7 /* DZOAuthSession.h in Headers */,
+				F0024C592075E6480011E1A7 /* NSDictionary+Extend.h in Headers */,
+				F0024C5A2075E6480011E1A7 /* DZResponseParser.h in Headers */,
+				F05BF8972075E8BC00273B49 /* OMGFormURLEncode.h in Headers */,
+				F0024C5B2075E6480011E1A7 /* PurgingDiskCache.h in Headers */,
+				F05BF8942075E8BC00273B49 /* OMGUserAgent.h in Headers */,
+				F0024C5D2075E6480011E1A7 /* DZUploadSession.h in Headers */,
+				F05BF89A2075E8BC00273B49 /* OMGHTTPURLRQ.h in Headers */,
+				F0024C5E2075E6480011E1A7 /* DZS3UploadSession.h in Headers */,
+				F0024C5F2075E6480011E1A7 /* DZNetworking.h in Headers */,
+				F0024C602075E6480011E1A7 /* DZActivityIndicatorManager.h in Headers */,
+				F0024C612075E6480011E1A7 /* DZURLSession.h in Headers */,
+				F0024C622075E6480011E1A7 /* NSString+Coders.h in Headers */,
+				F0024C642075E6480011E1A7 /* DZURLSessionProtocol.h in Headers */,
+				F0024C662075E6480011E1A7 /* DZS3CredentialsManager.h in Headers */,
+				F0024C672075E6480011E1A7 /* DZCommon.h in Headers */,
+				F0024C682075E6480011E1A7 /* DZResponse.h in Headers */,
+				F0024C692075E6480011E1A7 /* NSString+URLExtended.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0B2C67E1D10024C00944F5D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -333,12 +436,15 @@
 				F0B2C6971D10029800944F5D /* NSString+Coders.h in Headers */,
 				F0B2C6911D10029800944F5D /* DZCommon.h in Headers */,
 				F0018F571F792947004227B5 /* DZUploadSession.h in Headers */,
+				F05BF8932075E8BC00273B49 /* OMGUserAgent.h in Headers */,
 				F0018F5B1F7929FC004227B5 /* DZS3UploadSession.h in Headers */,
 				F0B2C6921D10029800944F5D /* DZURLSessionProtocol.h in Headers */,
 				F0B2C69D1D1002BF00944F5D /* DZResponseParser.h in Headers */,
 				F0B2C6991D1002B900944F5D /* DZURLSession.h in Headers */,
 				F0B2C6941D10029800944F5D /* NSString+URLExtended.h in Headers */,
 				F08E7C431E0BA97D0009BE19 /* DZNetworking.h in Headers */,
+				F05BF8962075E8BC00273B49 /* OMGFormURLEncode.h in Headers */,
+				F05BF8992075E8BC00273B49 /* OMGHTTPURLRQ.h in Headers */,
 				F0B2C69E1D1002BF00944F5D /* DZJSONResponseParser.h in Headers */,
 				F0B2C6981D1002B900944F5D /* DZResponse.h in Headers */,
 				F08E7C551E0BACE60009BE19 /* DZActivityIndicatorManager.h in Headers */,
@@ -359,6 +465,7 @@
 				F0018F551F792947004227B5 /* DZUploadSession.h in Headers */,
 				F0018F5A1F7929FC004227B5 /* DZS3UploadSession.h in Headers */,
 				F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */,
+				F05BF8922075E8BC00273B49 /* OMGUserAgent.h in Headers */,
 				F00D50541B75D5F100845897 /* DZActivityIndicatorManager.h in Headers */,
 				F0FC8E6E1B4FB22600FDA46C /* DZURLSession.h in Headers */,
 				F014D94B1BBE9F6D00E4F203 /* NSString+Coders.h in Headers */,
@@ -366,8 +473,10 @@
 				F04331CD1B5F931900A327C8 /* DZURLSessionProtocol.h in Headers */,
 				F0E102811FC583BA007C7140 /* ImageLoader.h in Headers */,
 				F0D0E2471B63F0700077F186 /* DZS3CredentialsManager.h in Headers */,
+				F05BF8982075E8BC00273B49 /* OMGHTTPURLRQ.h in Headers */,
 				F024471D1B6125AC004C65F9 /* DZCommon.h in Headers */,
 				F038A8961B6773B000349EA8 /* DZResponse.h in Headers */,
+				F05BF8952075E8BC00273B49 /* OMGFormURLEncode.h in Headers */,
 				F02DC60C1B6A665500656FDE /* NSString+URLExtended.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +484,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F0024C3F2075E6480011E1A7 /* DZNetworkingWatchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F0024C6B2075E6480011E1A7 /* Build configuration list for PBXNativeTarget "DZNetworkingWatchOS" */;
+			buildPhases = (
+				F0024C402075E6480011E1A7 /* Sources */,
+				F0024C522075E6480011E1A7 /* Frameworks */,
+				F0024C562075E6480011E1A7 /* Headers */,
+				F0024C6A2075E6480011E1A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DZNetworkingWatchOS;
+			productName = DZNetworking;
+			productReference = F0024C6E2075E6480011E1A7 /* DZNetworking.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		F0B2C6801D10024C00944F5D /* DZNetworkingMacOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0B2C6861D10024C00944F5D /* Build configuration list for PBXNativeTarget "DZNetworkingMacOS" */;
@@ -418,7 +545,6 @@
 				F0FC8E571B4FB1D300FDA46C /* Sources */,
 				F0FC8E581B4FB1D300FDA46C /* Frameworks */,
 				F0FC8E591B4FB1D300FDA46C /* Resources */,
-				F02D4D1A1FD9174400A77E3F /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -435,9 +561,12 @@
 		F0FC8E471B4FB1D300FDA46C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Dezine Zync Studios LLP.";
 				TargetAttributes = {
+					F0024C3F2075E6480011E1A7 = {
+						ProvisioningStyle = Automatic;
+					};
 					F0B2C6801D10024C00944F5D = {
 						CreatedOnToolsVersion = 7.3;
 						ProvisioningStyle = Automatic;
@@ -468,11 +597,19 @@
 				F0FC8E4F1B4FB1D300FDA46C /* DZNetworking */,
 				F0FC8E5A1B4FB1D300FDA46C /* DZNetworkingTests */,
 				F0B2C6801D10024C00944F5D /* DZNetworkingMacOS */,
+				F0024C3F2075E6480011E1A7 /* DZNetworkingWatchOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F0024C6A2075E6480011E1A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0B2C67F1D10024C00944F5D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -496,34 +633,42 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		F02D4D1A1FD9174400A77E3F /* Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
+/* Begin PBXSourcesBuildPhase section */
+		F0024C402075E6480011E1A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/OMGHTTPURLRQ.framework",
-			);
-			name = Carthage;
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/OMGHTTPURLRQ.framework",
+				F0024C412075E6480011E1A7 /* DZUploadSession.m in Sources */,
+				F0024C422075E6480011E1A7 /* DZS3CredentialsManager.m in Sources */,
+				F0024C442075E6480011E1A7 /* DZCommon.m in Sources */,
+				F0024C462075E6480011E1A7 /* DZActivityIndicatorManager.m in Sources */,
+				F0024C472075E6480011E1A7 /* DZResponseParser.m in Sources */,
+				F05BF89D2075E8BC00273B49 /* OMGHTTPURLRQ.m in Sources */,
+				F05BF8912075E8BC00273B49 /* OMGFormURLEncode.m in Sources */,
+				F0024C482075E6480011E1A7 /* DZOAuthSession.m in Sources */,
+				F0024C492075E6480011E1A7 /* DZURLSession.m in Sources */,
+				F0024C4A2075E6480011E1A7 /* PurgingDiskCache.m in Sources */,
+				F0024C4B2075E6480011E1A7 /* NSDictionary+Extend.m in Sources */,
+				F0024C4C2075E6480011E1A7 /* DZS3UploadSession.m in Sources */,
+				F0024C4E2075E6480011E1A7 /* NSString+URLExtended.m in Sources */,
+				F0024C4F2075E6480011E1A7 /* DZResponse.m in Sources */,
+				F0024C502075E6480011E1A7 /* DZJSONResponseParser.m in Sources */,
+				F0024C512075E6480011E1A7 /* NSString+Coders.m in Sources */,
+				F05BF88E2075E8BC00273B49 /* OMGUserAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
 		F0B2C67C1D10024C00944F5D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F0B2C68D1D10027E00944F5D /* DZURLSession.m in Sources */,
 				F0B2C68C1D10027E00944F5D /* DZResponse.m in Sources */,
+				F05BF88D2075E8BC00273B49 /* OMGUserAgent.m in Sources */,
+				F05BF89C2075E8BC00273B49 /* OMGHTTPURLRQ.m in Sources */,
 				F0B2C6891D10027300944F5D /* DZCommon.m in Sources */,
 				F0B2C68B1D10027E00944F5D /* DZJSONResponseParser.m in Sources */,
+				F05BF8902075E8BC00273B49 /* OMGFormURLEncode.m in Sources */,
 				F0B2C68A1D10027E00944F5D /* DZResponseParser.m in Sources */,
 				F0018F5E1F792A06004227B5 /* DZS3UploadSession.m in Sources */,
 				F0018F631F792B4A004227B5 /* DZOAuthSession.m in Sources */,
@@ -537,6 +682,8 @@
 			files = (
 				F0018F561F792947004227B5 /* DZUploadSession.m in Sources */,
 				F0D0E2481B63F0700077F186 /* DZS3CredentialsManager.m in Sources */,
+				F05BF89B2075E8BC00273B49 /* OMGHTTPURLRQ.m in Sources */,
+				F05BF88C2075E8BC00273B49 /* OMGUserAgent.m in Sources */,
 				F0E1027E1FC583BA007C7140 /* ImageLoader.m in Sources */,
 				F024471E1B6125AC004C65F9 /* DZCommon.m in Sources */,
 				F0E1027B1FC583BA007C7140 /* ImageResponseParser.m in Sources */,
@@ -547,6 +694,7 @@
 				F0608B4F1FD8F64F00FC42BB /* PurgingDiskCache.m in Sources */,
 				F014D9481BBE9D1300E4F203 /* NSDictionary+Extend.m in Sources */,
 				F0018F5C1F792A06004227B5 /* DZS3UploadSession.m in Sources */,
+				F05BF88F2075E8BC00273B49 /* OMGFormURLEncode.m in Sources */,
 				F0E1027F1FC583BA007C7140 /* UIImageView+ImageLoading.m in Sources */,
 				F02DC60D1B6A665500656FDE /* NSString+URLExtended.m in Sources */,
 				F038A8971B6773B000349EA8 /* DZResponse.m in Sources */,
@@ -570,9 +718,79 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		F0024C6C2075E6480011E1A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
+				);
+				INFOPLIST_FILE = "DZNetworkingWatchOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = DZNetworking;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		F0024C6D2075E6480011E1A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
+				);
+				INFOPLIST_FILE = "DZNetworkingWatchOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = DZNetworking;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
 		F0B2C6871D10024C00944F5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -607,6 +825,7 @@
 		F0B2C6881D10024C00944F5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -647,12 +866,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -705,12 +926,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -748,7 +971,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -784,7 +1007,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -861,6 +1084,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F0024C6B2075E6480011E1A7 /* Build configuration list for PBXNativeTarget "DZNetworkingWatchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0024C6C2075E6480011E1A7 /* Debug */,
+				F0024C6D2075E6480011E1A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F0B2C6861D10024C00944F5D /* Build configuration list for PBXNativeTarget "DZNetworkingMacOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

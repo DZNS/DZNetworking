@@ -29,9 +29,12 @@
 //
 
 #import "DZURLSession.h"
-#ifndef DZAPPKIT
+#if TARGET_OS_IOS == 1
 #import <DZNetworking/DZActivityIndicatorManager.h>
 #endif
+
+#import "OMGHTTPURLRQ.h"
+
 @interface DZURLSession() <NSURLSessionDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
@@ -364,7 +367,7 @@
 - (void)requestWithReq:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB
 {
     __block NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-#ifndef DZAPPKIT
+#if TARGET_OS_IOS == 1
         // we simply decrement it. No harm, since we ensure the value never drops below 0.
         [[DZActivityIndicatorManager shared] decrementCount];
 #endif
@@ -419,7 +422,7 @@
     }];
     
     [task resume];
-#ifndef DZAPPKIT
+#if TARGET_OS_IOS == 1
     if(self.useActivityManager) [[DZActivityIndicatorManager shared] incrementCount];
 #endif
 }

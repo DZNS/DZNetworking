@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 #import <DZNetworking/DZURLSessionProtocol.h>
-#import <OMGHTTPURLRQ/OMGHTTPURLRQ.h>
 #import <DZNetworking/DZResponse.h>
 #import <DZNetworking/NSString+URLExtended.h>
 
@@ -20,7 +19,6 @@
 #else
     #define DZLog(fmt,...) {}
 #endif
-
 
 extern NSString *const DZErrorDomain;
 extern NSString *const DZErrorData;
