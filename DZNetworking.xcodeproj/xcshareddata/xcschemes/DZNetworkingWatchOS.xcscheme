@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F0024C3F2075E6480011E1A7"
+               BlueprintIdentifier = "F03196292075FDC400A50D17"
                BuildableName = "DZNetworking.framework"
                BlueprintName = "DZNetworkingWatchOS"
                ReferencedContainer = "container:DZNetworking.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F0024C3F2075E6480011E1A7"
+            BlueprintIdentifier = "F03196292075FDC400A50D17"
             BuildableName = "DZNetworking.framework"
             BlueprintName = "DZNetworkingWatchOS"
             ReferencedContainer = "container:DZNetworking.xcodeproj">
@@ -63,7 +63,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F0024C3F2075E6480011E1A7"
+            BlueprintIdentifier = "F03196292075FDC400A50D17"
             BuildableName = "DZNetworking.framework"
             BlueprintName = "DZNetworkingWatchOS"
             ReferencedContainer = "container:DZNetworking.xcodeproj">
