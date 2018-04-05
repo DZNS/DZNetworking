@@ -45,7 +45,6 @@
  *  @param URL          the URL.
  *  @param params   Parameters for the request. These will be included in the HTTP Body along with the file's data.
  *
- *  @return DZPromise.
  */
 - (void)UPLOAD:(NSString *)filePath
             fieldName:(NSString *)fieldName
@@ -61,7 +60,6 @@
  *  @param URL          the URL.
  *  @param params       Parameters for the request. These will be included in the HTTP Body along with the file's data.
  *
- *  @return DZPromise.
  */
 - (void)UPLOAD:(NSData *)data
                  name:(NSString *)name

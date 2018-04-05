@@ -102,7 +102,6 @@
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the URL as query parameters.
  *
- *  @return DZPromise
  */
 - (void)GET:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
@@ -112,7 +111,6 @@
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
  */
 - (void)POST:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
@@ -123,7 +121,6 @@
  *  @param query  Parameters for the URL query.
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
  */
 - (void)POST:(NSString * _Nonnull)URI queryParams:(NSDictionary * _Nullable)query parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
@@ -133,7 +130,6 @@
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
  */
 - (void)PUT:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
@@ -144,7 +140,6 @@
  *  @param query  Parameters for the URL query.
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
  */
 - (void)PUT:(NSString * _Nonnull)URI queryParams:(NSDictionary * _Nullable)query parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
@@ -154,7 +149,6 @@
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
  */
 - (void)PATCH:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
@@ -164,7 +158,6 @@
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
- *  @return DZPromise
  */
 - (void)DELETE:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
@@ -175,7 +168,6 @@
  *  @param params Parameters for the request. These will be included in the URL as query parameters.
  *
  *  @discussion The response for such requests does not include a responseObject from the server. Check the response object for the desired information.
- *  @return DZPromise
  */
 - (void)HEAD:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
@@ -187,7 +179,6 @@
  *  @param params Parameters for the request. These will be included in the URL as query parameters.
  *
  *  @discussion The response for such requests may not include a responseObject from the server. Check the response object for the desired information.
- *  @return DZPromise
  */
 - (void)OPTIONS:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nonnull)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
