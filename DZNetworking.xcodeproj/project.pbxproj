@@ -747,7 +747,7 @@
 				INFOPLIST_FILE = DZNetworkingWatchOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.DZNetworkingWatchOS;
 				PRODUCT_NAME = DZNetworking;
 				SDKROOT = watchos;
@@ -780,12 +780,13 @@
 				INFOPLIST_FILE = DZNetworkingWatchOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.DZNetworkingWatchOS;
 				PRODUCT_NAME = DZNetworking;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				VALID_ARCHS = "armv7k i386";
+				VALID_ARCHS = armv7k;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;

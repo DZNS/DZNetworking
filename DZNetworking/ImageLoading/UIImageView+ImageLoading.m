@@ -53,7 +53,7 @@ static char AUTO_UPDATING_FRAME;
     [self il_setImageWithURL:url success:nil error:nil];
 }
 
-- (void)il_setImageWithURL:(id)url success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success error:(void (^ _Nullable)(NSError * _Nonnull))error
+- (void)il_setImageWithURL:(id)url success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success error:(void (^ _Nullable)(NSError * _Nonnull))errorCB
 {
     if (self.task)
         [self il_cancelImageLoading];
@@ -69,8 +69,12 @@ static char AUTO_UPDATING_FRAME;
             [self setNeedsDisplay];
         });
         
-        if (!self.autoUpdateFrameOrConstraints)
+        if (!self.autoUpdateFrameOrConstraints) {
+            if (success) {
+                success(image, url);
+            }
             return;
+        }
         
         __block CGRect frame;
         __block CGSize imageSize;
@@ -130,8 +134,12 @@ static char AUTO_UPDATING_FRAME;
             });
         }
         
-        if (exitEarly)
+        if (exitEarly) {
+            if (success) {
+                success(image, url);
+            }
             return;
+        }
         
         weakify(self);
         asyncMain(^{
@@ -139,10 +147,18 @@ static char AUTO_UPDATING_FRAME;
             self.frame = frame;
         });
         
+        if (success) {
+            success(image, url);
+        }
+        
     } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
 #ifdef DEBUG
         NSLog(@"%@", error);
 #endif
+        
+        if (errorCB) {
+            errorCB(error);
+        }
     }];
 }
 
