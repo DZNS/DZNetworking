@@ -7,6 +7,8 @@
 //
 
 #import <DZNetworking/DZNetworking.h>
+#import <DZNetworking/UIImage+GIF.h>
+#import <DZNetworking/WebPImageSerialization.h>
 
 @class ImageLoader;
 

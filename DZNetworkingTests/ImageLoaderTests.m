@@ -30,16 +30,11 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testGIF {
     
-    XCTAssert(YES);
-    return;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"GET:gifImage"];
     
-    XCTestExpectation *expectation = [self expectationWithDescription:@"GET:image"];
-    
-    NSURL *URL = [NSURL URLWithString:@"..."];
+    NSURL *URL = [NSURL URLWithString:@"https://bcdn.evilmadscientist.com/media/2018/02/action.gif"];
     
     [SharedImageLoader downloadImageForURL:URL success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         
@@ -51,6 +46,23 @@
     
     waitForExpectation;
     
+}
+
+- (void)testWebP {
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"GET:webPimage"];
+    
+    NSURL *URL = [NSURL URLWithString:@"https://www.gstatic.com/webp/gallery/1.sm.webp"];
+    
+    [SharedImageLoader downloadImageForURL:URL success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+        
+        [expectation fulfill];
+        
+    } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+        DZLog(@"%@", error);
+    }];
+    
+    waitForExpectation;
 }
 
 @end

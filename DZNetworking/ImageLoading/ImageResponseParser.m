@@ -7,6 +7,8 @@
 //
 
 #import "ImageResponseParser.h"
+#import "UIImage+GIF.h"
+#import "WebPImageSerialization.h"
 
 @implementation ImageResponseParser
 
@@ -14,7 +16,22 @@
 
 - (id)parseResponse:(NSData *)responseData :(NSHTTPURLResponse *)response error:(NSError *__autoreleasing *)error
 {
-    UIImage *image = [UIImage imageWithData:responseData];
+    
+    NSString *contentType = [[response allHeaderFields] valueForKey:@"Content-Type"];
+    UIImage *image = nil;
+    
+    if ([contentType isEqualToString:@"image/gif"]) {
+        image = [UIImage animatedImageWithAnimatedGIFData:responseData];
+    }
+    
+    else if ([contentType isEqualToString:@"image/webp"]) {
+        image = [UIImage imageWithWebPData:responseData];
+    }
+    
+    else {
+        image = [UIImage imageWithData:responseData];
+    }
+    
     return image;
 }
 
@@ -22,7 +39,7 @@
 
 - (NSSet *)contentTypes
 {
-    return [NSSet setWithArray:@[@"image/jpg", @"image/jpeg", @"image/png"]];
+    return [NSSet setWithArray:@[@"image/jpg", @"image/jpeg", @"image/png", @"image/gif", @"image/webp"]];
 }
 
 @end
