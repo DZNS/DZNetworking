@@ -30,4 +30,5 @@ typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
 typedef NSURLRequest *(^redirectModifierBlock)(NSURLRequest *request, NSHTTPURLResponse *redirectResponse);
 
 typedef void (^successBlock)(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task);
+typedef void (^progressBlock)(double completed, NSProgress *progress); // 0.0 to 1.0
 typedef void (^errorBlock)(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task);

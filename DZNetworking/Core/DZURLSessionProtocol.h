@@ -9,10 +9,7 @@
 #ifndef DZNetworking_DZURLSessionProtocol_h
 #define DZNetworking_DZURLSessionProtocol_h
 
-@protocol DZURLSessionProtocol <NSObject>
-
-@optional
-- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler;
+@protocol DZURLSessionProtocol <NSURLSessionDelegate>
 
 @end
 

@@ -63,6 +63,8 @@
     
     [_session UPLOAD:path fieldName:@"file" URL:URL parameters:nil success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         [expectation fulfill];
+    } progress:^(double completed, NSProgress *progress) {
+        NSLog(@"-> %@", @(completed));
     } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         DZLog(@"%@", error.localizedDescription);
     }];
@@ -81,11 +83,20 @@
     
     NSString *URL = @"http://localhost:3000/files";
     
-    NSString *str = @"This is some text";
+    NSMutableString *str = @"".mutableCopy;
+    
+    NSInteger runs = 30000;
+    while (runs > 0) {
+        [str appendString:@"This is some text"];
+        runs--;
+    }
+    
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     
     [_session UPLOAD:data name:@"sample.txt" fieldName:@"file" URL:URL parameters:nil success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         [expectation fulfill];
+    } progress:^(double completed, NSProgress *progress) {
+        NSLog(@"-> %@", @(completed));
     } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         DZLog(@"%@", error.localizedDescription);
     }];

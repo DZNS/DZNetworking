@@ -107,7 +107,7 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
-    return [self.session GET:request success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+    __unused NSURLSessionTask *task = [self.session GET:request success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         
         NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
@@ -177,7 +177,7 @@
 
 #pragma mark -
 
-- (void)GET:(NSString * _Nonnull)URI
+- (NSURLSessionTask *)GET:(NSString * _Nonnull)URI
                  parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
@@ -185,7 +185,7 @@
     
 }
 
-- (void)POST:(NSString * _Nonnull)URI
+- (NSURLSessionTask *)POST:(NSString * _Nonnull)URI
                   parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
@@ -193,7 +193,7 @@
     
 }
 
-- (void)POST:(NSString * _Nonnull)URI
+- (NSURLSessionTask *)POST:(NSString * _Nonnull)URI
                  queryParams:(NSDictionary * _Nullable)query
                   parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
@@ -202,7 +202,7 @@
     
 }
 
-- (void)PUT:(NSString * _Nonnull)URI
+- (NSURLSessionTask *)PUT:(NSString * _Nonnull)URI
                  parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
@@ -210,7 +210,7 @@
     
 }
 
-- (void)PUT:(NSString * _Nonnull)URI
+- (NSURLSessionTask *)PUT:(NSString * _Nonnull)URI
                 queryParams:(NSDictionary * _Nullable)query
                  parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
@@ -219,7 +219,7 @@
     
 }
 
-- (void)PATCH:(NSString * _Nonnull)URI
+- (NSURLSessionTask *)PATCH:(NSString * _Nonnull)URI
                    parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
@@ -227,7 +227,7 @@
     
 }
 
-- (void)DELETE:(NSString * _Nonnull)URI
+- (NSURLSessionTask *)DELETE:(NSString * _Nonnull)URI
                     parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
@@ -235,7 +235,7 @@
     
 }
 
-- (void)HEAD:(NSString * _Nonnull)URI
+- (NSURLSessionTask *)HEAD:(NSString * _Nonnull)URI
                   parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     
@@ -244,7 +244,7 @@
 }
 
 
-- (void)OPTIONS:(NSString * _Nonnull)URI
+- (NSURLSessionTask *)OPTIONS:(NSString * _Nonnull)URI
                      parameters:(NSDictionary * _Nonnull)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB
 {
     

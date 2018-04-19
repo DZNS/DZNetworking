@@ -46,10 +46,13 @@
  *  @param params   Parameters for the request. These will be included in the HTTP Body along with the file's data.
  *
  */
-- (void)UPLOAD:(NSString *)filePath
-            fieldName:(NSString *)fieldName
-                  URL:(NSString *)URL
-           parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)UPLOAD:(NSString *)filePath
+                   fieldName:(NSString *)fieldName
+                         URL:(NSString *)URL
+                  parameters:(NSDictionary *)params
+                     success:(successBlock)successCB
+                    progress:(progressBlock)progressCB
+                       error:(errorBlock)errorCB;
 
 /**
  *  Upload a file with the provided data and mime-type.
@@ -61,11 +64,22 @@
  *  @param params       Parameters for the request. These will be included in the HTTP Body along with the file's data.
  *
  */
-- (void)UPLOAD:(NSData *)data
-                 name:(NSString *)name
-            fieldName:(NSString *)fieldName
-                  URL:(NSString *)URL
-           parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)UPLOAD:(NSData *)data
+                        name:(NSString *)name
+                   fieldName:(NSString *)fieldName
+                         URL:(NSString *)URL
+                  parameters:(NSDictionary *)params
+                     success:(successBlock)successCB
+                       error:(errorBlock)errorCB;
+
+- (NSURLSessionTask *)UPLOAD:(NSData *)data
+                        name:(NSString *)name
+                   fieldName:(NSString *)fieldName
+                         URL:(NSString *)URL
+                  parameters:(NSDictionary *)params
+                     success:(successBlock)successCB
+                    progress:(progressBlock)progressCB
+                       error:(errorBlock)errorCB;
 
 #pragma mark - Internal
 

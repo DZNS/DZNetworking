@@ -38,9 +38,14 @@
 #import <CoreServices/CoreServices.h>
 #endif
 
+#import <objc/runtime.h>
+
 #import "OMGHTTPURLRQ.h"
 
-@interface DZUploadSession () <NSURLSessionTaskDelegate>
+static void *kTaskProgressBlock;
+static char *kTaskProgressContext;
+
+@interface DZUploadSession () <DZURLSessionProtocol>
 
 @property (nonatomic, strong) DZURLSession *session;
 
@@ -66,21 +71,21 @@
 - (instancetype)init
 {
     
-    if(self = [super init])
-    {
-        
+    if(self = [super init]) {
         _session = [[DZURLSession alloc] init];
-        
     }
     
     return self;
     
 }
 
-- (void)UPLOAD:(NSString *)path
-            fieldName:(NSString *)fieldName
-                  URL:(NSString *)URL
-           parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)UPLOAD:(NSString *)path
+                   fieldName:(NSString *)fieldName
+                         URL:(NSString *)URL
+                  parameters:(NSDictionary *)params
+                     success:(successBlock)successCB
+                    progress:(progressBlock)progressCB
+                       error:(errorBlock)errorCB
 {
     
     NSString *contentType = [[self class] mimeTypeForFileAtPath:path];
@@ -98,15 +103,32 @@
     
     NSMutableURLRequest *request = [OMGHTTPURLRQ POST:URL :processed error:nil];
     
-    [self.session POST:request success:successCB error:errorCB];
+    NSURLSessionTask *task = [self.session POST:request success:successCB error:errorCB];
+    
+    if (@available(iOS 11, *)) {
+        if (progressCB) {
+            objc_setAssociatedObject(task.progress, &kTaskProgressBlock, progressCB, OBJC_ASSOCIATION_COPY);
+            [task.progress addObserver:self forKeyPath:NSStringFromSelector(@selector(fractionCompleted)) options:NSKeyValueObservingOptionNew context:&kTaskProgressContext];
+        }
+    }
+    
+    return task;
     
 }
 
-- (void)UPLOAD:(NSData *)data
-                 name:(NSString *)name
-            fieldName:(NSString *)fieldName
-                  URL:(NSString *)URL
-           parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)UPLOAD:(NSData *)data name:(NSString *)name fieldName:(NSString *)fieldName URL:(NSString *)URL parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+{
+    return [self UPLOAD:data name:name fieldName:fieldName URL:URL parameters:params success:successCB progress:nil error:errorCB];
+}
+
+- (NSURLSessionTask *)UPLOAD:(NSData *)data
+                        name:(NSString *)name
+                   fieldName:(NSString *)fieldName
+                         URL:(NSString *)URL
+                  parameters:(NSDictionary *)params
+                     success:(successBlock)successCB
+                    progress:(progressBlock)progressCB
+                       error:(errorBlock)errorCB
 {
     
     //create a temporary file from the data.
@@ -123,7 +145,7 @@
         {
            if (errorCB)
                errorCB(error, nil, nil);
-            return;
+            return nil;
         }
         
     }
@@ -134,12 +156,12 @@
         NSError *error = [NSError errorWithDomain:DZErrorDomain code:2000 userInfo:nil];
         if (errorCB)
             errorCB(error, nil, nil);
-        return;
+        return nil;
         
     }
     
     
-    [self UPLOAD:path fieldName:fieldName URL:URL parameters:params success:successCB error:errorCB];
+    return [self UPLOAD:path fieldName:fieldName URL:URL parameters:params success:successCB progress:progressCB error:errorCB];
     
 }
 
@@ -168,5 +190,21 @@
     
 }
 
+#pragma mark - <KVO>
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(fractionCompleted))] && context == &kTaskProgressContext) {
+        NSProgress *progress = object;
+        
+        progressBlock block = objc_getAssociatedObject(object, &kTaskProgressBlock);
+        
+        if (block) {
+            double completed = [progress fractionCompleted];
+            
+            block(completed, progress);
+        }
+    }
+}
 
 @end

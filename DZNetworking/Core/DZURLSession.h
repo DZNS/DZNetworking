@@ -96,7 +96,7 @@
  *
 
  */
-- (void)GET:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)GET:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a POST request
@@ -106,7 +106,7 @@
  *
 
  */
-- (void)POST:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)POST:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a POST request
@@ -117,7 +117,7 @@
  *
 
  */
-- (void)POST:(NSString *)URI queryParams:(NSDictionary *)query parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)POST:(NSString *)URI queryParams:(NSDictionary *)query parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a PUT request
@@ -127,7 +127,7 @@
  *
 
  */
-- (void)PUT:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)PUT:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a PUT request
@@ -138,7 +138,7 @@
  *
 
  */
-- (void)PUT:(NSString *)URI queryParams:(NSDictionary *)query parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)PUT:(NSString *)URI queryParams:(NSDictionary *)query parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a PATCH request
@@ -148,7 +148,7 @@
  *
 
  */
-- (void)PATCH:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)PATCH:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a DELETE request. The response for such requests may not include a responseObject from the server. Check for the statusCode on the response object instead.
@@ -158,7 +158,7 @@
  *
 
  */
-- (void)DELETE:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)DELETE:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Trigger a HEAD request.
@@ -169,7 +169,7 @@
  *  @discussion The response for such requests does not include a responseObject from the server. Check the response object for the desired information.
 
  */
-- (void)HEAD:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)HEAD:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 
 /**
@@ -181,7 +181,7 @@
  *  @discussion The response for such requests may not include a responseObject from the server. Check the response object for the desired information.
 
  */
-- (void)OPTIONS:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)OPTIONS:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 #pragma mark - 
 
@@ -204,7 +204,7 @@
  *  @param params For PUT, POST, PATCH and DELETE requests, the params will be set on the HTTPBody. For all other request types, the parameters will be set on the query.
  *
  */
-- (void)performRequestWithURI:(NSString *)URI method:(NSString *)method params:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)performRequestWithURI:(NSString *)URI method:(NSString *)method params:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
 
 /**
  *  Triggers network request with the provided NSURLRequest. This method is the final method that gets called from most of the above methods. You should never have to call this method directly, but if you need to, ensure your parameters are correctly encoded and the required HTTPMethod is set.
@@ -212,7 +212,7 @@
  *  @param request The request object
  *
  */
-- (void)requestWithReq:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)requestWithReq:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB;
 
 #pragma mark - 
 
@@ -223,12 +223,12 @@
 // The following methods will however:
 // 1. Correctly set the HTTPMethod for you incase it is incorrect.
 
-- (void)GET:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (void)PUT:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (void)POST:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (void)PATCH:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (void)DELETE:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (void)OPTIONS:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (void)HEAD:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)GET:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)PUT:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)POST:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)PATCH:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)DELETE:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)OPTIONS:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask *)HEAD:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
 
 @end

@@ -87,24 +87,26 @@
 
 #pragma mark - HTTP Methods
 
-- (void)GET:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)GET:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     return [self performRequestWithURI:URI method:@"GET" params:params success:successCB error:errorCB];
     
 }
 
-- (void)POST:(NSString *)URI
-         parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)POST:(NSString *)URI
+                parameters:(NSDictionary *)params
+                   success:(successBlock)successCB
+                     error:(errorBlock)errorCB
 {
     
     return [self POST:URI queryParams:nil parameters:params success:successCB error:errorCB];
     
 }
 
-- (void)POST:(NSString *)URI
-        queryParams:(NSDictionary *)query
-         parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)POST:(NSString *)URI
+               queryParams:(NSDictionary *)query
+                parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
 
     if(query)
@@ -131,17 +133,21 @@
     
 }
 
-- (void)PUT:(NSString *)URI
-        parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)PUT:(NSString *)URI
+               parameters:(NSDictionary *)params
+                  success:(successBlock)successCB
+                    error:(errorBlock)errorCB
 {
     
     return [self performRequestWithURI:URI method:@"PUT" params:params success:successCB error:errorCB];
     
 }
 
-- (void)PUT:(NSString *)URI
-       queryParams:(NSDictionary *)query
-        parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)PUT:(NSString *)URI
+              queryParams:(NSDictionary *)query
+               parameters:(NSDictionary *)params
+                  success:(successBlock)successCB
+                    error:(errorBlock)errorCB
 {
     
     if(query)
@@ -167,32 +173,40 @@
     
 }
 
-- (void)PATCH:(NSString *)URI
-          parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)PATCH:(NSString *)URI
+                 parameters:(NSDictionary *)params
+                    success:(successBlock)successCB
+                      error:(errorBlock)errorCB
 {
     
     return [self performRequestWithURI:URI method:@"PATCH" params:params success:successCB error:errorCB];
     
 }
 
-- (void)DELETE:(NSString *)URI
-           parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)DELETE:(NSString *)URI
+                  parameters:(NSDictionary *)params
+                     success:(successBlock)successCB
+                       error:(errorBlock)errorCB
 {
     
     return [self performRequestWithURI:URI method:@"DELETE" params:params success:successCB error:errorCB];
     
 }
 
-- (void)HEAD:(NSString *)URI
-         parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)HEAD:(NSString *)URI
+                parameters:(NSDictionary *)params
+                   success:(successBlock)successCB
+                     error:(errorBlock)errorCB
 {
     
     return [self performRequestWithURI:URI method:@"HEAD" params:params success:successCB error:errorCB];
     
 }
 
-- (void)OPTIONS:(NSString *)URI
-            parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)OPTIONS:(NSString *)URI
+                   parameters:(NSDictionary *)params
+                      success:(successBlock)successCB
+                        error:(errorBlock)errorCB
 {
     
     return [self performRequestWithURI:URI method:@"OPTIONS" params:params success:successCB error:errorCB];
@@ -201,7 +215,7 @@
 
 #pragma mark - 
 
-- (void)GET:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)GET:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"GET" onRequest:req];
@@ -210,7 +224,7 @@
     
 }
 
-- (void)PUT:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)PUT:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"PUT" onRequest:req];
@@ -219,7 +233,7 @@
     
 }
 
-- (void)POST:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)POST:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"POST" onRequest:req];
@@ -228,7 +242,7 @@
     
 }
 
-- (void)PATCH:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)PATCH:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"PATCH" onRequest:req];
@@ -237,7 +251,7 @@
     
 }
 
-- (void)DELETE:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)DELETE:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"DELETE" onRequest:req];
@@ -246,7 +260,7 @@
     
 }
 
-- (void)OPTIONS:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)OPTIONS:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"OPTIONS" onRequest:req];
@@ -255,7 +269,7 @@
     
 }
 
-- (void)HEAD:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)HEAD:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
     req = [self ensureHTTPMethod:@"HEAD" onRequest:req];
@@ -354,17 +368,19 @@
     
 }
 
-- (void)performRequestWithURI:(NSString *)URI
-                              method:(NSString *)method
-                              params:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)performRequestWithURI:(NSString *)URI
+                                     method:(NSString *)method
+                                     params:(NSDictionary *)params
+                                    success:(successBlock)successCB
+                                      error:(errorBlock)errorCB
 {
     
     NSURLRequest *req = [self requestWithURI:URI method:method params:params];
     
-    [self requestWithReq:req success:successCB error:errorCB];
+    return [self requestWithReq:req success:successCB error:errorCB];
 }
 
-- (void)requestWithReq:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB
+- (NSURLSessionTask *)requestWithReq:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB
 {
     __block NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 #if TARGET_OS_IOS == 1
@@ -425,6 +441,8 @@
 #if TARGET_OS_IOS == 1
     if(self.useActivityManager) [[DZActivityIndicatorManager shared] incrementCount];
 #endif
+    
+    return task;
 }
 
 #pragma mark - NSURLSessionDelegate
@@ -445,6 +463,7 @@
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)redirectResponse newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest *))completionHandler
 {
+    
     NSURLRequest *newRequest = nil;
     
     if (self.redirectModifier) {
@@ -462,5 +481,37 @@
     
     completionHandler(newRequest);
 }
+
+#pragma mark - MSG Forwarding
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation
+{
+    
+    if ([(id)self.delegate respondsToSelector:[anInvocation selector]])
+    {
+        [anInvocation invokeWithTarget:self.delegate];
+    }
+    else
+    {
+        [super forwardInvocation:anInvocation];
+    }
+    
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+    return [(id)self.delegate respondsToSelector:aSelector] || [super respondsToSelector:aSelector];
+}
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
+{
+    NSMethodSignature *signature = [super methodSignatureForSelector:selector];
+    if (!signature)
+    {
+        signature = [(id)self.delegate methodSignatureForSelector:selector];
+    }
+    return signature;
+}
+
 
 @end
