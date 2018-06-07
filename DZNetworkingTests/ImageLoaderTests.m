@@ -34,11 +34,25 @@
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET:gifImage"];
     
-    NSURL *URL = [NSURL URLWithString:@"https://bcdn.evilmadscientist.com/media/2018/02/action.gif"];
+    __block NSURL *URL = [NSURL URLWithString:@"https://bcdn.evilmadscientist.com/media/2018/02/action.gif"];
     
     [SharedImageLoader downloadImageForURL:URL success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         
-        [expectation fulfill];
+        responseObject = nil;
+        
+        URL =  [NSURL URLWithString:[NSString stringWithFormat:@"https://bcdn.evilmadscientist.com/media/2018/02/action.gif?t=%@", @([NSDate.date timeIntervalSince1970])]];
+        
+        [SharedImageLoader downloadImageForURL:URL success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+            
+            responseObject = nil;
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [expectation fulfill];
+            });
+            
+        } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+            DZLog(@"%@", error);
+        }];
         
     } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
         DZLog(@"%@", error);
