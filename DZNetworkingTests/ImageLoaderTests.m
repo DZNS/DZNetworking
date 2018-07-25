@@ -79,4 +79,8 @@
     waitForExpectation;
 }
 
+- (void)testDeletingFiles {
+    [[SharedImageLoader cache] removeAllObjectsFromDisk];
+}
+
 @end

@@ -8,6 +8,7 @@
 
 #import "PurgingDiskCache.h"
 #import "NSString+Coders.h"
+#import "WebPImageSerialization.h"
 
 #ifndef DZAPPKIT
 
@@ -41,21 +42,36 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
     if (self = [super init]) {
         NSArray<NSString *> *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         self.diskPath = [paths[0] stringByAppendingPathComponent:@"purgingDiskCache"];
-        self.fileManager = [NSFileManager defaultManager];
         
         // write only one file at a time to prevent memspace corruption
         self.writeQueue = dispatch_queue_create("com.DZ.PDC.writeQueue", DISPATCH_QUEUE_SERIAL);
+        
+        weakify(self);
+        dispatch_sync(self.writeQueue, ^{
+            strongify(self);
+            self.fileManager = [NSFileManager defaultManager];
+        });
+        
         // read multiple files at any given point of time
-        self.readQueue = dispatch_queue_create("com.DZ.PDC.readQueu", DISPATCH_QUEUE_CONCURRENT);
+        self.readQueue = dispatch_queue_create("com.DZ.PDC.readQueue", DISPATCH_QUEUE_CONCURRENT);
         
         // create the data folder on disk if it doesn't exist. Do this as early as possible
-        if (![self.fileManager fileExistsAtPath:self.diskPath]) {
-            [self.fileManager createDirectoryAtPath:self.diskPath withIntermediateDirectories:YES attributes:nil error:NULL];
-        }
+        dispatch_sync(self.writeQueue, ^{
+            strongify(self);
+            [self _createLocalFolder];
+        });
     }
     
     return self;
 }
+
+- (void)_createLocalFolder {
+    if ([self.fileManager fileExistsAtPath:self.diskPath] == NO) {
+        [self.fileManager createDirectoryAtPath:self.diskPath withIntermediateDirectories:YES attributes:nil error:NULL];
+    }
+}
+
+#pragma mark -
 
 - (void)objectforKey:(NSString *)key callback:(void (^ _Nullable)(UIImage * _Nullable))cb {
     
@@ -111,10 +127,12 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
     [super setObject:obj forKey:key cost:g];
     
     // set inside our disk cache
-    if (!data && obj)
+    if (data == nil && obj)
         data = UIImagePNGRepresentation(obj); //assume PNG if we dont have the source
     
-    [self setObjectToDisk:data forKey:key];
+    if (data != nil) {
+        [self setObjectToDisk:data forKey:key];
+    }
 }
 
 - (void)removeObjectForKey:(NSString *)key
@@ -126,6 +144,8 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
     // remove from our disk cache
 }
 
+#pragma mark -
+
 - (void)removeAllObjects
 {
     [super removeAllObjects];
@@ -133,29 +153,48 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
     // do not evict from disk cache.
 }
 
+- (void)removeAllObjectsFromDisk {
+    
+    weakify(self);
+    
+    dispatch_sync(self.writeQueue, ^{
+        
+#ifdef DEBUG
+        NSLog(@"Path: %@", self.diskPath);
+#endif
+        
+        strongify(self);
+        
+        NSError *error = nil;
+        
+        if ([self.fileManager removeItemAtPath:self.diskPath error:&error] == NO) {
+#ifdef DEBUG
+            NSLog(@"%@: Error deleting caches directory: %@", NSStringFromClass(self.class), error);
+#endif
+        }
+        else {
+            [self _createLocalFolder];
+        }
+        
+    });
+    
+}
+
 #pragma mark -
 
-- (void)setObjectToDisk:(NSData *)obj forKey:(NSString *)key {
+- (void)setObjectToDisk:(id)obj forKey:(NSString *)key {
     
-    __weak typeof(self) wself = self;
+    weakify(self);
     
     dispatch_async(self.writeQueue, ^{
         
-        typeof(wself) sself = wself;
+        strongify(self);
        
-        NSString *path = [sself.diskPath stringByAppendingPathComponent:key];
+        NSString *path = [self.diskPath stringByAppendingPathComponent:key];
         
-        if ([sself.fileManager fileExistsAtPath:path]) {
-            NSError *error = nil;
-            [sself.fileManager removeItemAtPath:path error:&error];
-            
-            if (error) {
-                NSLog(@"Error writing %@ to disk: %@", key, error);
-                return;
-            }
+        if ([self.fileManager fileExistsAtPath:path] == NO) {
+            [self.fileManager createFileAtPath:path contents:obj attributes:@{NSURLIsExcludedFromBackupKey: @(YES)}];
         }
-        
-        [sself.fileManager createFileAtPath:path contents:obj attributes:@{NSURLIsExcludedFromBackupKey: @(YES)}];
         
     });
     
@@ -166,19 +205,23 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
     if (!cb)
         return;
     
-    __weak typeof(self) wself = self;
+    weakify(self);
     
     dispatch_async(self.readQueue, ^{
         
-        typeof(wself) sself = wself;
+        strongify(self);
         
-        NSString *path = [sself.diskPath stringByAppendingPathComponent:key];
+        NSString *path = [self.diskPath stringByAppendingPathComponent:key];
         // exit early if we cannot respond back.
         
-        if ([sself.fileManager fileExistsAtPath:path]) {
-            NSData *data = [sself.fileManager contentsAtPath:path];
+        if ([self.fileManager fileExistsAtPath:path]) {
+            NSData *data = [[NSData alloc] initWithContentsOfFile:path];
             
             UIImage *image = [[UIImage alloc] initWithData:data];
+            
+            if (image == nil) {
+                image = [UIImage imageWithWebPData:data];
+            }
             
             cb(image);
         }

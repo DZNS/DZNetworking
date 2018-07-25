@@ -82,7 +82,7 @@
 		F05BF8992075E8BC00273B49 /* OMGHTTPURLRQ.h in Headers */ = {isa = PBXBuildFile; fileRef = F05BF88A2075E8BC00273B49 /* OMGHTTPURLRQ.h */; };
 		F05BF89B2075E8BC00273B49 /* OMGHTTPURLRQ.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF88B2075E8BC00273B49 /* OMGHTTPURLRQ.m */; };
 		F05BF89C2075E8BC00273B49 /* OMGHTTPURLRQ.m in Sources */ = {isa = PBXBuildFile; fileRef = F05BF88B2075E8BC00273B49 /* OMGHTTPURLRQ.m */; };
-		F0608B4E1FD8F64F00FC42BB /* PurgingDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = F0608B4C1FD8F64F00FC42BB /* PurgingDiskCache.h */; };
+		F0608B4E1FD8F64F00FC42BB /* PurgingDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = F0608B4C1FD8F64F00FC42BB /* PurgingDiskCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0608B4F1FD8F64F00FC42BB /* PurgingDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F0608B4D1FD8F64F00FC42BB /* PurgingDiskCache.m */; };
 		F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C59C1B7760C3002F8395 /* DZResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };

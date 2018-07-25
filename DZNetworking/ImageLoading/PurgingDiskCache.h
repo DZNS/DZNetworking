@@ -8,6 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+#ifndef weakify
+#define weakify(var) __weak typeof(var) AHKWeak_##var = var;
+#endif
+
+#ifndef strongify
+#define strongify(var) \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wshadow\"") \
+__strong typeof(var) var = AHKWeak_##var; \
+_Pragma("clang diagnostic pop")
+#endif
+
+#define LOCK(lock) dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+#define UNLOCK(lock) dispatch_semaphore_signal(lock);
+
 #ifndef DZAPPKIT
 #import <UIKit/UIKit.h>
 #endif
@@ -23,6 +38,8 @@
 - (void)objectforKey:(NSString * _Nonnull)key callback:(void(^_Nullable)(UIImage * _Nullable image))cb;
 
 - (void)removeObjectForKey:(NSString * _Nonnull)key;
+
+- (void)removeAllObjectsFromDisk;
 
 #endif
 

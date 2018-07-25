@@ -10,11 +10,15 @@
 #import <DZNetworking/UIImage+GIF.h>
 #import <DZNetworking/WebPImageSerialization.h>
 
+#import <DZNetworking/PurgingDiskCache.h>
+
 @class ImageLoader;
 
 extern ImageLoader * _Nonnull SharedImageLoader;
 
 @interface ImageLoader : DZURLSession
+
+@property (nonatomic, strong) PurgingDiskCache *cache;
 
 - (NSURLSessionTask * _Nullable)downloadImageForURL:(id _Nonnull)url success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 

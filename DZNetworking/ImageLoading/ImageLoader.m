@@ -8,7 +8,6 @@
 
 #import "ImageLoader.h"
 #import "ImageResponseParser.h"
-#import "PurgingDiskCache.h"
 
 ImageLoader *SharedImageLoader;
 
@@ -21,8 +20,6 @@ ImageLoader *SharedImageLoader;
 @end
 
 @interface ImageLoader ()
-
-@property (nonatomic, strong) PurgingDiskCache *cache;
 
 @end
 
@@ -52,7 +49,7 @@ ImageLoader *SharedImageLoader;
 - (void)dealloc
 {
 #ifndef DZAPPKIT
-    [NSNotificationCenter.defaultCenter addObserver:self.cache selector:@selector(removeAllObjects) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 #endif
 }
 
@@ -84,7 +81,31 @@ ImageLoader *SharedImageLoader;
 - (NSURLSessionTask *)il_performRequest:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
-    __weak typeof(self) weakSelf = self;
+    weakify(self);
+    
+    __block id cachedObj = nil;
+    
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    
+    [self.cache objectforKey:request.URL.absoluteString callback:^(UIImage * _Nullable image) {
+        
+        cachedObj = image;
+        
+        UNLOCK(semaphore);
+        
+    }];
+    
+    LOCK(semaphore);
+    
+    if (cachedObj != nil) {
+        if (successCB) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                successCB(cachedObj, nil, nil);
+            });
+        }
+        
+        return nil;
+    }
     
     __block NSURLSessionDataTask *task = [(NSURLSession *)[self valueForKeyPath:@"session"] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 #ifndef DZAPPKIT
@@ -107,16 +128,16 @@ ImageLoader *SharedImageLoader;
             return;
         }
         
-        typeof(self) strongSelf = weakSelf;
+        strongify(self);
         
         NSError *parsingError;
-        UIImage *responseObject = [strongSelf.responseParser parseResponse:data :res error:&parsingError];
+        UIImage *responseObject = [self.responseParser parseResponse:data :res error:&parsingError];
         
         if (responseObject) {
-            [strongSelf.cache setObject:responseObject data:data forKey:request.URL.absoluteString];
+            [self.cache setObject:responseObject data:data forKey:request.URL.absoluteString];
         }
         
-        if(res.statusCode > strongSelf.maximumSuccessStatusCode)
+        if(res.statusCode > self.maximumSuccessStatusCode)
         {
             
             // Treat this as an error.
@@ -163,6 +184,16 @@ ImageLoader *SharedImageLoader;
         [[DZActivityIndicatorManager shared] incrementCount];
 #endif
     return task;
+}
+
+#pragma mark -
+
+- (PurgingDiskCache *)cache {
+    if (_cache == nil) {
+        _cache = [[PurgingDiskCache alloc] init];
+    }
+    
+    return _cache;
 }
 
 @end
