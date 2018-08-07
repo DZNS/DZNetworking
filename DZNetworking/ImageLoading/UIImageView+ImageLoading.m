@@ -64,6 +64,10 @@ static char AUTO_UPDATING_FRAME;
         
         strongify(self);
         
+        if (self == nil) {
+            return;
+        }
+        
         asyncMain(^{
             self.image = image;
             [self setNeedsDisplay];
@@ -73,6 +77,10 @@ static char AUTO_UPDATING_FRAME;
             if (success) {
                 success(image, url);
             }
+            return;
+        }
+        
+        if (image == nil) {
             return;
         }
         
