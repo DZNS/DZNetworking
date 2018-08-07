@@ -68,6 +68,14 @@ static char AUTO_UPDATING_FRAME;
             return;
         }
         
+        if ([self respondsToSelector:@selector(setImage:)] == NO) {
+            return;
+        }
+        
+        if ([self respondsToSelector:@selector(setNeedsDisplay)] == NO) {
+            return;
+        }
+        
         asyncMain(^{
             self.image = image;
             [self setNeedsDisplay];
