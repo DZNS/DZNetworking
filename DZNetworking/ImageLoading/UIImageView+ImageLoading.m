@@ -76,6 +76,12 @@ static char AUTO_UPDATING_FRAME;
             return;
         }
         
+        @try {
+            if (image && [image isKindOfClass:UIImage.class] == NO) {
+                image = nil;
+            }
+        } @catch (NSException *exc) {}
+        
         asyncMain(^{
             self.image = image;
             [self setNeedsDisplay];
