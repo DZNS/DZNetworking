@@ -13,7 +13,7 @@
 - (id)parseResponse:(NSData *)responseData :(NSHTTPURLResponse *)response error:(NSError *__autoreleasing *)error
 {
     
-    id responseObject = nil;
+    __autoreleasing id responseObject = nil;
     
     if(responseData && responseData.length)
     {

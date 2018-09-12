@@ -44,6 +44,13 @@
  */
 + (instancetype)shared;
 
+@property (readonly, nonatomic, strong) NSURLSessionConfiguration *sessionConfiguration;
+@property (readonly, nonatomic, strong) NSOperationQueue *operationQueue;
+
+- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)config;
+
+- (instancetype)init;
+
 @property (nonatomic, weak) id<DZURLSessionProtocol> delegate;
 
 /**
