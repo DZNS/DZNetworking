@@ -35,6 +35,18 @@
 
 #import "OMGHTTPURLRQ.h"
 
+#ifndef weakify
+#define weakify(var) __weak typeof(var) AHKWeak_##var = var;
+#endif
+
+#ifndef strongify
+#define strongify(var) \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wshadow\"") \
+__strong typeof(var) var = AHKWeak_##var; \
+_Pragma("clang diagnostic pop")
+#endif
+
 #ifndef NSFoundationVersionNumber_iOS_8_0
     #define NSFoundationVersionNumber_With_Fixed_5871104061079552_bug 1140.11
 #else
@@ -68,13 +80,13 @@ static void url_session_manager_create_task_safely(dispatch_block_t _Nonnull blo
 
 // The following lines of code are taken from AFNetworking/AFURLSessionManager.m
 static dispatch_queue_t url_session_manager_processing_queue() {
-    static dispatch_queue_t af_url_session_manager_processing_queue;
+    static dispatch_queue_t dz_url_session_manager_processing_queue;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        af_url_session_manager_processing_queue = dispatch_queue_create("com.dezinezync.networking.session.manager.processing", DISPATCH_QUEUE_CONCURRENT);
+        dz_url_session_manager_processing_queue = dispatch_queue_create("com.dezinezync.networking.session.manager.processing", DISPATCH_QUEUE_CONCURRENT);
     });
     
-    return af_url_session_manager_processing_queue;
+    return dz_url_session_manager_processing_queue;
 }
 
 @interface DZURLSession() <NSURLSessionDelegate>
@@ -109,8 +121,6 @@ static dispatch_queue_t url_session_manager_processing_queue() {
         _sessionConfiguration = config;
         _operationQueue = [[NSOperationQueue alloc] init];
         
-        _session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:self.operationQueue];
-        
         _useActivityManager = YES;
     }
     
@@ -137,6 +147,16 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     
     return self;
     
+}
+
+#pragma mark - Session Getter
+
+- (NSURLSession *)session {
+    if (_session == nil) { @autoreleasepool {
+        _session = [NSURLSession sessionWithConfiguration:self.sessionConfiguration delegate:self delegateQueue:self.operationQueue];
+    } }
+    
+    return _session;
 }
 
 #pragma mark - HTTP Methods
@@ -438,17 +458,13 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 {
     __block NSURLSessionDataTask *task = nil;
     
-    __weak typeof(self) wself = self;
+    weakify(self);
     
     url_session_manager_create_task_safely(^{
         
-        typeof(wself) sself = wself;
+        strongify(self);
         
-        __weak typeof(sself) wsself = sself;
-        
-        task = [sself.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            
-            typeof(wsself) ssself = wself;
+        task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             
 #if TARGET_OS_IOS == 1
             // we simply decrement it. No harm, since we ensure the value never drops below 0.
@@ -464,12 +480,16 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                 return;
             }
             
+            weakify(self);
+            
             dispatch_async(url_session_manager_processing_queue(), ^{
+                
+                strongify(self);
                
                 NSError *parsingError;
-                id responseObject = [ssself.responseParser parseResponse:data :res error:&parsingError];
+                id responseObject = [self.responseParser parseResponse:data :res error:&parsingError];
                 
-                if(res.statusCode > ssself.maximumSuccessStatusCode)
+                if(res.statusCode > self.maximumSuccessStatusCode)
                 {
                     
                     // Treat this as an error.
@@ -587,7 +607,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     NSURLRequest *newRequest = request;
     
     if (self.redirectModifier) {
-        newRequest = self.redirectModifier(request, redirectResponse);
+        newRequest = self.redirectModifier(task, request, redirectResponse);
     }
     
     completionHandler(newRequest);
