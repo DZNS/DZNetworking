@@ -428,7 +428,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     
     if (!params || !params.allKeys.count) {
         NSString *uri = request.URL.absoluteString;
-        if ([[uri substringFromIndex:uri.length-1] isEqualToString:@"?"]) {
+        if (uri.length && [[uri substringFromIndex:uri.length-1] isEqualToString:@"?"]) {
             uri = [uri substringToIndex:uri.length-1];
             
             mutableRequest = request.mutableCopy;

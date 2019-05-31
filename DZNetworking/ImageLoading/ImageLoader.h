@@ -20,6 +20,8 @@ extern ImageLoader * _Nonnull SharedImageLoader;
 
 @property (nonatomic, strong) PurgingDiskCache *cache;
 
+@property (nonatomic, strong) dispatch_queue_t ioQueue;
+
 - (NSURLSessionTask * _Nullable)downloadImageForURL:(id _Nonnull)url success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 @end

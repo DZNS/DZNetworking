@@ -53,135 +53,165 @@ static char AUTO_UPDATING_FRAME;
     [self il_setImageWithURL:url success:nil error:nil];
 }
 
-- (void)il_setImageWithURL:(id)url success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success error:(void (^ _Nullable)(NSError * _Nonnull))errorCB
-{
-    if (self.task)
+- (void)il_setImageWithURL:(id)url success:(void (^)(UIImage * _Nonnull, NSURL * _Nonnull))success error:(void (^)(NSError * _Nonnull))error {
+    [self il_setImageWithURL:url mutate:nil success:success error:error];
+}
+
+- (void)il_setImageWithURL:(id)url
+                    mutate:(UIImage *(^ _Nullable)(UIImage * _Nonnull))mutate
+                   success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
+                     error:(void (^ _Nullable)(NSError * _Nonnull))errorCB {
+    if (self.task != nil)
         [self il_cancelImageLoading];
     
     weakify(self);
     
-    self.task = [SharedImageLoader downloadImageForURL:url success:^(UIImage *image, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+    dispatch_async(SharedImageLoader.ioQueue, ^{
         
         strongify(self);
         
-        if (self == nil) {
-            return;
-        }
-        
-        if ([self respondsToSelector:@selector(setImage:)] == NO) {
-            return;
-        }
-        
-        if ([self respondsToSelector:@selector(setNeedsDisplay)] == NO) {
-            return;
-        }
-        
-        @try {
-            if (image && [image isKindOfClass:UIImage.class] == NO) {
-                image = nil;
+        self.task = [SharedImageLoader downloadImageForURL:url success:^(UIImage *image, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+            
+            if (self == nil) {
+                return;
             }
-        } @catch (NSException *exc) {}
-        
-        asyncMain(^{
+            
+            if ([self respondsToSelector:@selector(setImage:)] == NO) {
+                return;
+            }
+            
+            if ([self respondsToSelector:@selector(setNeedsDisplay)] == NO) {
+                return;
+            }
+            
+            @try {
+                if (image && [image isKindOfClass:UIImage.class] == NO) {
+                    image = nil;
+                }
+            } @catch (NSException *exc) {}
+            
+            if (mutate) {
+                
+                __block UIImage *mutated = nil;
+                
+                dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+                
+                dispatch_async(SharedImageLoader.ioQueue, ^{
+                    mutated = mutate(image);
+                    
+                    UNLOCK(semaphore);
+                });
+                
+                LOCK(semaphore);
+                
+                if (mutated != nil) {
+                    image = nil;
+                    image = [mutated copy];
+                    mutated = nil;
+                }
+            }
+            
             self.image = image;
             [self setNeedsDisplay];
-        });
-        
-        if (!self.autoUpdateFrameOrConstraints) {
-            if (success) {
-                success(image, url);
+            
+            if (!self.autoUpdateFrameOrConstraints) {
+                if (success) {
+                    success(image, url);
+                }
+                return;
             }
-            return;
-        }
-        
-        if (image == nil) {
-            return;
-        }
-        
-        __block CGRect frame;
-        __block CGSize imageSize;
-        __block NSArray <NSLayoutConstraint *> *constraints;
-        
-        if (NSThread.isMainThread) {
-            frame = self.frame;
-            imageSize = image.size;
-            constraints = self.constraints;
-        }
-        else
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            if (image == nil) {
+                return;
+            }
+            
+            __block CGRect frame;
+            __block CGSize imageSize;
+            __block NSArray <NSLayoutConstraint *> *constraints;
+            
+            if (NSThread.isMainThread) {
                 frame = self.frame;
                 imageSize = image.size;
                 constraints = self.constraints;
-            });
-        
-        CGFloat height = (imageSize.height / imageSize.width) * frame.size.width;
-        
-        frame.size.height = height;
-        
-        __block BOOL exitEarly = NO;
-        
-        if (constraints.count) {
-            BOOL found = NO;
+            }
+            else
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    frame = self.frame;
+                    imageSize = image.size;
+                    constraints = self.constraints;
+                });
             
-            for (NSLayoutConstraint *constraint in constraints) {
-                if (constraint.firstAttribute == NSLayoutAttributeHeight) {
-                    found = YES;
-                    
-                    weakify(self);
-                    
-                    asyncMain(^{
-                        constraint.constant = height;
-                        strongify(self);
-                        [self layoutIfNeeded];
-                    });
-                    
+            CGFloat height = (imageSize.height / imageSize.width) * frame.size.width;
+            
+            frame.size.height = height;
+            
+            __block BOOL exitEarly = NO;
+            
+            if (constraints.count) {
+                BOOL found = NO;
+                
+                for (NSLayoutConstraint *constraint in constraints) {
+                    if (constraint.firstAttribute == NSLayoutAttributeHeight) {
+                        found = YES;
+                        
+                        weakify(self);
+                        
+                        asyncMain(^{
+                            constraint.constant = height;
+                            strongify(self);
+                            [self layoutIfNeeded];
+                        });
+                        
+                    }
                 }
+                
+                if (found)
+                    return;
+            }
+            else {
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    if ([self.superview isKindOfClass:UIStackView.class]) {
+                        // inside a stackview but no height constraint
+                        weakify(self);
+                        asyncMain(^{
+                            strongify(self);
+                            [self.heightAnchor constraintEqualToConstant:height].active = YES;
+                        });
+                        
+                        exitEarly = YES;
+                    }
+                });
             }
             
-            if (found)
-                return;
-        }
-        else {
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                if ([self.superview isKindOfClass:UIStackView.class]) {
-                    // inside a stackview but no height constraint
-                    weakify(self);
-                    asyncMain(^{
-                        strongify(self);
-                        [self.heightAnchor constraintEqualToConstant:height].active = YES;
-                    });
-                    
-                    exitEarly = YES;
+            if (exitEarly) {
+                if (success) {
+                    success(image, url);
                 }
+                return;
+            }
+            
+            weakify(self);
+            asyncMain(^{
+                strongify(self);
+                self.frame = frame;
             });
-        }
-        
-        if (exitEarly) {
+            
             if (success) {
                 success(image, url);
             }
-            return;
-        }
-        
-        weakify(self);
-        asyncMain(^{
-            strongify(self);
-            self.frame = frame;
-        });
-        
-        if (success) {
-            success(image, url);
-        }
-        
-    } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+            
+        } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
 #ifdef DEBUG
-        NSLog(@"%@", error);
+//            NSLog(@"%@", error);
 #endif
+            
+            if (errorCB) {
+                errorCB(error);
+            }
+        }];
         
-        if (errorCB) {
-            errorCB(error);
-        }
-    }];
+    });
+    
 }
 
 - (void)il_cancelImageLoading

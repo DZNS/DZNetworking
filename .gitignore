@@ -34,3 +34,4 @@ scripts/certs/dist.cer
 scripts/certs/dist.p12
 DZNetworking.framework.zip
 test_output
+/DZNetworkingTests/Server/upload/package-lock.json
