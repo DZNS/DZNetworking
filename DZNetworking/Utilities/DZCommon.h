@@ -26,7 +26,7 @@ extern NSString *const DZErrorResponse;
 extern NSString *const DZErrorTask;
 extern NSInteger const DZUnusableRequestError;
 
-typedef NSURLRequest *(^requestModifierBlock)(NSURLRequest *request);
+typedef NSMutableURLRequest *(^requestModifierBlock)(NSMutableURLRequest *request);
 typedef NSURLRequest *(^redirectModifierBlock)(NSURLSessionTask *task, NSURLRequest *request, NSHTTPURLResponse *redirectResponse);
 
 typedef void (^successBlock)(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task);

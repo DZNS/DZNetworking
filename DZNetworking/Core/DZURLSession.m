@@ -195,7 +195,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
         
         if(self.requestModifier)
         {
-            req = [self.requestModifier(req) mutableCopy];
+            req = self.requestModifier(req);
         }
         
         return [self requestWithReq:req success:successCB error:errorCB];
@@ -498,7 +498,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                                                DZErrorResponse : responseObject ?: @{},
                                                DZErrorTask     : task};
                     
-                    NSError * statusCodeError = [NSError errorWithDomain:DZErrorDomain code:res.statusCode userInfo:userInfo];
+                    NSError * statusCodeError = [NSError errorWithDomain:NSNetServicesErrorDomain code:res.statusCode userInfo:userInfo];
                     
                     if (errorCB) {
                         

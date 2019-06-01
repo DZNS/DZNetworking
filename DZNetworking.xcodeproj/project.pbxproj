@@ -92,6 +92,9 @@
 		F074D801208DC1F3002F22CB /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F074D7FF208DC1F3002F22CB /* WebP.framework */; };
 		F08E7C431E0BA97D0009BE19 /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F08E7C551E0BACE60009BE19 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0923E7C22A11F710027A5E6 /* DZOAuth2Session.h in Headers */ = {isa = PBXBuildFile; fileRef = F0923E7A22A11F710027A5E6 /* DZOAuth2Session.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0923E7D22A11F710027A5E6 /* DZOAuth2Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F0923E7B22A11F710027A5E6 /* DZOAuth2Session.m */; };
+		F0923E7F22A121020027A5E6 /* OAuth2Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F0923E7E22A121020027A5E6 /* OAuth2Session.m */; };
 		F0B2C6891D10027300944F5D /* DZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = F024471C1B6125AC004C65F9 /* DZCommon.m */; };
 		F0B2C68A1D10027E00944F5D /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
 		F0B2C68B1D10027E00944F5D /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
@@ -185,6 +188,9 @@
 		F060C5A01B776302002F8395 /* DZJSONResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZJSONResponseParser.h; path = "Core/Response Parsers/DZJSONResponseParser.h"; sourceTree = "<group>"; };
 		F060C5A11B776302002F8395 /* DZJSONResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZJSONResponseParser.m; path = "Core/Response Parsers/DZJSONResponseParser.m"; sourceTree = "<group>"; };
 		F074D7FF208DC1F3002F22CB /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebP.framework; path = Carthage/Build/iOS/WebP.framework; sourceTree = SOURCE_ROOT; };
+		F0923E7A22A11F710027A5E6 /* DZOAuth2Session.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DZOAuth2Session.h; path = Core/DZOAuth2Session.h; sourceTree = "<group>"; };
+		F0923E7B22A11F710027A5E6 /* DZOAuth2Session.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DZOAuth2Session.m; path = Core/DZOAuth2Session.m; sourceTree = "<group>"; };
+		F0923E7E22A121020027A5E6 /* OAuth2Session.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAuth2Session.m; sourceTree = "<group>"; };
 		F0B2C6811D10024C00944F5D /* DZNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DZNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0B2C6851D10024C00944F5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0B2C6A41D1003F000944F5D /* OMGHTTPURLRQ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OMGHTTPURLRQ.framework; path = Carthage/Build/Mac/OMGHTTPURLRQ.framework; sourceTree = SOURCE_ROOT; };
@@ -403,6 +409,7 @@
 				F0D0E24F1B63F60C0077F186 /* DZS3UploadSessionTests.m */,
 				F02DC60E1B6A66E000656FDE /* URLCategoryTests.m */,
 				F02D4D181FD9164200A77E3F /* ImageLoaderTests.m */,
+				F0923E7E22A121020027A5E6 /* OAuth2Session.m */,
 				F0FC8E601B4FB1D300FDA46C /* Supporting Files */,
 			);
 			path = DZNetworkingTests;
@@ -430,6 +437,8 @@
 				F0D0E2421B63EA900077F186 /* DZS3UploadSession.m */,
 				F03B1EF91BBE5607000C3CFC /* DZOAuthSession.h */,
 				F03B1EFA1BBE5607000C3CFC /* DZOAuthSession.m */,
+				F0923E7A22A11F710027A5E6 /* DZOAuth2Session.h */,
+				F0923E7B22A11F710027A5E6 /* DZOAuth2Session.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -498,6 +507,7 @@
 				F0608B4E1FD8F64F00FC42BB /* PurgingDiskCache.h in Headers */,
 				F0C51348208738FD0045473E /* WebPImageSerialization.h in Headers */,
 				F0E102801FC583BA007C7140 /* UIImageView+ImageLoading.h in Headers */,
+				F0923E7C22A11F710027A5E6 /* DZOAuth2Session.h in Headers */,
 				F0018F551F792947004227B5 /* DZUploadSession.h in Headers */,
 				F0018F5A1F7929FC004227B5 /* DZS3UploadSession.h in Headers */,
 				F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */,
@@ -737,6 +747,7 @@
 				F0018F5C1F792A06004227B5 /* DZS3UploadSession.m in Sources */,
 				F05BF88F2075E8BC00273B49 /* OMGFormURLEncode.m in Sources */,
 				F0E1027F1FC583BA007C7140 /* UIImageView+ImageLoading.m in Sources */,
+				F0923E7D22A11F710027A5E6 /* DZOAuth2Session.m in Sources */,
 				F02DC60D1B6A665500656FDE /* NSString+URLExtended.m in Sources */,
 				F038A8971B6773B000349EA8 /* DZResponse.m in Sources */,
 				F060C5A31B776302002F8395 /* DZJSONResponseParser.m in Sources */,
@@ -752,6 +763,7 @@
 				F02447241B612873004C65F9 /* DZUploadTests.m in Sources */,
 				F02D4D191FD9164200A77E3F /* ImageLoaderTests.m in Sources */,
 				F02DC60F1B6A66E000656FDE /* URLCategoryTests.m in Sources */,
+				F0923E7F22A121020027A5E6 /* OAuth2Session.m in Sources */,
 				F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */,
 				F0D0E2501B63F60C0077F186 /* DZS3UploadSessionTests.m in Sources */,
 			);
