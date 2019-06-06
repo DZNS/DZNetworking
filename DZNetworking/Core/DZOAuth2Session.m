@@ -50,13 +50,14 @@
 
 @implementation DZOAuth2Session
 
-- (instancetype)initWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret serviceName:(NSString *)serviceName authorizationURL:(NSString * _Nonnull)authorizationURL tokenURL:(NSString *)tokenURL redirectURL:(NSString * _Nonnull)redirectURL scope:(NSString * _Nonnull)scope {
+- (instancetype)initWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret serviceName:(NSString *)serviceName authorizationURL:(NSString *)authorizationURL tokenURL:(NSString *)tokenURL redirectURL:(NSString *)redirectURL baseURL:(NSURL *)baseURL scope:(NSString *)scope {
     
     NSAssert(clientID, @"Client ID must be defined for initializing a OAuth2 Session");
     NSAssert(clientSecret, @"Client Secret must be defined for initializing a OAuth2 Session");
     NSAssert(authorizationURL, @"Authorization URL must be defined for initializing a OAuth2 Session");
     NSAssert(tokenURL, @"Token URL must be defined for initializing a OAuth2 Session");
     NSAssert(redirectURL, @"Redirect URL must be defined for initializing a OAuth2 Session");
+    NSAssert(baseURL, @"Base Service URL must be defined for initializing a OAuth2 Session");
     
     if (self = [super init]) {
         
@@ -66,6 +67,7 @@
         self.authorizationURL = authorizationURL;
         self.tokenURL = tokenURL;
         self.redirectURL = redirectURL;
+        self.baseURL = baseURL;
         self.scope = scope;
         
         // if the service name is defined, check if the credentials are available in the keychain for resuming the session
@@ -79,24 +81,6 @@
             self.tokenID = tokenID;
             
         }
-        
-        self.session = [[DZURLSession alloc] init];
-        self.session.useActivityManager = YES;
-        self.session.responseParser = [DZJSONResponseParser new];
-        
-        __weak typeof(self) weakSelf = self;
-        
-        self.session.requestModifier = ^NSMutableURLRequest *(NSMutableURLRequest *request) {
-            
-            typeof(weakSelf) sself = weakSelf;
-          
-            NSString *bearer = [NSString stringWithFormat:@"Bearer %@", sself.token];
-            
-            [request setValue:bearer forHTTPHeaderField:@"Authorization"];
-            
-            return request;
-            
-        };
     
     }
     
@@ -219,6 +203,36 @@
 }
 
 #pragma mark - Overrides
+
+- (DZURLSession *)session {
+    
+    if (_session == nil) {
+        _session = [[DZURLSession alloc] init];
+        _session.useActivityManager = YES;
+        _session.responseParser = [DZJSONResponseParser new];
+        
+        __weak typeof(self) weakSelf = self;
+        
+        _session.requestModifier = ^NSMutableURLRequest *(NSMutableURLRequest *request) {
+            
+            typeof(weakSelf) sself = weakSelf;
+            
+            if (sself.token == nil) {
+                return request;
+            }
+            
+            NSString *bearer = [NSString stringWithFormat:@"Bearer %@", sself.token];
+            
+            [request setValue:bearer forHTTPHeaderField:@"Authorization"];
+            
+            return request;
+            
+        };
+    }
+    
+    return _session;
+    
+}
 
 - (NSDictionary *)commonParameters {
     return @{};
@@ -441,7 +455,7 @@
     NSString *username = (key ?: self.username);
     
     NSDictionary *query = @{(__bridge NSString *)kSecClass: (__bridge NSString *)kSecClassInternetPassword,
-                            (__bridge NSString *)kSecAttrServer: self.baseURL,
+                            (__bridge NSString *)kSecAttrServer: self.baseURL.absoluteString,
                             (__bridge NSString *)kSecMatchLimit: (NSString *)kSecMatchLimitOne,
                             (__bridge NSString *)kSecReturnAttributes: @(NO),
                             (__bridge NSString *)kSecReturnData: @(YES),
@@ -461,19 +475,11 @@
         return nil;
     }
     
-    NSDictionary *matchingItem = (__bridge NSDictionary *)itemRef;
-    
-    NSData *passwordData = matchingItem[(__bridge NSString *)kSecValueData];
+    NSData *passwordData = (__bridge NSData *)itemRef;
     
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     
-    NSString *account = matchingItem[(__bridge NSString *)kSecAttrAccount];
-    
-    if ([account isEqualToString:username]) {
-        return password;
-    }
-    
-    return nil;
+    return password;
     
 }
 
@@ -489,7 +495,7 @@
     
     NSDictionary *query = @{(__bridge NSString *)kSecClass: (__bridge NSString *)kSecClassInternetPassword,
                             (__bridge NSString *)kSecAttrAccount: key,
-                            (__bridge NSString *)kSecAttrServer: self.serviceName,
+                            (__bridge NSString *)kSecAttrServer: self.baseURL.absoluteString,
                             (__bridge NSString *)kSecValueData: password,
                             (__bridge NSString *)kSecAttrLabel: @"oAuth2Token"
                             };

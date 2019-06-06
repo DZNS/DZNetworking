@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
                 authorizationURL:(NSString * _Nonnull)authorizationURL
                         tokenURL:(NSString * _Nonnull)tokenURL
                      redirectURL:(NSString * _Nonnull)redirectURL
+                         baseURL:(NSURL * _Nonnull)baseURL 
                            scope:(NSString * _Nonnull)scope;
 
 @property (nonatomic, copy) NSURL *baseURL;
