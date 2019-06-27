@@ -81,7 +81,7 @@ ImageLoader *SharedImageLoader;
     if (self = [super init]) {
         self.responseParser = [ImageResponseParser new];
         
-        self.ioQueue = dispatch_queue_create("com.dezinezync.imageloader.io", DISPATCH_QUEUE_CONCURRENT);
+        self.ioQueue = url_session_manager_processing_queue();
         
 #ifndef DZAPPKIT
       [NSNotificationCenter.defaultCenter addObserver:self.cache selector:@selector(removeAllObjects) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
@@ -123,8 +123,7 @@ ImageLoader *SharedImageLoader;
     return [self il_performRequest:req success:successCB error:errorCB];
 }
 
-- (NSURLSessionTask *)il_performRequest:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB
-{
+- (NSURLSessionTask *)il_performRequest:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB {
     
     weakify(self);
     
@@ -180,19 +179,31 @@ ImageLoader *SharedImageLoader;
                 return;
             }
             
-            dispatch_async(url_session_manager_processing_queue(), ^{
+            dispatch_async(self.ioQueue, ^{
             
                 strongify(self);
                 
-                NSError *parsingError;
-                UIImage *responseObject = [self.responseParser parseResponse:data :res error:&parsingError];
+                __block NSError *parsingError;
+                __block UIImage *responseObject = nil;
                 
-                if (responseObject) {
-                    [self.cache setObject:responseObject data:data forKey:request.URL.absoluteString];
+                dispatch_sync(self.ioQueue, ^{
+                    responseObject = [self.responseParser parseResponse:data :res error:&parsingError];
+                });
+                
+                if (parsingError != nil) {
+                    if (errorCB) {
+                        errorCB(error, res, task);
+                    }
+                    return;
                 }
                 
-                if(res.statusCode > self.maximumSuccessStatusCode)
-                {
+                if (responseObject) {
+                    dispatch_async(self.ioQueue, ^{
+                        [self.cache setObject:responseObject data:data forKey:request.URL.absoluteString];
+                    });
+                }
+                
+                if(res.statusCode > self.maximumSuccessStatusCode) {
                     
                     // Treat this as an error.
                     

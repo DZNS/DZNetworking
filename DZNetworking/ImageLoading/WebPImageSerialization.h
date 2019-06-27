@@ -16,7 +16,7 @@
 
 + (UIImage * _Nullable)imageWithWebPData:(NSData * _Nonnull)imgData;
 
-@property (nonatomic, readonly) NSData *dataWebPLossless;
+@property (nonatomic, readonly) NSData * _Nullable dataWebPLossless;
 
 - (BOOL)writeWebPToDocumentsWithFileName:(NSString * _Nonnull)filename quality:(CGFloat)quality;
 - (BOOL)writeWebPLosslessToDocumentsWithFileName:(NSString * _Nonnull)filename;

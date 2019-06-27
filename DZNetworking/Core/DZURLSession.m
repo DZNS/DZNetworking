@@ -374,8 +374,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 
 - (NSURLRequest *)requestWithURI:(NSString *)URI
                        method:(NSString *)method
-                       params:(NSDictionary *)params
-{
+                       params:(NSDictionary *)params {
     
     NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
     
@@ -403,14 +402,11 @@ static dispatch_queue_t url_session_manager_processing_queue() {
         mutableRequest.HTTPMethod = method;
     }
     
-    NSURLRequest *request = mutableRequest.copy;
-    
-    if(self.requestModifier)
-    {
+    if(self.requestModifier) {
         
-        request = self.requestModifier(request);
+        mutableRequest = self.requestModifier(mutableRequest);
         
-        if(!request)
+        if(mutableRequest == nil)
         {
             
             NSError *modifierError = [[NSError alloc] initWithDomain:DZErrorDomain code:DZUnusableRequestError userInfo:nil];
@@ -421,17 +417,17 @@ static dispatch_queue_t url_session_manager_processing_queue() {
         
     }
     
+    NSURLRequest *request = mutableRequest.copy;
+    
     /*
      * sanitize the URL request.
      * 1. the URL shouldn't have a ? if there are no searchParams
      */
-    
     if (!params || !params.allKeys.count) {
-        NSString *uri = request.URL.absoluteString;
+        NSString *uri = mutableRequest.URL.absoluteString;
         if (uri.length && [[uri substringFromIndex:uri.length-1] isEqualToString:@"?"]) {
             uri = [uri substringToIndex:uri.length-1];
             
-            mutableRequest = request.mutableCopy;
             mutableRequest.URL = [NSURL URLWithString:uri];
             
             request = mutableRequest.copy;

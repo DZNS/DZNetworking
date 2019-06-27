@@ -103,7 +103,7 @@
  *  @param params Parameters for the request. These will be included in the URL as query parameters.
  *
  */
-- (NSURLSessionTask *)GET:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)GET:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a POST request
@@ -112,7 +112,7 @@
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
  */
-- (NSURLSessionTask *)POST:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)POST:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a POST request
@@ -122,7 +122,7 @@
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
  */
-- (NSURLSessionTask *)POST:(NSString * _Nonnull)URI queryParams:(NSDictionary * _Nullable)query parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)POST:(NSString * _Nonnull)URI queryParams:(NSDictionary * _Nullable)query parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a PUT request
@@ -131,7 +131,7 @@
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
  */
-- (NSURLSessionTask *)PUT:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)PUT:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a PUT request
@@ -141,7 +141,7 @@
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
  */
-- (NSURLSessionTask *)PUT:(NSString * _Nonnull)URI queryParams:(NSDictionary * _Nullable)query parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)PUT:(NSString * _Nonnull)URI queryParams:(NSDictionary * _Nullable)query parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a PATCH request
@@ -150,7 +150,7 @@
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
  */
-- (NSURLSessionTask *)PATCH:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)PATCH:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a DELETE request. The response for such requests may not include a responseObject from the server. Check for the statusCode on the response object instead.
@@ -159,7 +159,7 @@
  *  @param params Parameters for the request. These will be included in the HTTP Body.
  *
  */
-- (NSURLSessionTask *)DELETE:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)DELETE:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a HEAD request.
@@ -169,7 +169,7 @@
  *
  *  @discussion The response for such requests does not include a responseObject from the server. Check the response object for the desired information.
  */
-- (NSURLSessionTask *)HEAD:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)HEAD:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 
 /**
@@ -180,12 +180,12 @@
  *
  *  @discussion The response for such requests may not include a responseObject from the server. Check the response object for the desired information.
  */
-- (NSURLSessionTask *)OPTIONS:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nonnull)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)OPTIONS:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nonnull)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 
 #pragma mark - Internal Methods
 
-- (NSDictionary *_Nullable)sign:(id _Nonnull)URI
+- (NSDictionary * _Nullable)sign:(id _Nonnull)URI
                          method:(NSString *_Nonnull)method
                      parameters:(NSDictionary *_Nullable)params;
 

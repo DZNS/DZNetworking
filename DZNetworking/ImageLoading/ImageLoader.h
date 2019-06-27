@@ -18,9 +18,9 @@ extern ImageLoader * _Nonnull SharedImageLoader;
 
 @interface ImageLoader : DZURLSession
 
-@property (nonatomic, strong) PurgingDiskCache *cache;
+@property (nonatomic, strong) PurgingDiskCache * _Nonnull cache;
 
-@property (nonatomic, strong) dispatch_queue_t ioQueue;
+@property (nonatomic, strong) dispatch_queue_t _Nonnull ioQueue;
 
 - (NSURLSessionTask * _Nullable)downloadImageForURL:(id _Nonnull)url success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
