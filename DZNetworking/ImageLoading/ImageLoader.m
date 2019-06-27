@@ -79,9 +79,10 @@ ImageLoader *SharedImageLoader;
 - (instancetype)init
 {
     if (self = [super init]) {
-        self.responseParser = [ImageResponseParser new];
         
         self.ioQueue = url_session_manager_processing_queue();
+        self.responseParser = [ImageResponseParser new];
+        [(ImageResponseParser *)(self.responseParser) setIoQueue:self.ioQueue];
         
 #ifndef DZAPPKIT
       [NSNotificationCenter.defaultCenter addObserver:self.cache selector:@selector(removeAllObjects) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];

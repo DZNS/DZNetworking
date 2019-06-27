@@ -14,31 +14,38 @@
 
 #if TARGET_OS_IOS == 1
 
-- (id)parseResponse:(NSData *)responseData :(NSHTTPURLResponse *)response error:(NSError *__autoreleasing *)error
-{
+- (id)parseResponse:(NSData *)responseData :(NSHTTPURLResponse *)response error:(NSError *__autoreleasing *)error {
     
     NSString *contentType = [[response allHeaderFields] valueForKey:@"Content-Type"];
-    UIImage *image = nil;
+    __block UIImage *image = nil;
     
-    if ([contentType isEqualToString:@"image/gif"]) {
-        image = [UIImage animatedImageWithAnimatedGIFData:responseData];
-    }
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    dispatch_queue_t queue = self.ioQueue ?: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     
-    else if ([contentType isEqualToString:@"image/webp"]) {
-        image = [UIImage imageWithWebPData:responseData];
-    }
+    dispatch_async(queue, ^{
+        if ([contentType isEqualToString:@"image/gif"]) {
+            image = [UIImage animatedImageWithAnimatedGIFData:responseData];
+        }
+        
+        else if ([contentType isEqualToString:@"image/webp"]) {
+            image = [UIImage imageWithWebPData:responseData];
+        }
+        
+        else {
+            image = [UIImage imageWithData:responseData];
+        }
+        
+        dispatch_semaphore_signal(semaphore);
+    });
     
-    else {
-        image = [UIImage imageWithData:responseData];
-    }
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
     return image;
 }
 
 #endif
 
-- (NSSet *)contentTypes
-{
+- (NSSet *)contentTypes {
     return [NSSet setWithArray:@[@"image/jpg", @"image/jpeg", @"image/png", @"image/gif", @"image/webp"]];
 }
 

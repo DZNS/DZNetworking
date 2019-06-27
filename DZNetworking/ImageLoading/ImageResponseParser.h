@@ -10,4 +10,6 @@
 
 @interface ImageResponseParser : DZResponseParser
 
+@property (nonatomic, weak) dispatch_queue_t ioQueue;
+
 @end
