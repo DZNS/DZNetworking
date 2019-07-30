@@ -155,26 +155,28 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
 
 - (void)removeAllObjectsFromDisk {
     
-    weakify(self);
-    
     dispatch_sync(self.writeQueue, ^{
         
 #ifdef DEBUG
         NSLog(@"Path: %@", self.diskPath);
 #endif
         
-        strongify(self);
+        NSFileCoordinator *coordinator = [NSFileCoordinator new];
         
-        NSError *error = nil;
-        
-        if ([self.fileManager removeItemAtPath:self.diskPath error:&error] == NO) {
+        __block NSError *error = nil;
+                            
+        [coordinator coordinateWritingItemAtURL:[NSURL fileURLWithPath:self.diskPath] options:NSFileCoordinatorWritingForDeleting error:&error byAccessor:^(NSURL * _Nonnull newURL) {
+            
+            if ([self.fileManager removeItemAtURL:newURL error:&error] == NO) {
 #ifdef DEBUG
-            NSLog(@"%@: Error deleting caches directory: %@", NSStringFromClass(self.class), error);
+                NSLog(@"%@: Error deleting caches directory: %@", NSStringFromClass(self.class), error);
 #endif
-        }
-        else {
-            [self _createLocalFolder];
-        }
+            }
+            else {
+                [self _createLocalFolder];
+            }
+            
+        }];
         
     });
     
@@ -192,9 +194,15 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
        
         NSString *path = [self.diskPath stringByAppendingPathComponent:key];
         
-        if ([self.fileManager fileExistsAtPath:path] == NO) {
-            [self.fileManager createFileAtPath:path contents:obj attributes:@{NSURLIsExcludedFromBackupKey: @(YES)}];
-        }
+        NSURL *url = [NSURL fileURLWithPath:path];
+        
+        NSFileCoordinator *coordinator = [NSFileCoordinator new];
+        
+        [coordinator coordinateWritingItemAtURL:url options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL * _Nonnull newURL) {
+           
+            [self.fileManager createFileAtPath:newURL.filePathURL.absoluteString contents:obj attributes:@{NSURLIsExcludedFromBackupKey: @(YES)}];
+            
+        }];
         
     });
     
@@ -214,16 +222,33 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
         NSString *path = [self.diskPath stringByAppendingPathComponent:key];
         // exit early if we cannot respond back.
         
+        NSURL *url = [NSURL fileURLWithPath:path];
+        
         if ([self.fileManager fileExistsAtPath:path]) {
-            NSData *data = [[NSData alloc] initWithContentsOfFile:path];
             
-            UIImage *image = [[UIImage alloc] initWithData:data];
+            NSFileCoordinator *coordinator = [NSFileCoordinator new];
             
-            if (image == nil) {
-                image = [UIImage imageWithWebPData:data];
-            }
+            [coordinator coordinateReadingItemAtURL:url options:NSFileCoordinatorReadingWithoutChanges error:nil byAccessor:^(NSURL * _Nonnull newURL) {
+               
+                NSData *data = [[NSData alloc] initWithContentsOfURL:newURL];
+                            
+                if (data == nil) {
+                    return cb(nil);
+                }
+                
+                UIImage *image = [[UIImage alloc] initWithData:data];
+                                
+                if (image == nil) {
+                    @try {
+                        image = [UIImage imageWithWebPData:data];
+                    }
+                    @catch (NSException *exc) {}
+                }
+                // if the above throws an exception, image will still be nil
+                cb(image);
+                
+            }];
             
-            cb(image);
         }
         else
             cb(nil);
