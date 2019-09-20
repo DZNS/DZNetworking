@@ -91,8 +91,12 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
     
 }
 
-- (void)setObject:(UIImage *)obj data:(NSData *)data forKey:(NSString *)key
-{
+- (void)setObject:(UIImage *)obj data:(NSData *)data forKey:(NSString *)key {
+    
+    if (obj == nil) {
+        return [self removeObjectForKey:key];
+    }
+    
     BOOL stored = NO;
     
 #ifndef DZAPPKIT

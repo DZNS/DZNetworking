@@ -61,8 +61,10 @@ static char AUTO_UPDATING_FRAME;
                     mutate:(UIImage *(^ _Nullable)(UIImage * _Nonnull))mutate
                    success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
                      error:(void (^ _Nullable)(NSError * _Nonnull))errorCB {
-    if (self.task != nil)
+    
+    if (self.task != nil) {
         [self il_cancelImageLoading];
+    }
     
     weakify(self);
     
@@ -75,20 +77,6 @@ static char AUTO_UPDATING_FRAME;
             if (self == nil) {
                 return;
             }
-            
-            if ([self respondsToSelector:@selector(setImage:)] == NO) {
-                return;
-            }
-            
-            if ([self respondsToSelector:@selector(setNeedsDisplay)] == NO) {
-                return;
-            }
-            
-            @try {
-                if (image && [image isKindOfClass:UIImage.class] == NO) {
-                    image = nil;
-                }
-            } @catch (NSException *exc) {}
             
             if (mutate) {
                 
@@ -111,93 +99,12 @@ static char AUTO_UPDATING_FRAME;
                 }
             }
             
-            self.image = image;
-            [self setNeedsDisplay];
-            
-            if (!self.autoUpdateFrameOrConstraints) {
-                if (success) {
-                    success(image, url);
-                }
-                return;
-            }
-            
-            if (image == nil) {
-                return;
-            }
-            
-            __block CGRect frame;
-            __block CGSize imageSize;
-            __block NSArray <NSLayoutConstraint *> *constraints;
-            
-            if (NSThread.isMainThread) {
-                frame = self.frame;
-                imageSize = image.size;
-                constraints = self.constraints;
-            }
-            else
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    frame = self.frame;
-                    imageSize = image.size;
-                    constraints = self.constraints;
-                });
-            
-            CGFloat height = (imageSize.height / imageSize.width) * frame.size.width;
-            
-            frame.size.height = height;
-            
-            __block BOOL exitEarly = NO;
-            
-            if (constraints.count) {
-                BOOL found = NO;
-                
-                for (NSLayoutConstraint *constraint in constraints) {
-                    if (constraint.firstAttribute == NSLayoutAttributeHeight) {
-                        found = YES;
-                        
-                        weakify(self);
-                        
-                        asyncMain(^{
-                            constraint.constant = height;
-                            strongify(self);
-                            [self layoutIfNeeded];
-                        });
-                        
-                    }
-                }
-                
-                if (found)
-                    return;
-            }
-            else {
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    if ([self.superview isKindOfClass:UIStackView.class]) {
-                        // inside a stackview but no height constraint
-                        weakify(self);
-                        asyncMain(^{
-                            strongify(self);
-                            [self.heightAnchor constraintEqualToConstant:height].active = YES;
-                        });
-                        
-                        exitEarly = YES;
-                    }
-                });
-            }
-            
-            if (exitEarly) {
-                if (success) {
-                    success(image, url);
-                }
-                return;
-            }
-            
-            weakify(self);
-            asyncMain(^{
-                strongify(self);
-                self.frame = frame;
-            });
+            [self _process:image];
             
             if (success) {
-                success(image, url);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    success(image, url);
+                });
             }
             
         } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
@@ -211,6 +118,87 @@ static char AUTO_UPDATING_FRAME;
         }];
         
     });
+    
+}
+
+- (void)_process:(UIImage *)image {
+    
+    if ([self respondsToSelector:@selector(setImage:)] == NO) {
+        return;
+    }
+    
+    if ([self respondsToSelector:@selector(setNeedsDisplay)] == NO) {
+        return;
+    }
+    
+    if (NSThread.isMainThread == NO) {
+        [self performSelectorOnMainThread:@selector(_process:) withObject:image waitUntilDone:NO];
+        return;
+    }
+    
+    @try {
+        if (image && [image isKindOfClass:UIImage.class] == NO) {
+            image = nil;
+        }
+    } @catch (NSException *exc) {}
+    
+    self.image = image;
+    [self setNeedsDisplay];
+    
+    if (!self.autoUpdateFrameOrConstraints) {
+        return;
+    }
+    
+    if (image == nil) {
+        return;
+    }
+    
+    __block CGRect frame;
+    __block CGSize imageSize;
+    __block NSArray <NSLayoutConstraint *> *constraints;
+    
+    frame = self.frame;
+    imageSize = image.size;
+    constraints = self.constraints;
+    
+    CGFloat height = (imageSize.height / imageSize.width) * frame.size.width;
+    
+    frame.size.height = height;
+    
+    __block BOOL exitEarly = NO;
+    
+    if (constraints.count) {
+        BOOL found = NO;
+        
+        for (NSLayoutConstraint *constraint in constraints) {
+            if (constraint.firstAttribute == NSLayoutAttributeHeight) {
+                found = YES;
+                
+                constraint.constant = height;
+                [self layoutIfNeeded];
+                
+            }
+        }
+        
+        if (found)
+            return;
+    }
+    else {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if ([self.superview isKindOfClass:UIStackView.class]) {
+                // inside a stackview but no height constraint
+                [self.heightAnchor constraintEqualToConstant:height].active = YES;
+                
+                exitEarly = YES;
+            }
+        });
+    }
+    
+    if (exitEarly) {
+        return;
+    }
+    
+    self.frame = frame;
     
 }
 

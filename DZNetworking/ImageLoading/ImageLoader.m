@@ -144,7 +144,7 @@ ImageLoader *SharedImageLoader;
     
     if (cachedObj != nil) {
         if (successCB) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(self.ioQueue, ^{
                 successCB(cachedObj, nil, nil);
             });
         }
@@ -173,7 +173,7 @@ ImageLoader *SharedImageLoader;
             if(error)
             {
                 if (errorCB) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
+                    dispatch_async(self.ioQueue, ^{
                         errorCB(error, res, task);
                     });
                 }
@@ -216,7 +216,7 @@ ImageLoader *SharedImageLoader;
                     
                     if (errorCB) {
                         
-                        dispatch_async(dispatch_get_main_queue(), ^{
+                        dispatch_async(self.ioQueue, ^{
                             errorCB(statusCodeError, res, task);
                         });
                         
@@ -229,7 +229,7 @@ ImageLoader *SharedImageLoader;
                     // our request succeeded but returned no data. Treat valid.
                     if (successCB) {
                         
-                        dispatch_async(dispatch_get_main_queue(), ^{
+                        dispatch_async(self.ioQueue, ^{
                             successCB(responseObject ?: data, res, task);
                         });
                         
@@ -239,7 +239,7 @@ ImageLoader *SharedImageLoader;
                 
                 if (parsingError) {
                     if (errorCB) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
+                        dispatch_async(self.ioQueue, ^{
                             errorCB(parsingError, res, task);
                         });
                     }
@@ -247,7 +247,7 @@ ImageLoader *SharedImageLoader;
                 }
                 
                 if (successCB) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
+                    dispatch_async(self.ioQueue, ^{
                         successCB(responseObject, res, task);
                     });
                 }
