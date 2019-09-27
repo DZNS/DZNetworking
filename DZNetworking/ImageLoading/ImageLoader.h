@@ -8,7 +8,6 @@
 
 #import <DZNetworking/DZNetworking.h>
 #import <DZNetworking/UIImage+GIF.h>
-#import <DZNetworking/WebPImageSerialization.h>
 
 #import <DZNetworking/PurgingDiskCache.h>
 

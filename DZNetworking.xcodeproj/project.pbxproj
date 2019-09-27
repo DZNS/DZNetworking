@@ -88,13 +88,11 @@
 		F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
 		F060C5A21B776302002F8395 /* DZJSONResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C5A01B776302002F8395 /* DZJSONResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F060C5A31B776302002F8395 /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
-		F074D800208DC1F3002F22CB /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F074D7FF208DC1F3002F22CB /* WebP.framework */; };
 		F074D801208DC1F3002F22CB /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F074D7FF208DC1F3002F22CB /* WebP.framework */; };
 		F08E7C431E0BA97D0009BE19 /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F08E7C551E0BACE60009BE19 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0923E7C22A11F710027A5E6 /* DZOAuth2Session.h in Headers */ = {isa = PBXBuildFile; fileRef = F0923E7A22A11F710027A5E6 /* DZOAuth2Session.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0923E7D22A11F710027A5E6 /* DZOAuth2Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F0923E7B22A11F710027A5E6 /* DZOAuth2Session.m */; };
-		F0923E7F22A121020027A5E6 /* OAuth2Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F0923E7E22A121020027A5E6 /* OAuth2Session.m */; };
 		F0B2C6891D10027300944F5D /* DZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = F024471C1B6125AC004C65F9 /* DZCommon.m */; };
 		F0B2C68A1D10027E00944F5D /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
 		F0B2C68B1D10027E00944F5D /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
@@ -113,8 +111,6 @@
 		F0B2C6A21D1002E500944F5D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D0E24D1B63F4900077F186 /* Security.framework */; };
 		F0C51343208736900045473E /* UIImage+GIF.h in Headers */ = {isa = PBXBuildFile; fileRef = F0C51341208736900045473E /* UIImage+GIF.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0C51344208736900045473E /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C51342208736900045473E /* UIImage+GIF.m */; };
-		F0C51348208738FD0045473E /* WebPImageSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = F0C51346208738FD0045473E /* WebPImageSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F0C51349208738FD0045473E /* WebPImageSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C51347208738FD0045473E /* WebPImageSerialization.m */; };
 		F0CA67E11BE1DE9F00963967 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D0E24D1B63F4900077F186 /* Security.framework */; };
 		F0CA67E21BE1DEA300963967 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02447201B61278A004C65F9 /* MobileCoreServices.framework */; };
 		F0D0E2471B63F0700077F186 /* DZS3CredentialsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D0E2451B63F0700077F186 /* DZS3CredentialsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -197,8 +193,6 @@
 		F0B2C6A51D1003F000944F5D /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/Mac/PromiseKit.framework; sourceTree = SOURCE_ROOT; };
 		F0C51341208736900045473E /* UIImage+GIF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+GIF.h"; path = "ImageLoading/UIImage+GIF.h"; sourceTree = "<group>"; };
 		F0C51342208736900045473E /* UIImage+GIF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIImage+GIF.m"; path = "ImageLoading/UIImage+GIF.m"; sourceTree = "<group>"; };
-		F0C51346208738FD0045473E /* WebPImageSerialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WebPImageSerialization.h; path = ImageLoading/WebPImageSerialization.h; sourceTree = "<group>"; };
-		F0C51347208738FD0045473E /* WebPImageSerialization.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = WebPImageSerialization.m; path = ImageLoading/WebPImageSerialization.m; sourceTree = "<group>"; };
 		F0D0E2411B63EA900077F186 /* DZS3UploadSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZS3UploadSession.h; path = Core/DZS3UploadSession.h; sourceTree = "<group>"; };
 		F0D0E2421B63EA900077F186 /* DZS3UploadSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZS3UploadSession.m; path = Core/DZS3UploadSession.m; sourceTree = "<group>"; };
 		F0D0E2451B63F0700077F186 /* DZS3CredentialsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZS3CredentialsManager.h; path = Utilities/DZS3CredentialsManager.h; sourceTree = "<group>"; };
@@ -242,7 +236,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F074D800208DC1F3002F22CB /* WebP.framework in Frameworks */,
 				F0D0E24E1B63F4900077F186 /* Security.framework in Frameworks */,
 				F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */,
 			);
@@ -347,8 +340,6 @@
 				F0608B4D1FD8F64F00FC42BB /* PurgingDiskCache.m */,
 				F0C51341208736900045473E /* UIImage+GIF.h */,
 				F0C51342208736900045473E /* UIImage+GIF.m */,
-				F0C51346208738FD0045473E /* WebPImageSerialization.h */,
-				F0C51347208738FD0045473E /* WebPImageSerialization.m */,
 			);
 			name = ImageLoading;
 			sourceTree = "<group>";
@@ -505,7 +496,6 @@
 				F014D9471BBE9D1300E4F203 /* NSDictionary+Extend.h in Headers */,
 				F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */,
 				F0608B4E1FD8F64F00FC42BB /* PurgingDiskCache.h in Headers */,
-				F0C51348208738FD0045473E /* WebPImageSerialization.h in Headers */,
 				F0E102801FC583BA007C7140 /* UIImageView+ImageLoading.h in Headers */,
 				F0923E7C22A11F710027A5E6 /* DZOAuth2Session.h in Headers */,
 				F0018F551F792947004227B5 /* DZUploadSession.h in Headers */,
@@ -750,7 +740,6 @@
 				F02DC60D1B6A665500656FDE /* NSString+URLExtended.m in Sources */,
 				F038A8971B6773B000349EA8 /* DZResponse.m in Sources */,
 				F060C5A31B776302002F8395 /* DZJSONResponseParser.m in Sources */,
-				F0C51349208738FD0045473E /* WebPImageSerialization.m in Sources */,
 				F014D94C1BBE9F6D00E4F203 /* NSString+Coders.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -762,7 +751,6 @@
 				F02447241B612873004C65F9 /* DZUploadTests.m in Sources */,
 				F02D4D191FD9164200A77E3F /* ImageLoaderTests.m in Sources */,
 				F02DC60F1B6A66E000656FDE /* URLCategoryTests.m in Sources */,
-				F0923E7F22A121020027A5E6 /* OAuth2Session.m in Sources */,
 				F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */,
 				F0D0E2501B63F60C0077F186 /* DZS3UploadSessionTests.m in Sources */,
 			);
@@ -843,7 +831,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DZNetworking/ImageLoading/**",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1222,7 +1209,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DZNetworking/ImageLoading/**",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1257,7 +1243,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DZNetworking/ImageLoading/**",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
