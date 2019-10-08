@@ -8,7 +8,6 @@
 
 #import "PurgingDiskCache.h"
 #import "NSString+Coders.h"
-#import "WebPImageSerialization.h"
 
 #ifndef DZAPPKIT
 
@@ -242,12 +241,6 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
                 
                 UIImage *image = [[UIImage alloc] initWithData:data];
                                 
-                if (image == nil) {
-                    @try {
-                        image = [UIImage imageWithWebPData:data];
-                    }
-                    @catch (NSException *exc) {}
-                }
                 // if the above throws an exception, image will still be nil
                 cb(image);
                 
