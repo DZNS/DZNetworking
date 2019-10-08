@@ -10,6 +10,8 @@
 #import "ImageLoader.h"
 #import <objc/runtime.h>
 
+@class ImageLoader;
+
 @interface UIImageView (ImageLoading)
 
 /**
