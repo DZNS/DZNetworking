@@ -94,7 +94,9 @@ static char *kTaskProgressContext;
     
     NSData *data = [[NSData alloc] initWithContentsOfFile:path];
     
-    [processed addFile:data parameterName:fieldName filename:[path lastPathComponent] contentType:contentType];
+    NSString *filename = [path lastPathComponent];
+    
+    [processed addFile:data parameterName:fieldName filename:filename contentType:contentType];
     
     if(params)
     {
