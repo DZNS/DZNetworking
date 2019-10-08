@@ -58,9 +58,19 @@ static char AUTO_UPDATING_FRAME;
 }
 
 - (void)il_setImageWithURL:(id)url
+ mutate:(UIImage *(^ _Nullable)(UIImage * _Nonnull))mutate
+success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
+  error:(void (^ _Nullable)(NSError * _Nonnull))errorCB {
+    
+    [self il_setImageWithURL:url mutate:mutate success:success error:errorCB imageLoader:SharedImageLoader];
+    
+}
+
+- (void)il_setImageWithURL:(id)url
                     mutate:(UIImage *(^ _Nullable)(UIImage * _Nonnull))mutate
                    success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
-                     error:(void (^ _Nullable)(NSError * _Nonnull))errorCB {
+                     error:(void (^ _Nullable)(NSError * _Nonnull))errorCB
+               imageLoader:(ImageLoader *)imageLoader {
     
     if (self.task != nil) {
         [self il_cancelImageLoading];
@@ -68,11 +78,11 @@ static char AUTO_UPDATING_FRAME;
     
     weakify(self);
     
-    dispatch_async(SharedImageLoader.ioQueue, ^{
+    dispatch_async(imageLoader.ioQueue, ^{
         
         strongify(self);
         
-        self.task = [SharedImageLoader downloadImageForURL:url success:^(UIImage *image, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+        self.task = [imageLoader downloadImageForURL:url success:^(UIImage *image, NSHTTPURLResponse *response, NSURLSessionTask *task) {
             
             if (self == nil) {
                 return;
@@ -84,7 +94,7 @@ static char AUTO_UPDATING_FRAME;
                 
                 dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
                 
-                dispatch_async(SharedImageLoader.ioQueue, ^{
+                dispatch_async(imageLoader.ioQueue, ^{
                     mutated = mutate(image);
                     
                     UNLOCK(semaphore);
