@@ -29,6 +29,12 @@
                    success:(void (^_Nullable)(UIImage * _Nonnull image, NSURL * _Nonnull URL))success
                      error:(void (^_Nullable)(NSError * _Nonnull error))error;
 
+- (void)il_setImageWithURL:(id _Nonnull)url
+                    mutate:(UIImage * _Nonnull(^ _Nullable)(UIImage * _Nonnull))mutate
+                   success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
+                     error:(void (^ _Nullable)(NSError * _Nonnull))errorCB
+               imageLoader:(ImageLoader * _Nonnull)imageLoader;
+
 - (void)il_cancelImageLoading;
 
 @end
