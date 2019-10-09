@@ -109,13 +109,15 @@ success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
                 }
             }
             
-            [self _process:image];
-            
-            if (success) {
-                dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self _process:image];
+                
+                if (success) {
                     success(image, url);
-                });
-            }
+                }
+                
+            });
             
         } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
 #ifdef DEBUG
@@ -214,7 +216,7 @@ success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
 
 - (void)il_cancelImageLoading
 {
-    if (self.task) {
+    if (self.task && self.task.state == NSURLSessionTaskStateRunning) {
         [self.task cancel];
         self.task = nil;
     }

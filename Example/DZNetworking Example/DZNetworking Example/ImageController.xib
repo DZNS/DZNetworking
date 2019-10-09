@@ -26,7 +26,7 @@
                     </constraints>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5Ip-UZ-tv7">
-                    <rect key="frame" x="0.0" y="466" width="414" height="66"/>
+                    <rect key="frame" x="0.0" y="466" width="414" height="99"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FLZ-Qb-ddf">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="33"/>
@@ -42,6 +42,15 @@
                             <state key="normal" title="Small"/>
                             <connections>
                                 <action selector="showSmallImage:" destination="-1" eventType="touchUpInside" id="01L-ar-C8w"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GuI-FO-pbN">
+                            <rect key="frame" x="0.0" y="66" width="414" height="33"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <state key="normal" title="Large"/>
+                            <connections>
+                                <action selector="showLargeImage:" destination="-1" eventType="touchUpInside" id="USj-Ew-IA3"/>
+                                <action selector="showSmallImage:" destination="-1" eventType="touchUpInside" id="Qkq-cY-Mp2"/>
                             </connections>
                         </button>
                     </subviews>
