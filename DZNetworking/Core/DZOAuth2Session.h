@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithClientID:(NSString * _Nonnull)clientID
                     clientSecret:(NSString * _Nonnull)clientSecret
-                     serviceName:(NSString * _Nonnull)serviceName
+                     serviceName:(NSString * _Nullable)serviceName
                 authorizationURL:(NSString * _Nonnull)authorizationURL
                         tokenURL:(NSString * _Nonnull)tokenURL
                      redirectURL:(NSString * _Nonnull)redirectURL
@@ -31,13 +31,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy, readonly) NSString *tokenID;
 
+@property (nonatomic, copy, readonly) NSString *refreshToken;
+
 @property (nonatomic, copy, readonly) NSString * _Nonnull scope;
+
+@property (nonatomic, copy) NSString * _Nullable refreshTokenPath;
 
 - (NSURL *)authorize;
 
 - (void)verifyOAuthCallback:(NSURL *)url
                     success:(void(^ _Nullable)(void))successCB
                       error:(void(^ _Nullable)(NSError * error))errorCB;
+
+- (void)getRefreshedToken:(void(^ _Nonnull)(NSString * _Nullable token, NSError * _Nullable error))completion;
 
 #pragma mark - HTTP
 
