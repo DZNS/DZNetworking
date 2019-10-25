@@ -129,16 +129,16 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 
 - (instancetype)init
 {
-    
+
     NSURLSessionConfiguration *defaultConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
     defaultConfig.HTTPMaximumConnectionsPerHost = 5;
     
     NSInteger const RAMCapacity = 10*1024*1024; // 10 MegaBytes
     NSInteger const diskCapacity = 100*1024*1024; // 100 MegaBytes
-    
+ 
     NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:RAMCapacity
                                                       diskCapacity:diskCapacity
-                                                          diskPath:nil];
+                                                      directoryURL:nil];
     
     defaultConfig.URLCache = cache;
     defaultConfig.timeoutIntervalForRequest = 15;
