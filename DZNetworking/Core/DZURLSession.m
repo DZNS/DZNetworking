@@ -229,9 +229,11 @@ static dispatch_queue_t url_session_manager_processing_queue() {
         NSString *url = [NSURL URLWithString:URI relativeToURL:self.baseURL].absoluteString;
         
         id queryString = OMGFormURLEncode(query);
-        if (queryString) url = [url stringByAppendingFormat:@"?%@", queryString];
+        if (queryString) {
+            url = [url stringByAppendingFormat:@"?%@", queryString];
+        }
         
-        NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url :params error:nil];
+        NSMutableURLRequest *req = [OMGHTTPURLRQ PUT:url JSON:params error:nil];
         
         if(self.requestModifier)
         {
@@ -386,11 +388,11 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     }
     else if([method isEqualToString:@"POST"])
     {
-        mutableRequest = [OMGHTTPURLRQ POST:url :params error:nil];
+        mutableRequest = [OMGHTTPURLRQ POST:url JSON:params error:nil];
     }
     else if([method isEqualToString:@"PUT"])
     {
-        mutableRequest = [OMGHTTPURLRQ PUT:url :params error:nil];
+        mutableRequest = [OMGHTTPURLRQ PUT:url JSON:params error:nil];
     }
     else if([method isEqualToString:@"DELETE"])
     {
