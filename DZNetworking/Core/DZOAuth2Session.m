@@ -32,6 +32,8 @@
 
 @property (nonatomic, copy, readwrite) NSString *tokenID;
 
+@property (nonatomic, copy, readwrite) NSString *refreshToken;
+
 @property (nonatomic, copy) NSString *authorizationURL;
 
 @property (nonatomic, copy) NSString *redirectURL;
@@ -71,16 +73,16 @@
         self.scope = scope;
         
         // if the service name is defined, check if the credentials are available in the keychain for resuming the session
-        if (self.serviceName != nil) {
-            
-            NSString *username = self.username;
-            NSString *token = [self getKeychainItem:username];
-            NSString *tokenID = [self getKeychainItem:[username stringByAppendingString:@"-ID"]];
-            
-            self.token = token;
-            self.tokenID = tokenID;
-            
-        }
+//        if (self.serviceName != nil) {
+//
+//            NSString *username = self.username;
+//            NSString *token = [self getKeychainItem:username];
+//            NSString *tokenID = [self getKeychainItem:[username stringByAppendingString:@"-ID"]];
+//
+//            self.token = token;
+//            self.tokenID = tokenID;
+//
+//        }
     
     }
     
@@ -100,7 +102,9 @@
                              @"client_id": self.clientID,
                              @"redirect_uri": self.redirectURL,
                              @"scope": self.scope,
-                             @"state": _state
+                             @"state": _state,
+                             @"access_type": @"offline",
+                             @"prompt": @"consent"
                              };
     
     NSLog(@"State:%@", _state);
@@ -164,6 +168,7 @@
         
         self.token = responseObject[@"access_token"];
         self.tokenID = responseObject[@"id_token"];
+        self.refreshToken = responseObject[@"refresh_token"];
         
         // save this to the keychain if the service name is available.
         if (self.serviceName != nil) {
@@ -196,6 +201,56 @@
        
         if (errorCB) {
             errorCB(error);
+        }
+        
+    }];
+    
+}
+
+- (void)getRefreshedToken:(void (^)(NSString * _Nullable, NSError * _Nullable))completion {
+    
+    if (self.refreshTokenPath == nil) {
+        
+        if (completion) {
+            NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class) code:0 userInfo:@{NSLocalizedDescriptionKey: @"An invalid or no refreshTokenPath was set on the session."}];
+            
+            completion(nil, error);
+        }
+        
+        return;
+        
+    }
+    
+    if (self.refreshToken == nil) {
+        
+        if (completion) {
+            NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class) code:0 userInfo:@{NSLocalizedDescriptionKey: @"An invalid or no refreshToken was set on the session."}];
+            
+            completion(nil, error);
+        }
+        
+        return;
+        
+    }
+    
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    params[@"refresh_token"] = self.refreshToken;
+    params[@"client_id"] = self.clientID;
+    params[@"client_secret"] = self.clientSecret;
+    params[@"grant_type"] = @"refresh_token";
+    
+    [self POST:self.refreshTokenPath parameters:params success:^(id responseObject, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+        
+        NSString *token = [responseObject valueForKey:@"access_token"];
+        
+        if (completion) {
+            completion(token, nil);
+        }
+        
+    } error:^(NSError *error, NSHTTPURLResponse *response, NSURLSessionTask *task) {
+       
+        if (completion) {
+            completion(nil, error);
         }
         
     }];
