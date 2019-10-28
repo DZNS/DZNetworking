@@ -423,7 +423,10 @@ static dispatch_queue_t url_session_manager_processing_queue() {
      * sanitize the URL request.
      * 1. the URL shouldn't have a ? if there are no searchParams
      */
-    if (!params || !params.allKeys.count) {
+    if (!params
+        || ([params isKindOfClass:NSDictionary.class] && params.allKeys.count == 0)
+        || ([params isKindOfClass:NSArray.class] && params.count == 0)) {
+        
         NSString *uri = mutableRequest.URL.absoluteString;
         if (uri.length && [[uri substringFromIndex:uri.length-1] isEqualToString:@"?"]) {
             uri = [uri substringToIndex:uri.length-1];
@@ -432,6 +435,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
             
             request = mutableRequest.copy;
         }
+        
     }
     
     return request;
