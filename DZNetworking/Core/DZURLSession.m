@@ -136,9 +136,18 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     NSInteger const RAMCapacity = 10*1024*1024; // 10 MegaBytes
     NSInteger const diskCapacity = 100*1024*1024; // 100 MegaBytes
  
-    NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:RAMCapacity
-                                                      diskCapacity:diskCapacity
-                                                      directoryURL:nil];
+    NSURLCache *cache = nil;
+    
+    if (@available(iOS 13, *)) {
+        
+        cache = [[NSURLCache alloc] initWithMemoryCapacity:RAMCapacity diskCapacity:diskCapacity directoryURL:nil];
+        
+    }
+    else {
+        
+        cache = [[NSURLCache alloc] initWithMemoryCapacity:RAMCapacity diskCapacity:diskCapacity diskPath:nil];
+        
+    }
     
     defaultConfig.URLCache = cache;
     defaultConfig.timeoutIntervalForRequest = 15;
