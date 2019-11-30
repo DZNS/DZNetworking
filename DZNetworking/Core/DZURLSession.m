@@ -397,7 +397,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     }
     else if([method isEqualToString:@"POST"])
     {
-        mutableRequest = [OMGHTTPURLRQ POST:url JSON:params error:nil];
+        mutableRequest = [OMGHTTPURLRQ POST:url JSON:params ?: @{} error:nil];
     }
     else if([method isEqualToString:@"PUT"])
     {
