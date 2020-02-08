@@ -1,0 +1,3 @@
+[submodule "DZNetworking/Vendors/WebPImageSerialization"]
+	path = DZNetworking/Vendors/WebPImageSerialization
+	url = https://github.com/TimOliver/WebPImageSerialization.git

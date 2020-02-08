@@ -88,7 +88,6 @@
 		F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C59D1B7760C3002F8395 /* DZResponseParser.m */; };
 		F060C5A21B776302002F8395 /* DZJSONResponseParser.h in Headers */ = {isa = PBXBuildFile; fileRef = F060C5A01B776302002F8395 /* DZJSONResponseParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F060C5A31B776302002F8395 /* DZJSONResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F060C5A11B776302002F8395 /* DZJSONResponseParser.m */; };
-		F074D801208DC1F3002F22CB /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F074D7FF208DC1F3002F22CB /* WebP.framework */; };
 		F08E7C431E0BA97D0009BE19 /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F08E7C551E0BACE60009BE19 /* DZActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F00D50521B75D5F100845897 /* DZActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0923E7C22A11F710027A5E6 /* DZOAuth2Session.h in Headers */ = {isa = PBXBuildFile; fileRef = F0923E7A22A11F710027A5E6 /* DZOAuth2Session.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -123,6 +122,9 @@
 		F0E1027F1FC583BA007C7140 /* UIImageView+ImageLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E102781FC583BA007C7140 /* UIImageView+ImageLoading.m */; };
 		F0E102801FC583BA007C7140 /* UIImageView+ImageLoading.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E102791FC583BA007C7140 /* UIImageView+ImageLoading.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0E102811FC583BA007C7140 /* ImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E1027A1FC583BA007C7140 /* ImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0E1C54023EED9BC00F6958B /* WebPImageSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E1C53E23EED9BC00F6958B /* WebPImageSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0E1C54123EED9BC00F6958B /* WebPImageSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E1C53F23EED9BC00F6958B /* WebPImageSerialization.m */; };
+		F0E1C54323EED9FA00F6958B /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0E1C54223EED9FA00F6958B /* WebP.framework */; };
 		F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FC8E5C1B4FB1D300FDA46C /* DZNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */; };
 		F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E621B4FB1D400FDA46C /* DZNetworkingTests.m */; };
@@ -183,7 +185,6 @@
 		F060C59D1B7760C3002F8395 /* DZResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZResponseParser.m; path = "Core/Response Parsers/DZResponseParser.m"; sourceTree = "<group>"; };
 		F060C5A01B776302002F8395 /* DZJSONResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZJSONResponseParser.h; path = "Core/Response Parsers/DZJSONResponseParser.h"; sourceTree = "<group>"; };
 		F060C5A11B776302002F8395 /* DZJSONResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZJSONResponseParser.m; path = "Core/Response Parsers/DZJSONResponseParser.m"; sourceTree = "<group>"; };
-		F074D7FF208DC1F3002F22CB /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebP.framework; path = Carthage/Build/iOS/WebP.framework; sourceTree = SOURCE_ROOT; };
 		F0923E7A22A11F710027A5E6 /* DZOAuth2Session.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DZOAuth2Session.h; path = Core/DZOAuth2Session.h; sourceTree = "<group>"; };
 		F0923E7B22A11F710027A5E6 /* DZOAuth2Session.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DZOAuth2Session.m; path = Core/DZOAuth2Session.m; sourceTree = "<group>"; };
 		F0923E7E22A121020027A5E6 /* OAuth2Session.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAuth2Session.m; sourceTree = "<group>"; };
@@ -205,6 +206,9 @@
 		F0E102781FC583BA007C7140 /* UIImageView+ImageLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+ImageLoading.m"; path = "ImageLoading/UIImageView+ImageLoading.m"; sourceTree = "<group>"; };
 		F0E102791FC583BA007C7140 /* UIImageView+ImageLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+ImageLoading.h"; path = "ImageLoading/UIImageView+ImageLoading.h"; sourceTree = "<group>"; };
 		F0E1027A1FC583BA007C7140 /* ImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageLoader.h; path = ImageLoading/ImageLoader.h; sourceTree = "<group>"; };
+		F0E1C53E23EED9BC00F6958B /* WebPImageSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebPImageSerialization.h; sourceTree = "<group>"; };
+		F0E1C53F23EED9BC00F6958B /* WebPImageSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebPImageSerialization.m; sourceTree = "<group>"; };
+		F0E1C54223EED9FA00F6958B /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebP.framework; path = DZNetworking/Vendors/WebPImageSerialization/WebP.framework; sourceTree = "<group>"; };
 		F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DZNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0FC8E541B4FB1D300FDA46C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZNetworking.h; sourceTree = "<group>"; };
@@ -227,7 +231,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F074D801208DC1F3002F22CB /* WebP.framework in Frameworks */,
 				F0B2C6A21D1002E500944F5D /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,6 +239,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0E1C54323EED9FA00F6958B /* WebP.framework in Frameworks */,
 				F0D0E24E1B63F4900077F186 /* Security.framework in Frameworks */,
 				F02447221B612793004C65F9 /* MobileCoreServices.framework in Frameworks */,
 			);
@@ -257,6 +261,7 @@
 		F0024C702075E6E80011E1A7 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				F0E1C53D23EED9BC00F6958B /* WebPImageSerialization */,
 				F05BF8892075E8BC00273B49 /* OMGFormURLEncode.h */,
 				F05BF8872075E8BC00273B49 /* OMGFormURLEncode.m */,
 				F05BF88A2075E8BC00273B49 /* OMGHTTPURLRQ.h */,
@@ -290,6 +295,7 @@
 		F02E59011D4227D000BD0AD7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F0E1C54223EED9FA00F6958B /* WebP.framework */,
 				F05BF8A02075E99C00273B49 /* MobileCoreServices.framework */,
 				F05BF89E2075E99700273B49 /* Security.framework */,
 				F02E59021D4227D000BD0AD7 /* CoreServices.framework */,
@@ -344,6 +350,16 @@
 			name = ImageLoading;
 			sourceTree = "<group>";
 		};
+		F0E1C53D23EED9BC00F6958B /* WebPImageSerialization */ = {
+			isa = PBXGroup;
+			children = (
+				F0E1C53E23EED9BC00F6958B /* WebPImageSerialization.h */,
+				F0E1C53F23EED9BC00F6958B /* WebPImageSerialization.m */,
+			);
+			name = WebPImageSerialization;
+			path = Vendors/WebPImageSerialization/WebPImageSerialization;
+			sourceTree = "<group>";
+		};
 		F0FC8E461B4FB1D300FDA46C = {
 			isa = PBXGroup;
 			children = (
@@ -383,7 +399,6 @@
 		F0FC8E531B4FB1D300FDA46C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F074D7FF208DC1F3002F22CB /* WebP.framework */,
 				F0D0E24D1B63F4900077F186 /* Security.framework */,
 				F02447201B61278A004C65F9 /* MobileCoreServices.framework */,
 				F0FC8E541B4FB1D300FDA46C /* Info.plist */,
@@ -496,6 +511,7 @@
 				F014D9471BBE9D1300E4F203 /* NSDictionary+Extend.h in Headers */,
 				F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */,
 				F0608B4E1FD8F64F00FC42BB /* PurgingDiskCache.h in Headers */,
+				F0E1C54023EED9BC00F6958B /* WebPImageSerialization.h in Headers */,
 				F0E102801FC583BA007C7140 /* UIImageView+ImageLoading.h in Headers */,
 				F0923E7C22A11F710027A5E6 /* DZOAuth2Session.h in Headers */,
 				F0018F551F792947004227B5 /* DZUploadSession.h in Headers */,
@@ -728,6 +744,7 @@
 				F0E1027B1FC583BA007C7140 /* ImageResponseParser.m in Sources */,
 				F00D50551B75D5F100845897 /* DZActivityIndicatorManager.m in Sources */,
 				F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */,
+				F0E1C54123EED9BC00F6958B /* WebPImageSerialization.m in Sources */,
 				F0018F611F792B4A004227B5 /* DZOAuthSession.m in Sources */,
 				F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */,
 				F0608B4F1FD8F64F00FC42BB /* PurgingDiskCache.m in Sources */,
@@ -831,6 +848,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DZNetworking/ImageLoading/**",
+					"$(PROJECT_DIR)/DZNetworking/Vendors/WebPImageSerialization/**",
 				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1209,6 +1227,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DZNetworking/ImageLoading/**",
+					"$(PROJECT_DIR)/DZNetworking/Vendors/WebPImageSerialization/**",
 				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1243,6 +1262,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DZNetworking/ImageLoading/**",
+					"$(PROJECT_DIR)/DZNetworking/Vendors/WebPImageSerialization/**",
 				);
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
