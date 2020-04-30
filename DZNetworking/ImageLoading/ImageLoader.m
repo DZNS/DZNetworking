@@ -15,6 +15,15 @@
 #define NSFoundationVersionNumber_With_Fixed_5871104061079552_bug NSFoundationVersionNumber_iOS_8_0
 #endif
 
+void runOnMainQueueWithoutDeadlocking(void (^block)(void)) {
+    if ([NSThread isMainThread]) {
+        block();
+    }
+    else {
+        dispatch_sync(dispatch_get_main_queue(), block);
+    }
+}
+
 // The following lines of code are taken from AFNetworking/AFURLSessionManager.m
 static dispatch_queue_t url_session_manager_creation_queue() {
     static dispatch_queue_t dz_url_session_manager_creation_queue;
@@ -50,7 +59,6 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     
     return dz_url_session_manager_processing_queue;
 }
-
 
 ImageLoader *SharedImageLoader;
 

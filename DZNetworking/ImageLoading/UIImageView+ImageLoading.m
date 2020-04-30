@@ -109,7 +109,7 @@ success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
                 }
             }
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+            runOnMainQueueWithoutDeadlocking(^{
                 
                 [self _process:image];
                 
@@ -140,11 +140,6 @@ success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
     }
     
     if ([self respondsToSelector:@selector(setNeedsDisplay)] == NO) {
-        return;
-    }
-    
-    if (NSThread.isMainThread == NO) {
-        [self performSelectorOnMainThread:@selector(_process:) withObject:image waitUntilDone:NO];
         return;
     }
     

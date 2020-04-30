@@ -11,6 +11,11 @@
 
 #import <DZNetworking/PurgingDiskCache.h>
 
+#ifndef runOnMainQueueWithoutDeadlockingExport
+#define runOnMainQueueWithoutDeadlockingExport 1
+FOUNDATION_EXPORT void runOnMainQueueWithoutDeadlocking(void (^ _Nonnull block)(void));
+#endif
+
 @class ImageLoader;
 
 extern ImageLoader * _Nonnull SharedImageLoader;
