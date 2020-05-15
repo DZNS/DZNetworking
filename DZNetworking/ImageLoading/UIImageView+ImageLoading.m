@@ -70,7 +70,7 @@ success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
                     mutate:(UIImage *(^ _Nullable)(UIImage * _Nonnull))mutate
                    success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
                      error:(void (^ _Nullable)(NSError * _Nonnull))errorCB
-               imageLoader:(ImageLoader *)imageLoader {
+               imageLoader:(ImageLoader * _Nonnull)imageLoader {
     
     if (self.task != nil) {
         [self il_cancelImageLoading];
@@ -113,8 +113,11 @@ success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
                 
                 [self _process:image];
                 
+                __weak UIImage *weakImageRef = image;
+                __weak NSURL *weakURLRef = url;
+                
                 if (success) {
-                    success(image, url);
+                    success(weakImageRef, weakURLRef);
                 }
                 
             });

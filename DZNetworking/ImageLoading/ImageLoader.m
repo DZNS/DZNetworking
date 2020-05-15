@@ -282,6 +282,8 @@ ImageLoader *SharedImageLoader;
 - (PurgingDiskCache *)cache {
     if (_cache == nil) {
         _cache = [[PurgingDiskCache alloc] init];
+        _cache.totalCostLimit = 50 * 1024 * 1024; // 50MB
+        _cache.countLimit = 100;
     }
     
     return _cache;

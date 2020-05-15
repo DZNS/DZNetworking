@@ -8,6 +8,7 @@
 
 #import "PurgingDiskCache.h"
 #import "NSString+Coders.h"
+#import "UIImage+Decoded.h"
 
 #ifndef DZAPPKIT
 
@@ -15,11 +16,7 @@
 
 // The implementation for the following has been taken from SDWebImage
 FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
-#ifdef DZAPPKIT
-    return image.size.height * image.size.width;
-#else
-    return image.size.height * image.size.width * image.scale * image.scale;
-#endif
+    return image.size.height * image.size.width * image.scale * image.scale * 8.f;
 }
 
 #endif
@@ -113,13 +110,7 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
     key = [(NSString *)key md5];
     
     [super setObject:obj forKey:key];
-        
-    // store on disk cache
-    // set inside our disk cache
-    if (!data && obj)
-        data = UIImagePNGRepresentation(obj);
-    
-    [self setObjectToDisk:data forKey:key];
+
 }
 
 - (void)setObject:(UIImage *)obj data:(NSData *)data forKey:(NSString *)key cost:(NSUInteger)g
@@ -129,22 +120,62 @@ FOUNDATION_STATIC_INLINE NSUInteger CacheCostForImage(UIImage *image) {
     
     [super setObject:obj forKey:key cost:g];
     
-    // set inside our disk cache
-    if (data == nil && obj)
-        data = UIImagePNGRepresentation(obj); //assume PNG if we dont have the source
+    if (!data && obj) {
+        data = UIImagePNGRepresentation(obj);
+    }
     
     if (data != nil) {
         [self setObjectToDisk:data forKey:key];
     }
 }
 
-- (void)removeObjectForKey:(NSString *)key
-{
+- (void)removeObjectForKey:(NSString *)key {
+    
+    [self removeObjectForKey:key memoryOnly:NO];
+    
+}
+
+- (void)removeObjectForKey:(NSString *)key memoryOnly:(BOOL)memoryOnly {
+    
     key = [(NSString *)key md5];
     
     [super removeObjectForKey:key];
     
-    // remove from our disk cache
+    if (memoryOnly == NO) {
+        // remove from our disk cache
+
+        weakify(self);
+        
+        dispatch_async(self.readQueue, ^{
+            
+            strongify(self);
+            
+            NSString *path = [self.diskPath stringByAppendingPathComponent:key];
+            
+            NSURL *url = [NSURL fileURLWithPath:path];
+            
+            if ([self.fileManager fileExistsAtPath:path]) {
+                
+                NSFileCoordinator *coordinator = [NSFileCoordinator new];
+                
+                [coordinator coordinateWritingItemAtURL:url options:NSFileCoordinatorWritingForDeleting error:nil byAccessor:^(NSURL * _Nonnull newURL) {
+                    
+                    NSError *error = nil;
+                    
+                    if ([self.fileManager removeItemAtURL:newURL error:&error] == NO) {
+                        
+                        NSLog(@"Error removing file from disk cache: %@", url);
+                        
+                    }
+                    
+                }];
+                
+            }
+            
+        });
+        
+    }
+    
 }
 
 #pragma mark -

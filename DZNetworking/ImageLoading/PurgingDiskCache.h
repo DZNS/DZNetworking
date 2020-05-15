@@ -39,6 +39,8 @@ _Pragma("clang diagnostic pop")
 
 - (void)removeObjectForKey:(NSString * _Nonnull)key;
 
+- (void)removeObjectForKey:(NSString * _Nonnull)key memoryOnly:(BOOL)memoryOnly;
+
 - (void)removeAllObjectsFromDisk;
 
 #endif
