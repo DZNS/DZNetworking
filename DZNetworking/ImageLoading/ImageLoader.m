@@ -20,7 +20,7 @@ void runOnMainQueueWithoutDeadlocking(void (^block)(void)) {
         block();
     }
     else {
-        dispatch_async(dispatch_get_main_queue(), block);
+        dispatch_sync(dispatch_get_main_queue(), block);
     }
 }
 
