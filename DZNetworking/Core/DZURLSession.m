@@ -89,11 +89,13 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     return dz_url_session_manager_processing_queue;
 }
 
-@interface DZURLSession() <NSURLSessionDelegate>
+@interface DZURLSession() <NSURLSessionDataDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (readwrite, nonatomic, strong) NSURLSessionConfiguration *sessionConfiguration;
 @property (readwrite, nonatomic, strong) NSOperationQueue *operationQueue;
+
+@property (nonatomic, strong) NSMutableDictionary <NSNumber *, NSMutableData *> * backgroundResponseData;
 
 @end
 
@@ -122,6 +124,22 @@ static dispatch_queue_t url_session_manager_processing_queue() {
         _operationQueue = [[NSOperationQueue alloc] init];
         
         _useActivityManager = YES;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)config delegate:(id<DZURLSessionProtocol>)delegate queue:(NSOperationQueue *)queue {
+    
+    if (self = [super init]) {
+        _maximumSuccessStatusCode = 399;
+        
+        _sessionConfiguration = config;
+        _operationQueue = queue;
+        _delegate = delegate;
+        
+        _useActivityManager = YES;
+        _backgroundResponseData = [NSMutableDictionary new];
     }
     
     return self;
@@ -162,7 +180,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 
 - (NSURLSession *)session {
     if (_session == nil) { @autoreleasepool {
-        _session = [NSURLSession sessionWithConfiguration:self.sessionConfiguration delegate:self delegateQueue:self.operationQueue];
+        _session = [NSURLSession sessionWithConfiguration:self.sessionConfiguration delegate:self.delegate delegateQueue:self.operationQueue];
     } }
     
     return _session;
@@ -624,6 +642,92 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     completionHandler(newRequest);
 }
 
+#pragma mark - Background Tasks
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
+    
+    NSMutableData *responseData = self.backgroundResponseData[@(dataTask.taskIdentifier)];
+    
+    if (!responseData) {
+        responseData = [NSMutableData dataWithData:data];
+        self.backgroundResponseData[@(dataTask.taskIdentifier)] = responseData;
+    }
+    else {
+        [responseData appendData:data];
+    }
+    
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    
+    if (error) {
+        
+        [self.backgroundResponseData removeObjectForKey:@(task.taskIdentifier)];
+        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//            self.backgroundCompletionHandler(task, nil, error);
+//
+//        });
+        
+        return;
+    }
+
+    NSMutableData *responseData = self.backgroundResponseData[@(task.taskIdentifier)];
+
+    if (responseData) {
+        
+        [self.backgroundResponseData removeObjectForKey:@(task.taskIdentifier)];
+        
+        id responseObject = [self.responseParser parseResponse:responseData :nil error:&error];
+        
+        if (error != nil) {
+            
+//            if (self.backgroundCompletionHandler) {
+//
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//
+//                    self.backgroundCompletionHandler(task, nil, error);
+//
+//                });
+//
+//            }
+            
+            return;
+        }
+        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//            self.backgroundCompletionHandler(task, responseObject, error);
+//
+//        });
+        
+    }
+    else {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//            self.backgroundCompletionHandler(task, nil, nil);
+//
+//        });
+    }
+    
+}
+
+- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
+    
+    if (self.backgroundCompletionHandler) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+           
+            self.backgroundCompletionHandler(nil, nil, nil);
+            self.backgroundCompletionHandler = nil;
+            
+        });
+        
+    }
+    
+}
+
 #pragma mark - MSG Forwarding
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation
@@ -642,6 +746,11 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 
 - (BOOL)respondsToSelector:(SEL)aSelector
 {
+    
+    if (self.delegate == self) {
+        return [super respondsToSelector:aSelector];
+    }
+    
     return [(id)self.delegate respondsToSelector:aSelector] || [super respondsToSelector:aSelector];
 }
 

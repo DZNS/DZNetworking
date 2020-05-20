@@ -9,7 +9,7 @@
 #ifndef DZNetworking_DZURLSessionProtocol_h
 #define DZNetworking_DZURLSessionProtocol_h
 
-@protocol DZURLSessionProtocol <NSURLSessionDelegate>
+@protocol DZURLSessionProtocol <NSURLSessionDataDelegate>
 
 @end
 

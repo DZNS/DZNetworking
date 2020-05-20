@@ -46,12 +46,14 @@
 
 @property (readonly, nonatomic, strong) NSURLSessionConfiguration *sessionConfiguration;
 @property (readonly, nonatomic, strong) NSOperationQueue *operationQueue;
+@property (readwrite, nonatomic, weak) id <NSURLSessionDataDelegate> delegate;
+
 
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)config;
 
-- (instancetype)init;
+- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)config delegate:(id<DZURLSessionProtocol>)delegate queue:(NSOperationQueue *)queue;
 
-@property (nonatomic, weak) id<DZURLSessionProtocol> delegate;
+- (instancetype)init;
 
 /**
  *  The base URL to use for all the requests. 
@@ -237,5 +239,9 @@
 - (NSURLSessionTask *)DELETE:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
 - (NSURLSessionTask *)OPTIONS:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
 - (NSURLSessionTask *)HEAD:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+
+#pragma mark - Background Sessions
+
+@property (nonatomic, copy, nullable) void (^backgroundCompletionHandler)(NSURLSessionTask * _Nullable task, id _Nullable responseObject, NSError * _Nullable error);
 
 @end
