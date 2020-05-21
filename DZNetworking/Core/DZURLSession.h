@@ -48,6 +48,7 @@
 @property (readonly, nonatomic, strong) NSOperationQueue *operationQueue;
 @property (readwrite, nonatomic, weak) id <NSURLSessionDataDelegate> delegate;
 
+@property (nonatomic, assign) BOOL isBackgroundSession;
 
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)config;
 
@@ -242,6 +243,10 @@
 
 #pragma mark - Background Sessions
 
-@property (nonatomic, copy, nullable) void (^backgroundCompletionHandler)(NSURLSessionTask * _Nullable task, id _Nullable responseObject, NSError * _Nullable error);
+@property (nonatomic, copy, nullable) void (^backgroundCompletionHandler)(void);
+
+@property (nonatomic, strong, nonnull) NSMutableDictionary <NSNumber *, successBlock> * backgroundSuccessBlocks;
+
+@property (nonatomic, strong, nonnull) NSMutableDictionary <NSNumber *, errorBlock> * backgroundErrorBlocks;
 
 @end

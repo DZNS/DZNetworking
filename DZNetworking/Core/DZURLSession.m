@@ -54,31 +54,6 @@ _Pragma("clang diagnostic pop")
 #endif
 
 // The following lines of code are taken from AFNetworking/AFURLSessionManager.m
-static dispatch_queue_t url_session_manager_creation_queue() {
-    static dispatch_queue_t dz_url_session_manager_creation_queue;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        dz_url_session_manager_creation_queue = dispatch_queue_create("com.dezinezync.networking.session.manager.creation", DISPATCH_QUEUE_SERIAL);
-    });
-    
-    return dz_url_session_manager_creation_queue;
-}
-
-// The following lines of code are taken from AFNetworking/AFURLSessionManager.m
-static void url_session_manager_create_task_safely(dispatch_block_t _Nonnull block) {
-    if (block != NULL) {
-        if (NSFoundationVersionNumber < NSFoundationVersionNumber_With_Fixed_5871104061079552_bug) {
-            // Fix of bug
-            // Open Radar:http://openradar.appspot.com/radar?id=5871104061079552 (status: Fixed in iOS8)
-            // Issue about:https://github.com/AFNetworking/AFNetworking/issues/2093
-            dispatch_sync(url_session_manager_creation_queue(), block);
-        } else {
-            block();
-        }
-    }
-}
-
-// The following lines of code are taken from AFNetworking/AFURLSessionManager.m
 static dispatch_queue_t url_session_manager_processing_queue() {
     static dispatch_queue_t dz_url_session_manager_processing_queue;
     static dispatch_once_t onceToken;
@@ -89,7 +64,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     return dz_url_session_manager_processing_queue;
 }
 
-@interface DZURLSession() <NSURLSessionDataDelegate>
+@interface DZURLSession() <NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (readwrite, nonatomic, strong) NSURLSessionConfiguration *sessionConfiguration;
@@ -121,6 +96,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
         _maximumSuccessStatusCode = 399;
         
         _sessionConfiguration = config;
+        _delegate = self;
         _operationQueue = [[NSOperationQueue alloc] init];
         
         _useActivityManager = YES;
@@ -184,6 +160,19 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     } }
     
     return _session;
+}
+
+- (void)setIsBackgroundSession:(BOOL)isBackgroundSession {
+    
+    _isBackgroundSession = isBackgroundSession;
+    
+    if (_isBackgroundSession) {
+        
+        self.backgroundSuccessBlocks = [NSMutableDictionary new];
+        self.backgroundErrorBlocks = [NSMutableDictionary new];
+        
+    }
+    
 }
 
 #pragma mark - HTTP Methods
@@ -487,19 +476,34 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 {
     __block NSURLSessionDataTask *task = nil;
     
-    weakify(self);
-    
-    url_session_manager_create_task_safely(^{
+    if (self.isBackgroundSession == YES) {
         
-        strongify(self);
+        task = (NSURLSessionDataTask *)[self.session downloadTaskWithRequest:request];
         
-        task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (successCB) {
+#ifdef DEBUG
+            NSLog(@"Added successCB for task:%@", @(task.taskIdentifier));
+#endif
             
+            [self.backgroundSuccessBlocks setObject:[successCB copy] forKey:@(task.taskIdentifier)];
+        }
+        
+        if (errorCB) {
+#ifdef DEBUG
+            NSLog(@"Added errorCB for task:%@", @(task.taskIdentifier));
+#endif
+            [self.backgroundErrorBlocks setObject:[errorCB copy] forKey:@(task.taskIdentifier)];
+        }
+        
+    }
+    else {
+        task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
 #if TARGET_OS_IOS == 1
             // we simply decrement it. No harm, since we ensure the value never drops below 0.
             [[DZActivityIndicatorManager shared] decrementCount];
 #endif
-            
+        
             NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
             
             if(error)
@@ -573,7 +577,9 @@ static dispatch_queue_t url_session_manager_processing_queue() {
             });
             
         }];
-    });
+        
+    }
+
     
     if (task) {
         [task resume];
@@ -619,7 +625,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler
 {
     
-    if(self.delegate && [self.delegate respondsToSelector:@selector(URLSession:didReceiveChallenge:completionHandler:)])
+    if(self.delegate && self.delegate != self && [self.delegate respondsToSelector:@selector(URLSession:didReceiveChallenge:completionHandler:)])
     {
         [self.delegate URLSession:session didReceiveChallenge:challenge completionHandler:completionHandler];
     }
@@ -658,57 +664,167 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     
 }
 
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
     
-    if (error) {
-        
-        [self.backgroundResponseData removeObjectForKey:@(task.taskIdentifier)];
-        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//
-//            self.backgroundCompletionHandler(task, nil, error);
-//
-//        });
-        
-        return;
+    NSLog(@"response: %@", response.debugDescription);
+    
+    NSURLSessionResponseDisposition disposition = NSURLSessionResponseAllow;
+    
+    if (completionHandler) {
+        completionHandler(disposition);
     }
+}
 
-    NSMutableData *responseData = self.backgroundResponseData[@(task.taskIdentifier)];
-
-    if (responseData) {
+- (void)URLSession:(NSURLSession *)session downloadTask:(nonnull NSURLSessionDownloadTask *)task didFinishDownloadingToURL:(nonnull NSURL *)location {
+    
+    NSHTTPURLResponse *response = (NSHTTPURLResponse *)[task response];
+    
+    errorBlock backgroundErrorBlock = [self.backgroundErrorBlocks objectForKey:@(task.taskIdentifier)];
+    successBlock backgroundSuccessBlock = [self.backgroundSuccessBlocks objectForKey:@(task.taskIdentifier)];
+    
+    if (backgroundErrorBlock) {
         
-        [self.backgroundResponseData removeObjectForKey:@(task.taskIdentifier)];
+#ifdef DEBUG
+        NSLog(@"Got errorCB for task:%@", @(task.taskIdentifier));
+#endif
         
-        id responseObject = [self.responseParser parseResponse:responseData :nil error:&error];
+        backgroundErrorBlock = [backgroundErrorBlock copy];
+        
+        [self.backgroundErrorBlocks removeObjectForKey:@(task.taskIdentifier)];
+        
+    }
+    
+    if (backgroundSuccessBlock) {
+        
+#ifdef DEBUG
+        NSLog(@"Got successCB for task:%@", @(task.taskIdentifier));
+#endif
+        
+        backgroundSuccessBlock = [backgroundSuccessBlock copy];
+        
+        [self.backgroundSuccessBlocks removeObjectForKey:@(task.taskIdentifier)];
+        
+    }
+    
+    if (response.statusCode != 304) {
+        
+        NSError *error = nil;
+        
+        NSData *data = [NSData dataWithContentsOfURL:location options:NSDataReadingMappedIfSafe error:&error];
         
         if (error != nil) {
-            
-//            if (self.backgroundCompletionHandler) {
-//
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//
-//                    self.backgroundCompletionHandler(task, nil, error);
-//
-//                });
-//
-//            }
+            // errored
+            if (backgroundErrorBlock) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+
+                    backgroundErrorBlock(error, (NSHTTPURLResponse *)[task response], task);
+
+                });
+                
+            }
             
             return;
         }
         
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//
-//            self.backgroundCompletionHandler(task, responseObject, error);
-//
-//        });
+        if (data != nil) {
+            
+            weakify(self);
+            
+            dispatch_async(url_session_manager_processing_queue(), ^{
+                
+                strongify(self);
+               
+                NSError *parsingError;
+                
+                id responseObject = [self.responseParser parseResponse:data :response error:&parsingError];
+                
+                if(response.statusCode > self.maximumSuccessStatusCode)
+                {
+                    
+                    // Treat this as an error.
+                    
+                    NSDictionary *userInfo = @{DZErrorData     : data ?: [NSData data],
+                                               DZErrorResponse : responseObject ?: @{},
+                                               DZErrorTask     : task};
+                    
+                    NSError * statusCodeError = [NSError errorWithDomain:NSNetServicesErrorDomain code:response.statusCode userInfo:userInfo];
+                    
+                    if (backgroundErrorBlock) {
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            backgroundErrorBlock(statusCodeError, response, task);
+                        });
+                        
+                    }
+                    
+                    return;
+                    
+                }
+                
+                if(response.statusCode == 200 && !responseObject)
+                {
+                    // our request succeeded but returned no data. Treat valid.
+                    if (backgroundSuccessBlock) {
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            backgroundSuccessBlock(responseObject ?: data, response, task);
+                        });
+                        
+                    }
+                    return;
+                }
+                
+                if (parsingError) {
+                    if (backgroundErrorBlock) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            backgroundErrorBlock(parsingError, response, task);
+                        });
+                    }
+                    return;
+                }
+                
+                if (backgroundSuccessBlock) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        backgroundSuccessBlock(responseObject, response, task);
+                    });
+                }
+                return;
+                
+            });
+            
+        }
+        else {
+            // data was nil
+            // treat at a 304 status
+            NSDictionary *userInfo = @{DZErrorData     : data ?: [NSData data],
+                                       DZErrorResponse : @{},
+                                       DZErrorTask     : task};
+            
+            NSError * statusCodeError = [NSError errorWithDomain:NSNetServicesErrorDomain code:304 userInfo:userInfo];
+            
+            if (backgroundErrorBlock) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    backgroundErrorBlock(statusCodeError, response, task);
+                });
+                
+            }
+        }
         
     }
     else {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//
-//            self.backgroundCompletionHandler(task, nil, nil);
-//
-//        });
+        
+        if (backgroundSuccessBlock) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                backgroundSuccessBlock(nil, (NSHTTPURLResponse *)[task response], task);
+                
+            });
+            
+        }
+        
     }
     
 }
@@ -717,10 +833,13 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     
     if (self.backgroundCompletionHandler) {
         
+#ifdef DEBUG
+        NSLog(@"Calling background completion handler");
+#endif
+        
         dispatch_async(dispatch_get_main_queue(), ^{
            
-            self.backgroundCompletionHandler(nil, nil, nil);
-            self.backgroundCompletionHandler = nil;
+            self.backgroundCompletionHandler();
             
         });
         
