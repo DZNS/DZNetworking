@@ -78,6 +78,43 @@ success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
     
     weakify(self);
     
+    __block BOOL gotCachedImage = NO;
+    
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    
+    NSString *cacheKey = [url isKindOfClass:NSURL.class] ? [(NSURL *)url absoluteString] : url;
+    
+    [imageLoader.cache objectforKey:cacheKey callback:^(UIImage * _Nullable image) {
+        
+        if (image) {
+            
+            gotCachedImage = YES;
+            
+            runOnMainQueueWithoutDeadlocking(^{
+                
+                [self _process:image];
+                
+                __weak UIImage *weakImageRef = image;
+                __weak NSURL *weakURLRef = url;
+                
+                if (success) {
+                    success(weakImageRef, weakURLRef);
+                }
+                
+            });
+            
+        }
+        
+        UNLOCK(semaphore);
+        
+    }];
+    
+    LOCK(semaphore);
+    
+    if (gotCachedImage == YES) {
+        return;
+    }
+    
     dispatch_async(imageLoader.ioQueue, ^{
         
         strongify(self);
@@ -103,6 +140,9 @@ success:(void (^ _Nullable)(UIImage * _Nonnull, NSURL * _Nonnull))success
                 LOCK(semaphore);
                 
                 if (mutated != nil) {
+                    
+                    [imageLoader.cache setObject:mutated data:UIImagePNGRepresentation(image) forKey:cacheKey];
+                    
                     image = nil;
                     image = [mutated copy];
                     mutated = nil;
