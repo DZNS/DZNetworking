@@ -18,9 +18,6 @@ jobs:
     - name: Show Build Version
       run: xcodebuild -version
 
-    - name: Show Build Settings
-      run: xcodebuild -showBuildSettings
-      
     - name: Show Build SDK
       run: xcodebuild -showsdks
     
