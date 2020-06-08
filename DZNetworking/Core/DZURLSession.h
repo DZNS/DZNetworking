@@ -42,31 +42,31 @@
  *
  *  @return DZURLSession.
  */
-+ (instancetype)shared;
++ (instancetype _Nonnull)shared;
 
-@property (readonly, nonatomic, strong) NSURLSessionConfiguration *sessionConfiguration;
-@property (readonly, nonatomic, strong) NSOperationQueue *operationQueue;
-@property (readwrite, nonatomic, weak) id <NSURLSessionDataDelegate> delegate;
+@property (readonly, nonatomic, strong) NSURLSessionConfiguration * _Nonnull sessionConfiguration;
+@property (readonly, nonatomic, strong) NSOperationQueue * _Nonnull operationQueue;
+@property (readwrite, nonatomic, weak) id <NSURLSessionDataDelegate> _Nullable delegate;
 
 @property (nonatomic, assign) BOOL isBackgroundSession;
 
-- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)config;
+- (instancetype _Nonnull)initWithSessionConfiguration:(NSURLSessionConfiguration * _Nonnull )config;
 
-- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)config delegate:(id<DZURLSessionProtocol>)delegate queue:(NSOperationQueue *)queue;
+- (instancetype _Nonnull)initWithSessionConfiguration:(NSURLSessionConfiguration * _Nonnull )config delegate:(id<DZURLSessionProtocol> _Nullable)delegate queue:(NSOperationQueue * _Nonnull)queue;
 
-- (instancetype)init;
+- (instancetype _Nonnull )init;
 
 /**
  *  The base URL to use for all the requests. 
  *  example: https://api.twitter.com
  */
-@property (nonatomic, copy) NSURL *baseURL;
+@property (nonatomic, copy) NSURL * _Nullable baseURL;
 
 /**
  *  The common HTTP Headers for all your requests. 
  *  example: Authentication or session headers.
  */
-@property (nonatomic, copy) NSDictionary *HTTPHeaders;
+@property (nonatomic, copy) NSDictionary * _Nullable HTTPHeaders;
 
 /**
  *  The maximum HTTP Status code value to be treated as a success. All values above this will be treated as an error.
@@ -84,19 +84,19 @@
  *  The request modifier block, if provided, is called before the NSURLRequest is actually used in a request. You can utilize this block to add additional data to the request if required.
  *  An example could be, adding authentication query parameters to the URL which are dynamically generated (Flickr oAuth API).
  */
-@property (nonatomic, copy) requestModifierBlock requestModifier;
+@property (nonatomic, copy) requestModifierBlock _Nullable requestModifier;
 
 /**
  *  The redirect modifier block, if provided, is called when a redirection is occuring. You can utilize this block to add additional data to the request if required or simply inspect it.
  */
-@property (nonatomic, copy) redirectModifierBlock redirectModifier;
+@property (nonatomic, copy) redirectModifierBlock _Nullable redirectModifier;
 
 /**
  *  DZURLSession automatically uses the DZActivityIndicatorManager class by default to show a network activity indicator in the status bar. This is usually desired, however, in some usecases, this may be an undesired effect. The default value is YES, however, when initiating your DZURLSession object, you can set this to NO. During runtime, you can update this value to YES and all subsequent network requests will display the activityIndicator. This isn't recommended though because if you set it to NO afterwards, you may end up with a constantly spinning network activity indicator. Thus, it is strongly recommended you set this value when instansiating the session, and never touch it again. You can simply create a new session with an alternate value and use that where ever necessary.
  */
 @property (nonatomic, assign) BOOL useActivityManager;
 
-@property (nonatomic, strong) DZResponseParser *responseParser;
+@property (nonatomic, strong) DZResponseParser * _Nullable responseParser;
 
 /**
  *  Trigger a GET request
@@ -106,7 +106,7 @@
  *
 
  */
-- (NSURLSessionTask *)GET:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)GET:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nonnull)successCB error:(errorBlock _Nonnull)errorCB;
 
 /**
  *  Trigger a POST request
@@ -116,7 +116,7 @@
  *
 
  */
-- (NSURLSessionTask *)POST:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)POST:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nonnull)successCB error:(errorBlock _Nonnull)errorCB;
 
 /**
  *  Trigger a POST request
@@ -127,7 +127,7 @@
  *
 
  */
-- (NSURLSessionTask *)POST:(NSString *)URI queryParams:(NSDictionary *)query parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)POST:(NSString * _Nonnull)URI queryParams:(NSDictionary * _Nullable)query parameters:(NSDictionary * _Nullable)params success:(successBlock _Nonnull)successCB error:(errorBlock _Nonnull)errorCB;
 
 /**
  *  Trigger a PUT request
@@ -137,7 +137,7 @@
  *
 
  */
-- (NSURLSessionTask *)PUT:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)PUT:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nonnull)successCB error:(errorBlock _Nonnull)errorCB;
 
 /**
  *  Trigger a PUT request
@@ -148,7 +148,7 @@
  *
 
  */
-- (NSURLSessionTask *)PUT:(NSString *)URI queryParams:(NSDictionary *)query parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)PUT:(NSString * _Nonnull)URI queryParams:(NSDictionary * _Nullable)query parameters:(NSDictionary * _Nullable)params success:(successBlock _Nonnull)successCB error:(errorBlock _Nonnull)errorCB;
 
 /**
  *  Trigger a PATCH request
@@ -158,7 +158,7 @@
  *
 
  */
-- (NSURLSessionTask *)PATCH:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)PATCH:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nonnull)errorCB;
 
 /**
  *  Trigger a DELETE request. The response for such requests may not include a responseObject from the server. Check for the statusCode on the response object instead.
@@ -168,7 +168,7 @@
  *
 
  */
-- (NSURLSessionTask *)DELETE:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)DELETE:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a HEAD request.
@@ -179,7 +179,7 @@
  *  @discussion The response for such requests does not include a responseObject from the server. Check the response object for the desired information.
 
  */
-- (NSURLSessionTask *)HEAD:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)HEAD:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 
 /**
@@ -191,7 +191,7 @@
  *  @discussion The response for such requests may not include a responseObject from the server. Check the response object for the desired information.
 
  */
-- (NSURLSessionTask *)OPTIONS:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)OPTIONS:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 #pragma mark - 
 
@@ -204,7 +204,7 @@
  *
  *  @return NSURLRequest
  */
-- (NSURLRequest *)requestWithURI:(NSString *)URI method:(NSString *)method params:(NSDictionary *)params;
+- (NSURLRequest * _Nullable)requestWithURI:(NSString * _Nonnull)URI method:(NSString * _Nullable)method params:(NSDictionary * _Nullable)params;
 
 /**
  *  Build an NSURLRequest using requestWithURI:method:params and then trigger that request.
@@ -214,7 +214,7 @@
  *  @param params For PUT, POST, PATCH and DELETE requests, the params will be set on the HTTPBody. For all other request types, the parameters will be set on the query.
  *
  */
-- (NSURLSessionTask *)performRequestWithURI:(NSString *)URI method:(NSString *)method params:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)performRequestWithURI:(NSString * _Nonnull)URI method:(NSString * _Nonnull)method params:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Triggers network request with the provided NSURLRequest. This method is the final method that gets called from most of the above methods. You should never have to call this method directly, but if you need to, ensure your parameters are correctly encoded and the required HTTPMethod is set.
@@ -222,7 +222,7 @@
  *  @param request The request object
  *
  */
-- (NSURLSessionTask *)requestWithReq:(NSURLRequest *)request success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)requestWithReq:(NSURLRequest * _Nonnull)request success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 #pragma mark - 
 
@@ -233,19 +233,19 @@
 // The following methods will however:
 // 1. Correctly set the HTTPMethod for you incase it is incorrect.
 
-- (NSURLSessionTask *)GET:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (NSURLSessionTask *)PUT:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (NSURLSessionTask *)POST:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (NSURLSessionTask *)PATCH:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (NSURLSessionTask *)DELETE:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (NSURLSessionTask *)OPTIONS:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
-- (NSURLSessionTask *)HEAD:(NSURLRequest *)req success:(successBlock)successCB error:(errorBlock)errorCB;
+- (NSURLSessionTask * _Nullable)GET:(NSURLRequest * _Nonnull)req success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)PUT:(NSURLRequest * _Nonnull)req success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)POST:(NSURLRequest * _Nonnull)req success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)PATCH:(NSURLRequest * _Nonnull)req success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)DELETE:(NSURLRequest * _Nonnull)req success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)OPTIONS:(NSURLRequest * _Nonnull)req success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
+- (NSURLSessionTask * _Nullable)HEAD:(NSURLRequest * _Nonnull)req success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 #pragma mark - Background Sessions
 
 @property (nonatomic, copy, nullable) void (^backgroundCompletionHandler)(void);
 
-@property (nonatomic, strong, nonnull) NSMutableDictionary <NSNumber *, successBlock> * backgroundSuccessBlocks;
+@property (nonatomic, strong, nonnull) NSMutableDictionary <NSNumber *, successBlock> *  backgroundSuccessBlocks;
 
 @property (nonatomic, strong, nonnull) NSMutableDictionary <NSNumber *, errorBlock> * backgroundErrorBlocks;
 
