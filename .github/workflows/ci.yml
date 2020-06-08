@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        destination: ['platform=iOS Simulator,OS=13.5,name=iPhone 11 Pro']
+        destination: ['platform=iOS Simulator,OS=13.4,name=iPhone 11 Pro']
 
     steps:
     - name: Checkout
@@ -17,6 +17,6 @@ jobs:
     - name: Build and test
       run: |
         cd DZNetworking
-        xcodebuild clean test -project DZNetworking.xcodeproj -scheme DZNetworking -destination "${destination}" CODE_SIGN_IDENTITY=""
+        xcodebuild clean test -scheme DZNetworking -destination "${destination}" CODE_SIGN_IDENTITY=""
       env: 
          destination: ${{ matrix.destination }}
