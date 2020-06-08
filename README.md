@@ -1,6 +1,6 @@
 # DZNetworking
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-<img src="https://api.travis-ci.org/DZNS/DZNetworking.svg" /> 
+![Xcode CI](https://github.com/DZNS/DZNetworking/workflows/Xcode%20CI/badge.svg?branch=master) 
 <img src="https://camo.githubusercontent.com/81fef85a8b1266b3890108413ab62ee96d8d39c9/68747470733a2f2f696d672e736869656c64732e696f2f636f636f61706f64732f6c2f496e7374616772616d4b69742e7376673f7374796c653d666c6174" /> 
 <img src="https://camo.githubusercontent.com/c748fef80a903c7b5237f215139f9791c2d6cf8e/68747470733a2f2f696d672e736869656c64732e696f2f636f636f61706f64732f702f496e7374616772616d4b69742e7376673f7374796c653d666c6174" />
 
