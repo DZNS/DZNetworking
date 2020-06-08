@@ -62,6 +62,7 @@
     
 }
 
+#if !TARGET_OS_MACCATALYST
 - (void)testWebP {
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET:webPimage"];
@@ -78,6 +79,7 @@
     
     waitForExpectation;
 }
+#endif
 
 - (void)testDeletingFiles {
     [[SharedImageLoader cache] removeAllObjectsFromDisk];

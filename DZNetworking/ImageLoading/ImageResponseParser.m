@@ -8,7 +8,10 @@
 
 #import "ImageResponseParser.h"
 #import "UIImage+GIF.h"
+
+#if !TARGET_OS_MACCATALYST
 #import "WebPImageSerialization.h"
+#endif
 
 @implementation ImageResponseParser
 
@@ -26,11 +29,11 @@
         if ([contentType isEqualToString:@"image/gif"]) {
             image = [UIImage animatedImageWithAnimatedGIFData:responseData];
         }
-        
+#if !TARGET_OS_MACCATALYST
         else if ([contentType isEqualToString:@"image/webp"]) {
             image = UIImageWithWebPData(responseData);
         }
-        
+#endif
         else {
             image = [UIImage imageWithData:responseData];
         }
@@ -46,7 +49,11 @@
 #endif
 
 - (NSSet *)contentTypes {
+#if !TARGET_OS_MACCATALYST
     return [NSSet setWithArray:@[@"image/jpg", @"image/jpeg", @"image/png", @"image/gif", @"image/webp"]];
+#else
+    return [NSSet setWithArray:@[@"image/jpg", @"image/jpeg", @"image/png", @"image/gif"]];
+#endif
 }
 
 @end

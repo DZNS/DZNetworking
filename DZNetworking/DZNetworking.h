@@ -44,16 +44,16 @@ FOUNDATION_EXPORT const unsigned char DZNetworkingVersionString[];
 #import <DZNetworking/DZS3UploadSession.h>
 #import <DZNetworking/NSString+URLExtended.h>
 
-#if TARGET_OS_IOS
 #import <DZNetworking/DZActivityIndicatorManager.h>
 #import <DZNetworking/ImageLoader.h>
 #import <DZNetworking/ImageResponseParser.h>
 #import <DZNetworking/UIImageView+ImageLoading.h>
-#endif
 
 #import <DZNetworking/DZResponseParser.h>
 #import <DZNetworking/DZJSONResponseParser.h>
 #import <DZNetworking/DZOAuthSession.h>
 #import <DZNetworking/DZOAuth2Session.h>
 
+#if !TARGET_OS_MACCATALYST
 #import <DZNetworking/WebPImageSerialization.h>
+#endif 
