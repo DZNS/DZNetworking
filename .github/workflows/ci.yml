@@ -15,8 +15,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
     - name: Build and test
-      run: |
-        cd DZNetworking
-        xcodebuild clean test -scheme DZNetworking -destination "${destination}" CODE_SIGN_IDENTITY=""
+      run: xcodebuild clean test -scheme DZNetworking -destination "${destination}" CODE_SIGN_IDENTITY=""
       env: 
          destination: ${{ matrix.destination }}
