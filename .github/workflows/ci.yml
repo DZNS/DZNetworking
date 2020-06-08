@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Switch to Xcode 11
-      run: sudo xcode-select -s /Applications/Xcode_11.4.app
+      run: sudo xcode-select -s /Applications/Xcode_11.4.1.app
 
     - name: Show Build Version
       run: xcodebuild -version
