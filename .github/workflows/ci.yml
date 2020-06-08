@@ -1,0 +1,22 @@
+name: Xcode CI
+
+on: [push]
+
+jobs:
+  test:
+    name: Test 
+    runs-on: macOS-latest
+
+    strategy:
+      matrix:
+        destination: ['platform=iOS Simulator,OS=13.5,name=iPhone 11 Pro']
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Build and test
+      run: |
+        cd DZNetworking
+        xcodebuild clean test -project DZNetworking.xcodeproj -scheme DZNetworking -destination "${destination}" CODE_SIGN_IDENTITY=""
+      env: 
+         destination: ${{ matrix.destination }}
