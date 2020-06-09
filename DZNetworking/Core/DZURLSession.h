@@ -106,7 +106,7 @@
  *
 
  */
-- (NSURLSessionTask * _Nullable)GET:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nonnull)successCB error:(errorBlock _Nonnull)errorCB;
+- (NSURLSessionTask * _Nullable)GET:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a POST request
@@ -116,7 +116,7 @@
  *
 
  */
-- (NSURLSessionTask * _Nullable)POST:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nonnull)successCB error:(errorBlock _Nonnull)errorCB;
+- (NSURLSessionTask * _Nullable)POST:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 
 /**
  *  Trigger a POST request
