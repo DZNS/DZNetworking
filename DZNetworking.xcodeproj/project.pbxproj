@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -134,9 +134,6 @@
 		F0E1027F1FC583BA007C7140 /* UIImageView+ImageLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E102781FC583BA007C7140 /* UIImageView+ImageLoading.m */; };
 		F0E102801FC583BA007C7140 /* UIImageView+ImageLoading.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E102791FC583BA007C7140 /* UIImageView+ImageLoading.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0E102811FC583BA007C7140 /* ImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E1027A1FC583BA007C7140 /* ImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F0E1C54023EED9BC00F6958B /* WebPImageSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E1C53E23EED9BC00F6958B /* WebPImageSerialization.h */; platformFilter = ios; settings = {ATTRIBUTES = (Public, ); }; };
-		F0E1C54123EED9BC00F6958B /* WebPImageSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E1C53F23EED9BC00F6958B /* WebPImageSerialization.m */; platformFilter = ios; };
-		F0E1C54323EED9FA00F6958B /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0E1C54223EED9FA00F6958B /* WebP.framework */; platformFilter = ios; };
 		F0FC8E561B4FB1D300FDA46C /* DZNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E551B4FB1D300FDA46C /* DZNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FC8E631B4FB1D400FDA46C /* DZNetworkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FC8E621B4FB1D400FDA46C /* DZNetworkingTests.m */; };
 		F0FC8E6E1B4FB22600FDA46C /* DZURLSession.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FC8E6C1B4FB22600FDA46C /* DZURLSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -301,7 +298,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0E1C54323EED9FA00F6958B /* WebP.framework in Frameworks */,
 				F0448D0E244463D7003B6AA7 /* CoreServices.framework in Frameworks */,
 				F0D0E24E1B63F4900077F186 /* Security.framework in Frameworks */,
 			);
@@ -594,7 +590,6 @@
 				F014D9471BBE9D1300E4F203 /* NSDictionary+Extend.h in Headers */,
 				F060C59E1B7760C3002F8395 /* DZResponseParser.h in Headers */,
 				F0608B4E1FD8F64F00FC42BB /* PurgingDiskCache.h in Headers */,
-				F0E1C54023EED9BC00F6958B /* WebPImageSerialization.h in Headers */,
 				F0E102801FC583BA007C7140 /* UIImageView+ImageLoading.h in Headers */,
 				F0923E7C22A11F710027A5E6 /* DZOAuth2Session.h in Headers */,
 				F0018F551F792947004227B5 /* DZUploadSession.h in Headers */,
@@ -877,7 +872,6 @@
 				F0E1027B1FC583BA007C7140 /* ImageResponseParser.m in Sources */,
 				F00D50551B75D5F100845897 /* DZActivityIndicatorManager.m in Sources */,
 				F060C59F1B7760C3002F8395 /* DZResponseParser.m in Sources */,
-				F0E1C54123EED9BC00F6958B /* WebPImageSerialization.m in Sources */,
 				F0018F611F792B4A004227B5 /* DZOAuthSession.m in Sources */,
 				F0FC8E6F1B4FB22600FDA46C /* DZURLSession.m in Sources */,
 				F0608B4F1FD8F64F00FC42BB /* PurgingDiskCache.m in Sources */,
@@ -965,11 +959,7 @@
 				INFOPLIST_FILE = DZNetworkingWatchOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.DZNetworkingWatchOS;
 				PRODUCT_NAME = DZNetworking;
@@ -1004,11 +994,7 @@
 				INFOPLIST_FILE = DZNetworkingWatchOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.DZNetworkingWatchOS;
 				PRODUCT_NAME = DZNetworking;
@@ -1037,10 +1023,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ImageLoaderExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.ImageLoaderExample;
@@ -1064,10 +1047,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ImageLoaderExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.ImageLoaderExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1102,11 +1082,7 @@
 				INFOPLIST_FILE = DZNetworkingMacOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.DZNetworkingMacOS;
 				PRODUCT_NAME = DZNetworking;
@@ -1139,11 +1115,7 @@
 				INFOPLIST_FILE = DZNetworkingMacOS/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dezinezync.DZNetworkingMacOS;
 				PRODUCT_NAME = DZNetworking;
@@ -1292,11 +1264,7 @@
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1331,11 +1299,7 @@
 				INFOPLIST_FILE = DZNetworking/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1364,11 +1328,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = DZNetworkingTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1389,11 +1349,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				INFOPLIST_FILE = DZNetworkingTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dezinezync.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

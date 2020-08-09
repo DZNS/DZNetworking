@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DZURLSession.h"
+#import <DZNetworking/DZURLSession.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

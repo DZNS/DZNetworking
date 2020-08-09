@@ -53,7 +53,3 @@ FOUNDATION_EXPORT const unsigned char DZNetworkingVersionString[];
 #import <DZNetworking/DZJSONResponseParser.h>
 #import <DZNetworking/DZOAuthSession.h>
 #import <DZNetworking/DZOAuth2Session.h>
-
-#if !TARGET_OS_MACCATALYST
-#import <DZNetworking/WebPImageSerialization.h>
-#endif 

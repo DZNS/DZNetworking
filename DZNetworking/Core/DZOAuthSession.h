@@ -6,7 +6,7 @@
 //  Copyright © 2015 Dezine Zync Studios LLP. All rights reserved.
 //
 
-#import "DZURLSession.h"
+#import <DZNetworking/DZURLSession.h>
 
 @interface DZOAuthSession : NSObject
 

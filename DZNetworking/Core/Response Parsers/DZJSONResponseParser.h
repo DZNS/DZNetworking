@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Dezine Zync Studios LLP. All rights reserved.
 //
 
-#import "DZResponseParser.h"
+#import <DZNetworking/DZResponseParser.h>
 
 @interface DZJSONResponseParser : DZResponseParser
 

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ImageLoader.h"
+#import <DZNetworking/ImageLoader.h>
 #import <objc/runtime.h>
 
 @class ImageLoader;
