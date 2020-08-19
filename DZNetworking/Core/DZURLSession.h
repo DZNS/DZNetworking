@@ -98,13 +98,16 @@
 
 @property (nonatomic, strong) DZResponseParser * _Nullable responseParser;
 
+#pragma mark -
+
+- (NSString * _Nonnull)stringifyQueryParams:(NSDictionary * _Nullable)queryParams;
+
 /**
  *  Trigger a GET request
  *
  *  @param URI    The URI for the request
  *  @param params Parameters for the request. These will be included in the URL as query parameters.
  *
-
  */
 - (NSURLSessionTask * _Nullable)GET:(NSString * _Nonnull)URI parameters:(NSDictionary * _Nullable)params success:(successBlock _Nullable)successCB error:(errorBlock _Nullable)errorCB;
 

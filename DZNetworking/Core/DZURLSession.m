@@ -159,6 +159,16 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 
 #pragma mark - HTTP Methods
 
+- (NSString *)stringifyQueryParams:(NSDictionary *)queryParams {
+    
+    if (!queryParams) {
+        return @"";
+    }
+    
+    return OMGFormURLEncode(queryParams);
+    
+}
+
 - (NSURLSessionTask *)GET:(NSString *)URI parameters:(NSDictionary *)params success:(successBlock)successCB error:(errorBlock)errorCB
 {
     
