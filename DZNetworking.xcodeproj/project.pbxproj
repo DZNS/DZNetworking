@@ -257,8 +257,6 @@
 		F0E102781FC583BA007C7140 /* UIImageView+ImageLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+ImageLoading.m"; path = "ImageLoading/UIImageView+ImageLoading.m"; sourceTree = "<group>"; };
 		F0E102791FC583BA007C7140 /* UIImageView+ImageLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+ImageLoading.h"; path = "ImageLoading/UIImageView+ImageLoading.h"; sourceTree = "<group>"; };
 		F0E1027A1FC583BA007C7140 /* ImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageLoader.h; path = ImageLoading/ImageLoader.h; sourceTree = "<group>"; };
-		F0E1C53E23EED9BC00F6958B /* WebPImageSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebPImageSerialization.h; sourceTree = "<group>"; };
-		F0E1C53F23EED9BC00F6958B /* WebPImageSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebPImageSerialization.m; sourceTree = "<group>"; };
 		F0E1C54223EED9FA00F6958B /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebP.framework; path = DZNetworking/Vendors/WebPImageSerialization/WebP.framework; sourceTree = "<group>"; };
 		F0FC8E501B4FB1D300FDA46C /* DZNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DZNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0FC8E541B4FB1D300FDA46C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -317,7 +315,6 @@
 		F0024C702075E6E80011E1A7 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				F0E1C53D23EED9BC00F6958B /* WebPImageSerialization */,
 				F05BF8892075E8BC00273B49 /* OMGFormURLEncode.h */,
 				F05BF8872075E8BC00273B49 /* OMGFormURLEncode.m */,
 				F05BF88A2075E8BC00273B49 /* OMGHTTPURLRQ.h */,
@@ -425,16 +422,6 @@
 				F07D5FD7246EBA310031C9E0 /* UIImage+Decoded.m */,
 			);
 			name = ImageLoading;
-			sourceTree = "<group>";
-		};
-		F0E1C53D23EED9BC00F6958B /* WebPImageSerialization */ = {
-			isa = PBXGroup;
-			children = (
-				F0E1C53E23EED9BC00F6958B /* WebPImageSerialization.h */,
-				F0E1C53F23EED9BC00F6958B /* WebPImageSerialization.m */,
-			);
-			name = WebPImageSerialization;
-			path = Vendors/WebPImageSerialization/WebPImageSerialization;
 			sourceTree = "<group>";
 		};
 		F0FC8E461B4FB1D300FDA46C = {
