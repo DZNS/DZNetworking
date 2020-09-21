@@ -100,11 +100,6 @@ static dispatch_queue_t url_session_manager_processing_queue() {
         _sessionConfiguration = config;
         _delegate = self;
         
-        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-        queue.maxConcurrentOperationCount = 1;
-        
-        _operationQueue = queue;
-        
         _useActivityManager = YES;
         
         _backgroundSuccessBlocks = [NSMutableDictionary new];
@@ -155,6 +150,21 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     } }
     
     return _session;
+}
+
+- (NSOperationQueue *)operationQueue {
+    
+    if (_operationQueue == nil) {
+        
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        queue.maxConcurrentOperationCount = self.isBackgroundSession == YES ? 1 : 5;
+        
+        _operationQueue = queue;
+        
+    }
+    
+    return _operationQueue;
+    
 }
 
 #pragma mark - HTTP Methods
