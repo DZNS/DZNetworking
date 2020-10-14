@@ -786,7 +786,11 @@ static dispatch_queue_t url_session_manager_processing_queue() {
             NSLog(@"Error: loading data for background task from location: %@", location);
         }
         else {
-            self.backgroundResponseData[@(task.taskIdentifier)] = data.mutableCopy;
+            
+            @synchronized (self) {
+                self.backgroundResponseData[@(task.taskIdentifier)] = data.mutableCopy;
+            }
+            
         }
         
     }
@@ -795,11 +799,19 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 
 - (void)URLSession:(NSURLSession *)session dataTask:(nonnull NSURLSessionDataTask *)dataTask didReceiveData:(nonnull NSData *)data {
     
-    NSMutableData *responseData = self.backgroundResponseData[@(dataTask.taskIdentifier)];
+    NSMutableData *responseData;
+    
+    @synchronized (self) {
+        responseData = self.backgroundResponseData[@(dataTask.taskIdentifier)];
+    }
     
     if (responseData == nil) {
         responseData = [NSMutableData dataWithData:data];
-        self.backgroundResponseData[@(dataTask.taskIdentifier)] = responseData;
+        
+        @synchronized (self) {
+            self.backgroundResponseData[@(dataTask.taskIdentifier)] = responseData;
+        }
+        
     }
     else {
         [responseData appendData:data];
@@ -809,7 +821,11 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 
 - (void)URLSession:(NSURLSession *)session task:(nonnull NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error {
     
-    NSData *data = [self.backgroundResponseData objectForKey:@(task.taskIdentifier)];
+    NSData *data;
+    
+    @synchronized (self) {
+        data = [self.backgroundResponseData objectForKey:@(task.taskIdentifier)];
+    }
     
     [self handleResponseFor:task responseData:data error:error];
     
