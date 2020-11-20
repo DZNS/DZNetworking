@@ -492,17 +492,17 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     if (task != nil) {
         
         if (successCB) {
-#ifdef DEBUG
-            NSLog(@"Added successCB for task:%@", @(task.taskIdentifier));
-#endif
+//#ifdef DEBUG
+//            NSLog(@"Added successCB for task:%@", @(task.taskIdentifier));
+//#endif
             
             [self.backgroundSuccessBlocks setObject:[successCB copy] forKey:@(task.taskIdentifier)];
         }
         
         if (errorCB) {
-#ifdef DEBUG
-            NSLog(@"Added errorCB for task:%@", @(task.taskIdentifier));
-#endif
+//#ifdef DEBUG
+//            NSLog(@"Added errorCB for task:%@", @(task.taskIdentifier));
+//#endif
             [self.backgroundErrorBlocks setObject:[errorCB copy] forKey:@(task.taskIdentifier)];
         }
         
@@ -611,33 +611,33 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     
     if (errorBlock) {
         
-#ifdef DEBUG
-        NSLog(@"Got errorCB for task:%@", @(task.taskIdentifier));
-#endif
+//#ifdef DEBUG
+//        NSLog(@"Got errorCB for task:%@", @(task.taskIdentifier));
+//#endif
         
         errorBlock = [errorBlock copy];
         
         [self.backgroundErrorBlocks removeObjectForKey:@(task.taskIdentifier)];
         
-#ifdef DEBUG
-        NSLog(@"Removed errorCB from dictionary for task:%@", @(task.taskIdentifier));
-#endif
+//#ifdef DEBUG
+//        NSLog(@"Removed errorCB from dictionary for task:%@", @(task.taskIdentifier));
+//#endif
         
     }
     
     if (successBlock) {
         
-#ifdef DEBUG
-        NSLog(@"Got successCB for task:%@", @(task.taskIdentifier));
-#endif
+//#ifdef DEBUG
+//        NSLog(@"Got successCB for task:%@", @(task.taskIdentifier));
+//#endif
         
         successBlock = [successBlock copy];
         
         [self.backgroundSuccessBlocks removeObjectForKey:@(task.taskIdentifier)];
         
-#ifdef DEBUG
-        NSLog(@"Removed successCB from dictionary for task:%@", @(task.taskIdentifier));
-#endif
+//#ifdef DEBUG
+//        NSLog(@"Removed successCB from dictionary for task:%@", @(task.taskIdentifier));
+//#endif
         
     }
     
