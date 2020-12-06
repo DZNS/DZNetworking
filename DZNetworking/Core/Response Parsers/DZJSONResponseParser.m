@@ -10,17 +10,11 @@
 
 @implementation DZJSONResponseParser
 
-- (id)parseResponse:(NSData *)responseData :(NSHTTPURLResponse *)response error:(NSError *__autoreleasing *)error
-{
+- (id)parseResponse:(NSData *)responseData :(NSHTTPURLResponse *)response error:(NSError *__autoreleasing *)error {
     
     __autoreleasing id responseObject = nil;
     
-    if(responseData && responseData.length)
-    {
-        // ensure & enforce utf-8 encoding.
-        NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-        responseData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-        
+    if(responseData && responseData.length) {
         responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:error];
     
     }
@@ -29,8 +23,7 @@
     
 }
 
-- (NSSet *)contentTypes
-{
+- (NSSet *)contentTypes {
     return [NSSet setWithObjects:@"application/json", @"text/javascript", @"text/json", nil];
 }
 

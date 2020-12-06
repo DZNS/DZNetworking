@@ -670,9 +670,20 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                NSError *parsingError;
                
                id responseObject = [self.responseParser parseResponse:data :response error:&parsingError];
+               
+               if (parsingError) {
+                   
+                   if (errorBlock) {
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           errorBlock(parsingError, response, task);
+                       });
+                   }
+                   
+                   return;
+                   
+               }
             
-                if(response.statusCode > self.maximumSuccessStatusCode)
-                {
+               if(response.statusCode > self.maximumSuccessStatusCode) {
                     
                     // Treat this as an error.
                     NSDictionary *userInfo = @{DZErrorData     : data ?: [NSData data],
