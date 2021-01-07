@@ -669,6 +669,28 @@ static dispatch_queue_t url_session_manager_processing_queue() {
               
                NSError *parsingError;
                
+               NSString *contentType = [[response allHeaderFields] valueForKey:@"Content-Type"];
+               
+               if (contentType != nil) {
+                   
+                   contentType = [[contentType componentsSeparatedByString:@";"] firstObject];
+                   
+                   if ([self.responseParser.contentTypes containsObject:contentType] == NO) {
+                       
+                       parsingError = [NSError errorWithDomain:DZErrorDomain code:503 userInfo:@{NSLocalizedDescriptionKey: @"The content was not of the expected types."}];
+                       
+                       if (errorBlock) {
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               errorBlock(parsingError, response, task);
+                           });
+                       }
+                       
+                       return;
+                       
+                   }
+                   
+               }
+               
                id responseObject = [self.responseParser parseResponse:data :response error:&parsingError];
                
                if (parsingError) {
