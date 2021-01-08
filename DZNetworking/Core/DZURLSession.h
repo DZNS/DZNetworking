@@ -248,8 +248,8 @@
 
 @property (nonatomic, copy, nullable) void (^backgroundCompletionHandler)(void);
 
-@property (nonatomic, strong, nonnull) NSMutableDictionary <NSNumber *, successBlock> *  backgroundSuccessBlocks;
+@property (atomic, strong, nonnull) NSMutableDictionary <NSNumber *, successBlock> *  backgroundSuccessBlocks;
 
-@property (nonatomic, strong, nonnull) NSMutableDictionary <NSNumber *, errorBlock> * backgroundErrorBlocks;
+@property (atomic, strong, nonnull) NSMutableDictionary <NSNumber *, errorBlock> * backgroundErrorBlocks;
 
 @end
