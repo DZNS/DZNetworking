@@ -677,7 +677,37 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                    
                    if ([self.responseParser.contentTypes containsObject:contentType] == NO) {
                        
-                       parsingError = [NSError errorWithDomain:DZErrorDomain code:503 userInfo:@{NSLocalizedDescriptionKey: @"The content was not of the expected types."}];
+                       NSString *responseText = @"";
+                       
+                       if ([contentType isEqualToString:@"text/html"]) {
+                           
+                           NSStringEncoding encoding = NSUTF8StringEncoding;
+                           
+                           if ([response.allHeaderFields[@"content-type"] containsString:@"charset="]) {
+                               
+                               NSString *contentTypeHeader = response.allHeaderFields[@"contentType"];
+                               
+                               NSUInteger index = [contentTypeHeader rangeOfString:@"charset="].location + 8;
+                               
+                               NSString *encodingType = [[contentTypeHeader substringFromIndex:index] lowercaseString];
+                               
+                               if ([encodingType isEqualToString:@"utf-16"] || [encodingType isEqualToString:@"utf16"]) {
+                                   encoding = NSUTF16StringEncoding;
+                               }
+                               else if ([encodingType isEqualToString:@"utf-32"] || [encodingType isEqualToString:@"utf32"]) {
+                                   encoding = NSUTF32StringEncoding;
+                               }
+                               
+                           }
+                           
+                           responseText = [[NSString alloc] initWithData:data encoding:encoding];
+                           
+                       }
+                       
+                       parsingError = [NSError errorWithDomain:DZErrorDomain code:503 userInfo:@{
+                           NSLocalizedDescriptionKey: @"The content was not of the expected types.",
+                           NSLocalizedFailureErrorKey: responseText
+                       }];
                        
                        if (errorBlock) {
                            dispatch_async(dispatch_get_main_queue(), ^{
