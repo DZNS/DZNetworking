@@ -29,7 +29,6 @@
 //
 
 #import "DZUploadSession.h"
-#import <DZNetworking/DZURLSession.h>
 #if TARGET_OS_IOS == 1
 #import <MobileCoreServices/MobileCoreServices.h>
 #elif TARGET_OS_WATCH
@@ -47,7 +46,7 @@ static char *kTaskProgressContext;
 
 @interface DZUploadSession () <DZURLSessionProtocol>
 
-@property (nonatomic, strong) DZURLSession *session;
+@property (nonatomic, strong, readwrite) DZURLSession *session;
 
 @end
 

@@ -30,8 +30,11 @@
 
 #import <Foundation/Foundation.h>
 #import <DZNetworking/DZCommon.h>
+#import <DZNetworking/DZURLSession.h>
 
 @interface DZUploadSession : NSObject
+
+@property (nonatomic, readonly) DZURLSession *session;
 
 + (DZUploadSession *)shared;
 
