@@ -33,7 +33,7 @@
 #import "DZActivityIndicatorManager.h"
 #endif
 
-#import "OMGHTTPURLRQ.h"
+#import "../Vendors/OMGHTTPURLRQ.h"
 
 #ifndef weakify
 #define weakify(var) __weak typeof(var) AHKWeak_##var = var;

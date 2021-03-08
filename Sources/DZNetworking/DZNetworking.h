@@ -36,21 +36,19 @@ FOUNDATION_EXPORT double DZNetworkingVersionNumber;
 //! Project version string for DZNetworking.
 FOUNDATION_EXPORT const unsigned char DZNetworkingVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <DZNetworking/PublicHeader.h>
-#import <DZNetworking/DZResponse.h>
-#import <DZNetworking/DZURLSession.h>
-#import <DZNetworking/DZUploadSession.h>
-#import <DZNetworking/DZS3CredentialsManager.h>
-#import <DZNetworking/DZS3UploadSession.h>
-#import <DZNetworking/NSString+URLExtended.h>
+#import "Core/DZResponse.h"
+#import "Core/DZURLSession.h"
+#import "Core/DZUploadSession.h"
+#import "Core/DZS3UploadSession.h"
+#import "Core/DZOAuthSession.h"
+#import "Core/DZOAuth2Session.h"
+#import "Core/NSString+Coders.h"
 
-#import <DZNetworking/DZActivityIndicatorManager.h>
+#import "Utilities/NSString+URLExtended.h"
+#import "Utilities/DZActivityIndicatorManager.h"
+#import "Utilities/DZS3CredentialsManager.h"
+#import "Utilities/NSString+URLExtended.h"
+#import "Utilities/NSDictionary+Extend.h"
 
-#import <DZNetworking/DZResponseParser.h>
-#import <DZNetworking/DZJSONResponseParser.h>
-#import <DZNetworking/DZOAuthSession.h>
-#import <DZNetworking/DZOAuth2Session.h>
-
-#import <DZNetworking/NSString+URLExtended.h>
-#import <DZNetworking/NSDictionary+Extend.h>
-#import <DZNetworking/NSString+Coders.h>
+#import "ResponseParsers/DZResponseParser.h"
+#import "ResponseParsers/DZJSONResponseParser.h"

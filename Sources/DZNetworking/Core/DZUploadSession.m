@@ -29,7 +29,7 @@
 //
 
 #import "DZUploadSession.h"
-#if TARGET_OS_UNIX == 1
+#if TARGET_OS_MAC == 1
 #import <CoreServices/CoreServices.h>
 #else
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -37,7 +37,7 @@
 
 #import <objc/runtime.h>
 
-#import "OMGHTTPURLRQ.h"
+#import "../Vendors/OMGHTTPURLRQ.h"
 
 static void *kTaskProgressBlock;
 static char *kTaskProgressContext;

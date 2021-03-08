@@ -26,21 +26,26 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "DZNetworking",
-            dependencies: [],
             path: "Sources/DZNetworking",
-            exclude: [
-                "Info.plist"
-            ],
-            sources: ["Core", "Utilities", "Vendors", "ResponseParsers"],
-            cSettings: [
-                .headerSearchPath("Core"),
-                .headerSearchPath("Utilities"),
-                .headerSearchPath("Vendors"),
-                .headerSearchPath("ResponseParsers")
-            ]
+            publicHeadersPath: ""
         ),
         .testTarget(
             name: "DZNetworkingTests",
             dependencies: ["DZNetworking"]),
     ]
 )
+
+/**
+ 
+ exclude: [
+     "Info.plist",
+     "DZNetworkingTests"
+ ],
+ sources: ["Core", "Utilities", "Vendors", "ResponseParsers"],
+ cSettings: [
+     .headerSearchPath("Core"),
+     .headerSearchPath("Utilities"),
+     .headerSearchPath("Vendors"),
+     .headerSearchPath("ResponseParsers")
+ ]
+ */

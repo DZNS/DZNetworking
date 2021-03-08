@@ -12,11 +12,11 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import <Security/Security.h>
 
-#import "DZJSONResponseParser.h"
+#import "../ResponseParsers/DZJSONResponseParser.h"
 
-#import "NSDictionary+Extend.h"
+#import "../Utilities/NSDictionary+Extend.h"
 #import "NSString+Coders.h"
-#import "OMGHTTPURLRQ.h"
+#import "../Vendors/OMGHTTPURLRQ.h"
 
 @interface DZOAuth2Session () {
     

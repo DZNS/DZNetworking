@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "DZURLSessionProtocol.h"
-#import "DZResponse.h"
+#import "../Core/DZURLSessionProtocol.h"
+#import "../Core/DZResponse.h"
 #import "NSString+URLExtended.h"
 
 #ifdef DEBUG

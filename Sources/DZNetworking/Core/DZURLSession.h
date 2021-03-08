@@ -29,8 +29,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DZCommon.h"
-#import "DZResponseParser.h"
+#import "../Utilities/DZCommon.h"
+#import "../ResponseParsers/DZResponseParser.h"
 
 /**
  *  The base class for all REST API networking. This class should satisfy all your REST API networking requirements. If you believe we've missed something, or perhaps something needs fixing, please open an issue/pull request on github: https://github.com/dzns/DZNetworking

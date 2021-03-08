@@ -1,6 +1,10 @@
 import XCTest
 @testable import DZNetworking
 
+extension DZURLSession {
+    
+}
+
 final class DZNetworkingTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.

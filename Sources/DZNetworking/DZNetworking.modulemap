@@ -1,4 +1,0 @@
-module DZNetworking {
-umbrella "Sources/DZNetworking/DZNetworking.h"
-export *
-}

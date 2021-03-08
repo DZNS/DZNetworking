@@ -29,7 +29,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DZCommon.h"
+#import "../Utilities/DZCommon.h"
 #import "DZURLSession.h"
 
 @interface DZUploadSession : NSObject

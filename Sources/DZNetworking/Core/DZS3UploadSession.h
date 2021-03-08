@@ -30,7 +30,7 @@
 
 #import "DZURLSession.h"
 #import "DZUploadSession.h"
-#import "DZS3CredentialsManager.h"
+#import "../Utilities/DZS3CredentialsManager.h"
 
 @interface DZS3UploadSession : NSObject
 

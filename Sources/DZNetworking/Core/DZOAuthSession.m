@@ -8,9 +8,9 @@
 
 #import "DZOAuthSession.h"
 
-#import "DZJSONResponseParser.h"
+#import "../ResponseParsers/DZJSONResponseParser.h"
 
-#import "NSDictionary+Extend.h"
+#import "../Utilities/NSDictionary+Extend.h"
 #import "NSString+Coders.h"
 #import <CommonCrypto/CommonCrypto.h>
 
