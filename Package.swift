@@ -6,7 +6,10 @@ import PackageDescription
 let package = Package(
     name: "DZNetworking",
     platforms: [
-        .iOS("14")
+        .iOS("14"),
+        .macOS("11"),
+        .watchOS("5"),
+        .tvOS("14")
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.

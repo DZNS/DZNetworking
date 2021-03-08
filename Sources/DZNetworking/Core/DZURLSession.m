@@ -774,7 +774,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                                                DZErrorResponse : responseObject ?: @{},
                                                DZErrorTask     : task};
                     
-                    NSError * statusCodeError = [NSError errorWithDomain:NSNetServicesErrorDomain code:response.statusCode userInfo:userInfo];
+                    NSError * statusCodeError = [NSError errorWithDomain:NSCocoaErrorDomain code:response.statusCode userInfo:userInfo];
                     
                     if (errorBlock) {
                         
@@ -828,7 +828,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                                        DZErrorResponse : @{},
                                        DZErrorTask     : task};
             
-            NSError * statusCodeError = [NSError errorWithDomain:NSNetServicesErrorDomain code:304 userInfo:userInfo];
+            NSError * statusCodeError = [NSError errorWithDomain:NSCocoaErrorDomain code:304 userInfo:userInfo];
             
             if (errorBlock) {
                 

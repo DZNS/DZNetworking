@@ -29,12 +29,10 @@
 //
 
 #import "DZUploadSession.h"
-#if TARGET_OS_IOS == 1
-#import <MobileCoreServices/MobileCoreServices.h>
-#elif TARGET_OS_WATCH
-#import <MobileCoreServices/MobileCoreServices.h>
-#elif TARGET_OS_UNIX == 1
+#if TARGET_OS_UNIX == 1
 #import <CoreServices/CoreServices.h>
+#else
+#import <MobileCoreServices/MobileCoreServices.h>
 #endif
 
 #import <objc/runtime.h>
