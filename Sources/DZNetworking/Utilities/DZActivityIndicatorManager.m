@@ -72,25 +72,7 @@
 
 - (void)updateIndicatorVisibility
 {
-    
-#if TARGET_OS_IOS == 1
-    
-    if (![NSThread isMainThread]) {
-        return [self performSelectorOnMainThread:@selector(updateIndicatorVisibility) withObject:nil waitUntilDone:NO];
-    }
-    
-    BOOL show = [self isShowingActivityIndicator];
-    
-    BOOL isShowing = [[UIApplication sharedApplication] isNetworkActivityIndicatorVisible];
-    
-    if(show == isShowing) return;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-       
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:show];
-        
-    });
-#endif
+    // Deprecated. 
 }
 
 @end
