@@ -30,7 +30,7 @@
 
 #import "DZURLSession.h"
 #if TARGET_OS_IOS == 1
-#import "DZActivityIndicatorManager.h"
+#import "../Utilities/DZActivityIndicatorManager.h"
 #endif
 
 #import "../Vendors/OMGHTTPURLRQ.h"
