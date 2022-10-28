@@ -511,30 +511,19 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     __block NSURLSessionDataTask *task = nil;
     
     if (self.isBackgroundSession == YES) {
-        
         task = (NSURLSessionDataTask *)[self.session downloadTaskWithRequest:request];
-        
     }
     else {
-        
         task = [self.session dataTaskWithRequest:request];
-        
     }
     
     if (task != nil) {
         
-        if (successCB) {
-//#ifdef DEBUG
-//            NSLog(@"Added successCB for task:%@", @(task.taskIdentifier));
-//#endif
-            
+        if (successCB != nil) {
             [self.backgroundSuccessBlocks setObject:[successCB copy] forKey:@(task.taskIdentifier)];
         }
         
-        if (errorCB) {
-//#ifdef DEBUG
-//            NSLog(@"Added errorCB for task:%@", @(task.taskIdentifier));
-//#endif
+        if (errorCB != nil) {
             [self.backgroundErrorBlocks setObject:[errorCB copy] forKey:@(task.taskIdentifier)];
         }
         
@@ -545,7 +534,6 @@ static dispatch_queue_t url_session_manager_processing_queue() {
             [[DZActivityIndicatorManager shared] incrementCount];
         }
 #endif
-        
     }
     
     return task;
@@ -554,7 +542,8 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 - (void)invalidateSessionCancelingTasks:(BOOL)cancelPendingTasks {
     if (cancelPendingTasks) {
         [self.session invalidateAndCancel];
-    } else {
+    }
+    else {
         [self.session finishTasksAndInvalidate];
     }
 }
@@ -641,12 +630,10 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     errorBlock errorBlock = [self.backgroundErrorBlocks objectForKey:@(task.taskIdentifier)];
     successBlock successBlock = [self.backgroundSuccessBlocks objectForKey:@(task.taskIdentifier)];
     
-    if (errorBlock) {
-        
+    if (errorBlock != nil) {
 //#ifdef DEBUG
 //        NSLog(@"Got errorCB for task:%@", @(task.taskIdentifier));
 //#endif
-        
         errorBlock = [errorBlock copy];
         
         [self.backgroundErrorBlocks removeObjectForKey:@(task.taskIdentifier)];
@@ -654,11 +641,9 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 //#ifdef DEBUG
 //        NSLog(@"Removed errorCB from dictionary for task:%@", @(task.taskIdentifier));
 //#endif
-        
     }
     
-    if (successBlock) {
-        
+    if (successBlock != nil) {
 //#ifdef DEBUG
 //        NSLog(@"Got successCB for task:%@", @(task.taskIdentifier));
 //#endif
@@ -670,27 +655,19 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 //#ifdef DEBUG
 //        NSLog(@"Removed successCB from dictionary for task:%@", @(task.taskIdentifier));
 //#endif
-        
     }
     
     if (error != nil) {
-        
         if (errorBlock) {
-            
             dispatch_async(dispatch_get_main_queue(), ^{
-
-                errorBlock(error, (NSHTTPURLResponse *)[task response], task);
-
+              errorBlock(error, (NSHTTPURLResponse *)[task response], task);
             });
-            
         }
         
         return;
-        
     }
     
     if (response.statusCode != 304) {
-        
         if (data != nil ) {
             
             weakify(self);
@@ -733,7 +710,6 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                            }
                            
                            responseText = [[NSString alloc] initWithData:data encoding:encoding];
-                           
                        }
                        
                        parsingError = [NSError errorWithDomain:DZErrorDomain code:503 userInfo:@{
@@ -746,17 +722,13 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                                errorBlock(parsingError, response, task);
                            });
                        }
-                       
                        return;
-                       
                    }
-                   
                }
                
                id responseObject = self.responseParser != nil ? [self.responseParser parseResponse:data :response error:&parsingError] : data;
                
                if (parsingError) {
-                   
                    if (errorBlock) {
                        dispatch_async(dispatch_get_main_queue(), ^{
                            errorBlock(parsingError, response, task);
@@ -764,11 +736,9 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                    }
                    
                    return;
-                   
                }
             
                if(response.statusCode > self.maximumSuccessStatusCode) {
-                    
                     // Treat this as an error.
                     NSDictionary *userInfo = @{DZErrorData     : data ?: [NSData data],
                                                DZErrorResponse : responseObject ?: @{},
@@ -777,19 +747,15 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                     NSError * statusCodeError = [NSError errorWithDomain:NSCocoaErrorDomain code:response.statusCode userInfo:userInfo];
                     
                     if (errorBlock) {
-                        
                         dispatch_async(dispatch_get_main_queue(), ^{
                             errorBlock(statusCodeError, response, task);
                         });
                         
                     }
-                    
                     return;
-                    
                 }
                 
-                if(response.statusCode == 200 && !responseObject)
-                {
+                if(response.statusCode == 200 && !responseObject) {
                     // our request succeeded but returned no data. Treat valid.
                     if (successBlock) {
                         
@@ -819,7 +785,6 @@ static dispatch_queue_t url_session_manager_processing_queue() {
             });
             
             return;
-            
         }
         else {
             // data was nil
@@ -838,22 +803,16 @@ static dispatch_queue_t url_session_manager_processing_queue() {
                 
             }
         }
-        
     }
     else {
-        
         if (successBlock) {
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 successBlock(nil, (NSHTTPURLResponse *)[task response], task);
                 
             });
-            
         }
-        
     }
-    
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
@@ -867,11 +826,9 @@ static dispatch_queue_t url_session_manager_processing_queue() {
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(nonnull NSURLSessionDownloadTask *)task didFinishDownloadingToURL:(nonnull NSURL *)location {
-    
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)[task response];
     
     if (response.statusCode != 304) {
-        
         NSError *error = nil;
         
         NSData *data = [NSData dataWithContentsOfURL:location options:NSDataReadingMappedIfSafe error:&error];
@@ -881,19 +838,14 @@ static dispatch_queue_t url_session_manager_processing_queue() {
             NSLog(@"Error: loading data for background task from location: %@", location);
         }
         else {
-            
             @synchronized (self) {
                 self.backgroundResponseData[@(task.taskIdentifier)] = data.mutableCopy;
             }
-            
         }
-        
     }
-    
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(nonnull NSURLSessionDataTask *)dataTask didReceiveData:(nonnull NSData *)data {
-    
     NSMutableData *responseData;
     
     @synchronized (self) {
@@ -906,16 +858,13 @@ static dispatch_queue_t url_session_manager_processing_queue() {
         @synchronized (self) {
             self.backgroundResponseData[@(dataTask.taskIdentifier)] = responseData;
         }
-        
     }
     else {
         [responseData appendData:data];
     }
-    
 }
 
 - (void)URLSession:(NSURLSession *)session task:(nonnull NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error {
-    
     NSData *data;
     
     @synchronized (self) {
@@ -923,32 +872,23 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     }
     
     [self handleResponseFor:task responseData:data error:error];
-    
 }
 
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
     
     if (self.backgroundCompletionHandler) {
-        
 #ifdef DEBUG
         NSLog(@"Calling background completion handler");
 #endif
-        
         dispatch_async(dispatch_get_main_queue(), ^{
-           
             self.backgroundCompletionHandler();
-            
         });
-        
     }
-    
 }
 
 #pragma mark - MSG Forwarding
 
-- (void)forwardInvocation:(NSInvocation *)anInvocation
-{
-    
+- (void)forwardInvocation:(NSInvocation *)anInvocation {
     if ([(id)self.delegate respondsToSelector:[anInvocation selector]])
     {
         [anInvocation invokeWithTarget:self.delegate];
@@ -957,12 +897,9 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     {
         [super forwardInvocation:anInvocation];
     }
-    
 }
 
-- (BOOL)respondsToSelector:(SEL)aSelector
-{
-    
+- (BOOL)respondsToSelector:(SEL)aSelector {
     if (self.delegate == self) {
         return [super respondsToSelector:aSelector];
     }
@@ -970,8 +907,7 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     return [(id)self.delegate respondsToSelector:aSelector] || [super respondsToSelector:aSelector];
 }
 
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
-{
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
     NSMethodSignature *signature = [super methodSignatureForSelector:selector];
     if (!signature)
     {
