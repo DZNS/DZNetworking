@@ -18,8 +18,12 @@ public typealias RedirectModifierBlock = (_ task: URLSessionTask, _ request: URL
 ///
 /// Example:
 /// ```
-/// let session = DZURLSession.shared 
+/// let session = DZURLSession()
+/// session.baseURL = URL(string:"http://api.myapp.com/")!
+///
+/// let (data, _) = try await session.GET("/posts", query: ["userID": "1"])
 /// ```
+/// 
 open class DZURLSession: NSObject {
   // MARK: Public
   
@@ -101,6 +105,12 @@ open class DZURLSession: NSObject {
   }
   
   // MARK: Public
+  
+  /// Default operation queue to use for the receiver
+  ///
+  /// You can create and use your own, or use this prepared one for convenience
+  /// - Parameter backgroundSession: when `true`, limits the number of simultaneous requests to `1`
+  /// - Returns: operation queue for the internal `URLSession`
   public class func defaultOperationQueue(for backgroundSession: Bool = false) -> OperationQueue {
     let opQueue = OperationQueue()
     opQueue.maxConcurrentOperationCount = backgroundSession ? 1 : 5

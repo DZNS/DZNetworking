@@ -25,7 +25,7 @@ public func dzError(code: Int, description: String, failure: String?) -> NSError
   )
 }
 
-public func dzObjectError(code: Int, description: String, data: Data, responseObject: Decodable?) -> NSError {
+public func dzObjectError(code: Int, description: String, data: Data, responseObject: Any?) -> NSError {
   var userInfo: [String: Any] = [
     NSLocalizedDescriptionKey: description,
     DZErrorData: data
@@ -47,4 +47,10 @@ enum PublicError: LocalizedError {
   case invalidURL
   /// when URLResponse cannot be mapped to HTTPURLResponse 
   case invalidResponseType
+  /// thrown when encoding parameters to data fails 
+  case invalidBodyParameters
+  /// the type of  the body parameter should either be `[String: AnyHashable]` or `MultipartFormData`
+  case invalidBodyParameter
+  /// expected `Data` as a response object, but got something else. If you have setup a `responseParser` on the session, you should unset it
+  case expectedData
 }

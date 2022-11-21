@@ -22,7 +22,7 @@ let package = Package(
     .target(
       name: "DZNetworking",
       path: "Sources/DZNetworking",
-      exclude: ["Info.plist"],
+      exclude: [],
       publicHeadersPath: ""
     ),
     .testTarget(

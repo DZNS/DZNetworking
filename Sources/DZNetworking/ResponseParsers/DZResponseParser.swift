@@ -23,7 +23,7 @@ public protocol DZResponseParser {
   
   func isExpectedContentType(in response: HTTPURLResponse) -> Bool
   
-  func parseResponse(data: Data, response: HTTPURLResponse) throws -> Decodable?
+  func parseResponse(data: Data, response: HTTPURLResponse) throws -> Any?
 }
 
 extension DZResponseParser {

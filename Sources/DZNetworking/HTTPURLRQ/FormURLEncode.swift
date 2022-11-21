@@ -14,7 +14,7 @@ import Foundation
 /// - Parameters:
 ///   - parameters: the URL query items
 /// - Returns: String to use as the search param in `URLComponents`, if the parameters dictionary is nil or empty, returns `nil`
-public func FormURLEncode(_ parameters: [String: String]) -> String? {
+public func FormURLEncode(_ parameters: [String: AnyHashable]) -> String? {
   guard !parameters.isEmpty else {
     return nil
   }
@@ -76,14 +76,14 @@ private func encodeKey(_ text: String) -> String {
   encode(text, ignore: "[]")
 }
 
-private func encodeValue(_ text: String) -> String {
+private func encodeValue(_ text: AnyHashable) -> String {
   encode(text, ignore: "")
 }
 
-private func encode(_ text: String, ignore: String) -> String {
+private func encode(_ text: AnyHashable, ignore: String) -> String {
   var allowedSet: CharacterSet = .init(charactersIn: ignore)
   allowedSet.formUnion(.urlQueryAllowed)
   allowedSet.remove(charactersIn: #":/?&=;+!@#$()',*"#)
   
-  return text.addingPercentEncoding(withAllowedCharacters: allowedSet) ?? text
+  return "\(text)".addingPercentEncoding(withAllowedCharacters: allowedSet) ?? "\(text)"
 }
