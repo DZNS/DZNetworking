@@ -31,7 +31,8 @@ public func FormURLEncode(_ parameters: [String: AnyHashable]) -> String? {
     queryString = queryString.appendingFormat("%@=%@&", encodeKey(key), encodeValue(value))
   }
   
-  queryString = String(queryString.suffix(1))
+  // remove the trailing &
+  queryString.removeLast()
   
   return queryString
 }

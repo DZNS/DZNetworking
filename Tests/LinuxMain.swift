@@ -3,5 +3,6 @@ import XCTest
 import DZNetworkingTests
 
 var tests = [XCTestCaseEntry]()
-tests += DZNetworkingTests.allTests()
+tests += DZURLSessionTests.allTests()
+tests += FormURLEncodeTests.allTests()
 XCTMain(tests)
