@@ -37,3 +37,4 @@ test_output
 /DZNetworkingTests/Server/upload/package-lock.json
 /DZNetworkingTests/OAuth2Session.m
 /DZNetworking.xcodeproj/xcuserdata/dezinezync.xcuserdatad/xcschemes/xcschememanagement.plist
+/.build

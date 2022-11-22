@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 #endif
 
+#if canImport(AppKit)
+import AppKit
+#endif
+
 /// This is Swift port OMGHTTPURLRQ
 struct HTTPURLRQ {
   static let userAgent: String = {
@@ -24,14 +28,18 @@ struct HTTPURLRQ {
     let systemVersion = UIDevice.current.systemVersion
     
     #if os(tvOS)
-    ua = String(format: "%@/%@ (%@; tvOS %@; Scale/%0.2f)", name ?? "No Name", version ?? "0.1", device, systemVersion, scale)
+    ua = String(format: "%@/%@ (%@; tvOS %@; Scale/%0.2f)", name ?? "NoName", version ?? "0.1", device, systemVersion, scale)
     #elseif os(watchOS)
-    ua = String(format: "%@/%@ (%@; watchOS %@; Scale/%0.2f)", name ?? "No Name", version ?? "0.1", device, systemVersion, scale)
+    ua = String(format: "%@/%@ (%@; watchOS %@; Scale/%0.2f)", name ?? "NoName", version ?? "0.1", device, systemVersion, scale)
     #else
-    ua = String(format: "%@/%@ (%@; iOS %@; Scale/%0.2f)", name ?? "No Name", version ?? "0.1", device, systemVersion, scale)
+    ua = String(format: "%@/%@ (%@; iOS %@; Scale/%0.2f)", name ?? "NoName", version ?? "0.1", device, systemVersion, scale)
     #endif
     #else
-    ua = String(format: "%@/%@ (%@; iOS %@; Scale/%0.2f)", name ?? "No Name", version ?? "0.1", device, systemVersion, scale)
+    let scale = NSScreen.main?.backingScaleFactor ?? 2.0
+    let device = Host.current().localizedName ?? "NoDeviceName"
+    let systemVersion = ProcessInfo.processInfo.operatingSystemVersion
+    let systemVersionString = "\(systemVersion.majorVersion).\(systemVersion.minorVersion).\(systemVersion.patchVersion)"
+    ua = String(format: "%@/%@ (%@; macOS %@; Scale/%0.2f)", name ?? "NoName", version ?? "0.1", device, systemVersionString, scale)
     #endif
     
     return ua
