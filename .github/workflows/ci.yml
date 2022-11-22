@@ -1,14 +1,14 @@
-name: Xcode CI
+name: Swift
 
 on: [push]
 
 jobs:
-  test:
-    name: Test 
-    runs-on: macOS-latest
+  build:
+
+    runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - name: Build
         run: swift build
       - name: Run tests
