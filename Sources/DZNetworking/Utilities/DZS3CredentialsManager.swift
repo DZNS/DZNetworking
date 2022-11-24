@@ -18,6 +18,7 @@ public enum DZACL: String {
 }
 
 public enum DZS3Encryption: String {
+  case `none`
   case AES256
 }
 
@@ -67,7 +68,7 @@ public struct DZS3CredentialsManager {
   ///   - contentType: the content type of the data, if uploading an object (PUT, POST, PATCH)
   ///   - expires: the expiry interval of the request from `now`
   /// - Returns: `Authentication` header value
-  public func authorization(with method: HTTPMethod, bucket: String, path: String, acl: DZACL? = .private, encryption: DZS3Encryption? = .AES256, contentType: String?, expires: TimeInterval = 3600) throws -> (String, String) {
+  public func authorization(with method: HTTPMethod, bucket: String, path: String, acl: DZACL? = .private, encryption: DZS3Encryption? = DZS3Encryption.none, contentType: String?, expires: TimeInterval = 3600) throws -> (String, String) {
     if method == .PUT || method == .POST || method == .PATCH {
       guard let _ = acl,
             let _ = encryption,
