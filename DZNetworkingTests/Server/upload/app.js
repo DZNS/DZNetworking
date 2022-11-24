@@ -24,12 +24,12 @@ app.post('/files', upload.single('file'), function(req,res) {
 
     res.send({"status" : "File uploaded."});
 
+  if (!!(req.file.path)) {
     process.nextTick(function() {
-
-        fs.unlinkSync(__dirname+"/"+req.file.path);
+        fs.unlinkSync(__dirname + "/" + req.file.path);
         console.log("removed file", req.file.filename);
-
     });
+  }
 
 });
 

@@ -84,14 +84,20 @@ struct HTTPURLRQ {
     
     let url = try validURLForRequest(from: uri, query: query)
     
-    let jsonData = try JSONSerialization.data(withJSONObject: json)
+    var body: Data
+    if let data = json as? Data {
+      body = data
+    }
+    else {
+      body = try JSONSerialization.data(withJSONObject: json)
+    }
     
     let request = mutableRequest()
     request.url = url
     request.httpMethod = "POST"
     request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
     request.addValue("json", forHTTPHeaderField: "Data-Type")
-    request.httpBody = jsonData
+    request.httpBody = body
     
     return request
   }

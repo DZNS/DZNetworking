@@ -8,9 +8,9 @@
 import Foundation
 
 public final class DZUploadSession: NSObject {
-  public let shared = DZUploadSession()
+  static public let shared = DZUploadSession()
   
-  private let session = DZURLSession()
+  public let session = DZURLSession()
   
   public func upload(file: URL, fieldName: String, uri: String, query: [String: String]?, parameters: [String: String]? = nil, contentType: String = "application/octet-stream") async throws -> (Any?, HTTPURLResponse) {
     

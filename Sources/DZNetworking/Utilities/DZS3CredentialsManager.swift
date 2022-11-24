@@ -101,7 +101,8 @@ public struct DZS3CredentialsManager {
     
     let signedString = HMAC<SHA256>.authenticationCode(for: stringToSign.data(using: .utf8)!, using: signingKey)
     let signature = Data(signedString).base64EncodedString()
+    let headerValue = String(format: "AWS %@:%@", key, signature)
     
-    return (String(format: "AWS %@:%@", key, signature), expiresString)
+    return (headerValue, expiresString)
   }
 }
