@@ -53,4 +53,6 @@ enum PublicError: LocalizedError {
   case invalidBodyParameter
   /// expected `Data` as a response object, but got something else. If you have setup a `responseParser` on the session, you should unset it
   case expectedData
+  /// the file to be uploaded could not be read due to read permission errors 
+  case fileReadNoPermission
 }

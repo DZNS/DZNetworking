@@ -10,6 +10,16 @@ import Foundation
 public typealias SuccessCallback = (_ responseObject: Any, _ response: HTTPURLResponse) -> Void
 public typealias ErrorCallback = (_ error: Error) -> Void
 
+public enum HTTPMethod: String {
+  case GET
+  case POST
+  case PUT
+  case PATCH
+  case DELETE
+  case OPTIONS
+  case HEAD
+}
+
 // MARK: - Convenience
 extension DZURLSession {
   // MARK: Async
