@@ -24,17 +24,16 @@ final class DZS3UploadSessionTests: XCTestCase {
     XCTAssertTrue(true)
     return
     
-    let filePath = ("~/tmp/sample.txt" as NSString).expandingTildeInPath
+    let root = FileManager.default.temporaryDirectory
+    let fileURL = root.appendingPathComponent("dzurlsession.txt")
     
     guard let data = "Hello World, uploaded from DZURLSession".data(using: .utf8) else {
       throw CocoaError(.coderInvalidValue)
     }
     
-    let fileURL = URL(fileURLWithPath: filePath)
-    
     try data.write(to: fileURL)
     
-    let (_, response) = try await session.upload(file: fileURL, bucket: bucket, path: "/tests/sample.txt", contentType: "text/plain")
+    let (_, response) = try await session.upload(file: fileURL, bucket: bucket, path: "dzurlsession.txt", contentType: "text/plain")
     
     XCTAssertLessThanOrEqual(response.statusCode, 204)
   }
