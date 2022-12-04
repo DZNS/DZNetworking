@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Crypto
+import CommonCrypto
 
 public enum DZS3Error: LocalizedError {
   case incompleteParamters
@@ -23,87 +23,168 @@ public enum DZS3Encryption: String {
 }
 
 /// Credentials manager for S3 operations
-///
-/// Example:
-/// ```swift
-/// let credentials = DZS3CredentialsManager(key: "foo", secret: "bar")
-/// let (authHeaderValue, expiresString) = try credentails.authorization(
-///  with: .PUT,
-///  bucket: "mybucket",
-///  path: "/2049/12/24/secrets.txt",
-///  contentType: "text/plain"
-/// )
-/// ```
 public struct DZS3CredentialsManager {
   /// the `AWSAccessKey`
   public let key: String
-  /// the `AWSAccessSecret`
-  public let secret: String
+  /// the `AWSSecretKey`
+  fileprivate let secretAccessKey: String
+  /// the service (static)
+  fileprivate let service = "s3"
+  /// region to use (does not affect url of the request) 
+  public let region: String
   
-  /// signing key derived from the secret
-  fileprivate let signingKey: SymmetricKey
-  
-  /// date formatter for deriving string value of the expiry segment 
-  fileprivate let dateFormatter: DateFormatter = {
-    var df = DateFormatter()
-    df.dateFormat = "EEE',' dd MMM yyyy HH':'mm':'ss 'GMT'"
-    df.locale = Locale(identifier: "en_US_POSIX")
-    df.timeZone = TimeZone(secondsFromGMT: 0)
-    return df
+  /// AWS Style ISO8601 formatter
+  private let iso8601Formatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.calendar = Calendar(identifier: .iso8601)
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.timeZone = TimeZone(secondsFromGMT: 0)
+    formatter.dateFormat = "yyyyMMdd'T'HHmmssXXXXX"
+    return formatter
   }()
   
-  public init(key: String, secret: String) {
+  private let urlQueryAllowed: CharacterSet = .alphanumerics.union(.init(charactersIn: "-._~")) // as per RFC 3986
+  
+  public init(key: String, secret: String, region: String = "us-east-1") {
     self.key = key
-    self.secret = secret
-    self.signingKey = SymmetricKey(data: secret.data(using: .utf8)!)
+    self.secretAccessKey = secret
+    self.region = region
   }
   
-  /// Generate the authorization token to be used for an S3 (or compatible service) request
+  /// Signs the provided request for authenticating with AWS v4 API
+  ///
+  /// For uploads, the request must have valid:
+  ///  - http method
+  ///  - http body
+  ///  - url
+  /// - Parameter request: the request to authenticate
+  /// - Returns: signed request
+  public func authorize(request: NSMutableURLRequest) throws -> NSMutableURLRequest? {
+    let signedRequest = request
+    
+    guard let url = signedRequest.url,
+          let host = url.host else {
+      return nil
+    }
+    
+    let date = iso8601()
+    let method = signedRequest.httpMethod
+    
+    signedRequest.addValue(host, forHTTPHeaderField: "Host")
+    signedRequest.addValue(date.full, forHTTPHeaderField: "X-Amz-Date")
+    
+    var contentHash: String
+    
+    if method.lowercased() == "put" || method.lowercased() == "post" {
+      contentHash = String(data: request.httpBody ?? Data(), encoding: .utf8)!.sha256()
+      signedRequest.addValue(contentHash, forHTTPHeaderField: "x-amz-content-sha256")
+    }
+    else {
+      contentHash = "".sha256()
+      signedRequest.addValue("".sha256(), forHTTPHeaderField: "x-amz-content-sha256")
+    }
+    
+    guard let headers = signedRequest.allHTTPHeaderFields else {
+      return nil
+    }
+            
+    let signedHeaders = headers.map { $0.key.lowercased() }.sorted().joined(separator: ";")
+    
+    let canonicalRequest = "\(method)\n\(url.path)\n\(url.query ?? "")\nhost:\(host)\nx-amz-content-sha256:\(contentHash)\nx-amz-date:\(date.full)\n\n\(signedHeaders)\n\(contentHash)"
+    
+    let canonicalRequestHash = canonicalRequest.sha256()
+    
+    let credential = getCredential(date: date.short, accessKeyId: key)
+    
+    let stringToSign = ["AWS4-HMAC-SHA256", date.full, credential, canonicalRequestHash].joined(separator: "\n")
+    
+    guard let signature = signatureWith(stringToSign: stringToSign, shortDateString: date.short) else {
+      return nil
+    }
+    
+    let authorization = "AWS4-HMAC-SHA256 Credential=" + key + "/" + credential + ",SignedHeaders=" + signedHeaders + ",Signature=" + signature
+    signedRequest.addValue(authorization, forHTTPHeaderField: "Authorization")
+    
+    return signedRequest
+  }
+  
+  /// returns a **credentials** string for including in the string to sign portion of the process
+  ///
+  /// composed of 4 components
+  ///  - the short date (YYYYMMDD)
+  ///  - the region
+  ///  - the service (s3)
+  ///  - static `aws4_request` string
+  private func getCredential(date: String, accessKeyId: String) -> String {
+    let credential = [date, region, service, "aws4_request"].joined(separator: "/")
+    return credential
+  }
+  
+  /// Generate the actual signature to be used in the auth header
+  ///
+  /// This uses the 4 step process to derive the signing key
   /// - Parameters:
-  ///   - method: the HTTP Method
-  ///   - bucket: the bucket name
-  ///   - path: the path for the object
-  ///   - acl: the acesss control list option
-  ///   - encryption: s3 on-disk encryption type (optional)
-  ///   - contentType: the content type of the data, if uploading an object (PUT, POST, PATCH)
-  ///   - expires: the expiry interval of the request from `now`
-  /// - Returns: `Authentication` header value
-  public func authorization(with method: HTTPMethod, bucket: String, path: String, acl: DZACL? = .private, encryption: DZS3Encryption? = DZS3Encryption.none, contentType: String?, expires: TimeInterval = 3600) throws -> (String, String) {
-    if method == .PUT || method == .POST || method == .PATCH {
-      guard let _ = acl,
-            let _ = encryption,
-            let _ = contentType else {
-        throw DZS3Error.incompleteParamters
-      }
+  ///   - stringToSign: the string to sign formed using various components
+  ///   - secretAccessKey: the secret key
+  ///   - shortDateString: the shrot date string representation (YYYYMMDD)
+  /// - Returns: signature for the header (hex encoded)
+  private func signatureWith(stringToSign: String, shortDateString: String) -> String? {
+    let firstKey = "AWS4" + secretAccessKey
+    let dateKey = shortDateString.hmac(keyString: firstKey)
+    let dateRegionKey = region.hmac(keyData: dateKey)
+    let dateRegionServiceKey = service.hmac(keyData: dateRegionKey)
+    let signingKey = "aws4_request".hmac(keyData: dateRegionServiceKey)
+    let signature = stringToSign.hmac(keyData: signingKey)
+    
+    return signature.toHexString()
+  }
+  /// date representations, full and short (YYYYMMDD)
+  private func iso8601() -> (full: String, short: String) {
+    let date = iso8601Formatter.string(from: Date())
+    let index = date.index(date.startIndex, offsetBy: 8)
+    let shortDate = String(date[..<index])
+    return (full: date, short: shortDate)
+  }
+}
+
+private extension String {
+  
+  func sha256() -> String {
+    guard let data = self.data(using: .utf8) else { return "" }
+    var hash = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
+    data.withUnsafeBytes {
+      _ = CC_SHA256($0, CC_LONG(data.count), &hash)
     }
+    let outputData = Data(hash)
+    return outputData.toHexString()
+  }
+  
+  func hmac(keyString: String) -> Data {
+    var digest = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+    CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA256), keyString, keyString.count, self, self.count, &digest)
+    let data = Data(digest)
+    return data
+  }
+  
+  func hmac(keyData: Data) -> Data {
+    let keyBytes = keyData.bytes()
+    let data = self.cString(using: String.Encoding.utf8)
+    let dataLen = Int(self.lengthOfBytes(using: String.Encoding.utf8))
+    var result = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+    CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA256), keyBytes, keyData.count, data, dataLen, &result);
     
-    let expiryDate = Date().addingTimeInterval(expires)
-    let expiresString = dateFormatter.string(from: expiryDate)
-    
-    var stringToSign = "\(method.rawValue)\n"
-    // content-md5 goes in here, but AWS doesn't seem to care and throws an error.
-    stringToSign = stringToSign.appendingFormat("%@\n", "")
-    stringToSign.append("\n")
-    stringToSign = stringToSign.appendingFormat("%@\n", expiresString)
-    
-    if let acl {
-      stringToSign = stringToSign.appendingFormat("x-amz-acl:%@\n", acl.rawValue)
-    }
-    
-    if let encryption {
-      stringToSign = stringToSign.appendingFormat("x-amz-server-side-encryption:%@\n", encryption.rawValue)
-    }
-    
-    stringToSign = stringToSign.appendingFormat("/%@%@", bucket, path)
-    
-    #if DEBUG
-    print("DZS3CredentialsManager: string to sign: \(stringToSign)")
-    #endif
-    
-    let signedString = HMAC<SHA256>.authenticationCode(for: stringToSign.data(using: .utf8)!, using: signingKey)
-    let signature = Data(signedString).base64EncodedString()
-    let headerValue = String(format: "AWS %@:%@", key, signature)
-    
-    return (headerValue, expiresString)
+    return Data(result)
+  }
+}
+
+private extension Data {
+  func toHexString() -> String {
+    let hexString = self.map{ String(format:"%02x", $0) }.joined()
+    return hexString
+  }
+  
+  func bytes() -> [UInt8] {
+    let array = [UInt8](self)
+    return array
   }
 }

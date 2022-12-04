@@ -54,31 +54,19 @@ public final class DZS3UploadSession: NSObject {
     
     file.stopAccessingSecurityScopedResource()
     
-    let (authorizationHeader, expiresString) = try credentials.authorization(
-      with: .PUT,
-      bucket: bucket,
-      path: path,
-      acl: acl,
-      encryption: encryption,
-      contentType: contentType,
-      expires: expires
-    )
-    
     guard let url = URL(string: "/\(bucket)\(path)", relativeTo: URL(string: "https://s3.amazonaws.com")!) else {
       throw PublicError.invalidURL
     }
     
     let request = NSMutableURLRequest(url: url)
-    request.setValue(authorizationHeader, forHTTPHeaderField: "Authorization")
-    request.setValue(acl.rawValue, forHTTPHeaderField: "X-Amz-Acl")
-    request.setValue(encryption.rawValue, forHTTPHeaderField: "X-amz-server-size-encryption")
-    request.setValue("s3.amazonaws.com", forHTTPHeaderField: "Host")
-    request.setValue(expiresString, forHTTPHeaderField: "Date")
-    request.setValue("\(data.count)", forHTTPHeaderField: "Content-Length")
     request.httpBody = data
     request.httpMethod = HTTPMethod.PUT.rawValue
     
-    let (result, response) = try await session.session.upload(for: request as URLRequest, from: data)
+    guard let signedRequest = try credentials.authorize(request: request) else {
+      throw DZS3Error.incompleteParamters
+    }
+    
+    let (result, response) = try await session.session.upload(for: signedRequest as URLRequest, from: data)
     
     return (result, response as! HTTPURLResponse)
   }
