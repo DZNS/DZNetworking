@@ -86,7 +86,7 @@ final class DZOAuthSession: NSObject {
       throw OAuthError.activeAuthState
     }
     
-    let stateToken = UUID().uuidString
+    let stateToken = "\(Date().timeIntervalSince1970)".data(using: .utf8)!.base64EncodedString()
     state = .authorizing(stateToken: stateToken)
     
     let params: [String: String] = [
@@ -119,7 +119,7 @@ final class DZOAuthSession: NSObject {
       throw OAuthError.invalidOrNoCode
     }
     
-    let params: [String: String] = [
+    let body: [String: String] = [
       "grant_type": "authorization_code",
       "client_id": clientID,
       "client_secret": clientSecret,
@@ -127,19 +127,17 @@ final class DZOAuthSession: NSObject {
       "code": code
     ]
     
-    let (result, _) = try await session.POST(tokenURL.absoluteString, query: params, json: nil)
+    let (result, _) = try await session.POST(tokenURL.absoluteString, query: [:], json: body)
     
     guard let json = result as? [String: Any],
-          let token = json["access_token"] as? String,
-          let tokenID = json["id_token"] as? String,
-          let refreshToken = json["refresh_token"] as? String else {
+          let token = json["access_token"] as? String else {
       state = .none
       throw OAuthError.invalidTokenResponse
     }
     
     self.token = token
-    self.tokenID = tokenID
-    self.refreshToken = refreshToken
+    self.tokenID = json["id_token"] as? String
+    self.refreshToken = json["refresh_token"] as? String
     
     self.state = .authorized
   }
@@ -153,14 +151,14 @@ final class DZOAuthSession: NSObject {
     
     state = .refreshing
     
-    let params: [String: String] = [
+    let body: [String: String] = [
       "refresh_token": refreshToken,
       "client_id": clientID,
       "client_secret": clientSecret,
       "grant_type": "refresh_token"
     ]
     
-    let (result, _) = try await session.POST(refreshTokenURL.absoluteString, query: params, json: nil)
+    let (result, _) = try await session.POST(refreshTokenURL.absoluteString, query: [:], json: body)
     
     guard let json = result as? [String: Any],
           let token = json["access_token"] as? String else {
@@ -181,3 +179,11 @@ final class DZOAuthSession: NSObject {
     session.baseURL = url
   }
 }
+
+#if DEBUG || TEST
+extension DZOAuthSession {
+  func setState(_ state: SessionState) {
+    self.state = state
+  }
+}
+#endif
