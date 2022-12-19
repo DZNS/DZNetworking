@@ -265,7 +265,7 @@ extension DZURLSession {
       throw PublicError.invalidURL
     }
     
-    let request = try urlRequest(with: url.absoluteString, method: method, body: body)
+    let request = try urlRequest(with: url.absoluteString, method: method, query: query, body: body)
     
     let (data, response) = try await session.data(for: request)
     
