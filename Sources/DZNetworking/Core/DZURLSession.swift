@@ -36,7 +36,9 @@ open class DZURLSession: NSObject {
   /// when setting `true`, use the appropriate `URLSessionConfiguration.background(withIdentifier:)` initialiser for the configuration parameter
   public let isBackgroundSession: Bool
   
-  /// delegate of the receiever, to handle optionally implemented protocol methods. Some `URLSession.Delegate` invocations are also forwarded to this implementation.
+  /// delegate of the receiever, to handle optionally implemented protocol methods.
+  ///
+  /// Some `URLSession.Delegate` invocations are also forwarded to this implementation.
   public weak var delegate: URLSessionDelegate? = nil
   
   /// the base URL to use for all requests.
@@ -63,14 +65,31 @@ open class DZURLSession: NSObject {
   /// The redirect modifier block, if provided, is called when a redirection is occuring. You can utilize this block to add additional data to the request if required or simply inspect it.
   public var redirectModifier: RedirectModifierBlock? = nil
   
+  /// The response parser for HTTP payloads
+  ///
+  /// When `nil`, the response object will always be `Data` when non-nil.
+  ///
+  /// When a parser value is set, the result type will be determined by the response parser's output type
   public var responseParser: DZResponseParser? = nil
   
+  /// the background completion handler received by the app for background data/download tasks
+  public var backgroundCompletionHandler: (() -> Void)? {
+    get {
+      taskHandler.completionHandler
+    }
+    set {
+      taskHandler.completionHandler = newValue
+    }
+  }
+  
   // MARK: Private
+  internal let taskHandler = TaskHandler()
+  
   /// internal private operation queue
   private let operationQueue: OperationQueue
   
   internal lazy var session: URLSession = {
-    let session = URLSession(configuration: configuration, delegate: delegate, delegateQueue: operationQueue)
+    let session = URLSession(configuration: configuration, delegate: taskHandler, delegateQueue: operationQueue)
     session.sessionDescription = "DZURLSession Managed: \(UUID().uuidString)"
     return session
   }()
@@ -85,6 +104,8 @@ open class DZURLSession: NSObject {
   ///   - delegate: optional object that handles `URLSessionDelegate` invocations on behalf of the receiver
   public init(configuration: URLSessionConfiguration, operationQueue: OperationQueue, isBackgroundSession: Bool, delegate: URLSessionDelegate? = nil) {
     precondition(operationQueue != .main, "Should not use the main operation queue")
+    configuration.shouldUseExtendedBackgroundIdleMode = true
+    
     self.configuration = configuration
     self.operationQueue = operationQueue
     self.isBackgroundSession = isBackgroundSession

@@ -267,13 +267,24 @@ extension DZURLSession {
     
     let request = try urlRequest(with: url.absoluteString, method: method, query: query, body: body)
     
-    let (data, response) = try await session.data(for: request)
+    let task = session.dataTask(with: request)
     
-    guard let response = response as? HTTPURLResponse else {
-      throw PublicError.invalidResponseType
+    let result = try await withTaskCancellationHandler {
+      try await withUnsafeThrowingContinuation { continuation in
+        taskHandler.handlers[task] = DataTaskHandler(continuation.resume(with:))
+        
+        task.resume()
+      }
+      
+    } onCancel: {
+      task.cancel()
     }
     
-    return (data, response)
+    guard let response = result.1 as? HTTPURLResponse else {
+      throw PublicError.invalidResponseType
+    }
+
+    return (result.0 ?? Data(), response)
   }
   
   // MARK: Internal  
