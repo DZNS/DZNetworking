@@ -40,3 +40,4 @@ test_output
 /.build
 /archives
 /DZNetworking.xcframework
+/DZNetworking.xcframework.zip
