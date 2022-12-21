@@ -10,7 +10,9 @@ let package = Package(
     // Products define the executables and libraries a package produces, and make them visible to other packages.
     .library(
       name: "DZNetworking",
-      targets: ["DZNetworking"]),
+      type: .dynamic,
+      targets: ["DZNetworking"]
+    ),
   ],
   dependencies: [
     // Dependencies declare other packages that this package depends on.

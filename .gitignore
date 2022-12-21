@@ -38,3 +38,5 @@ test_output
 /DZNetworkingTests/OAuth2Session.m
 /DZNetworking.xcodeproj/xcuserdata/dezinezync.xcuserdatad/xcschemes/xcschememanagement.plist
 /.build
+/archives
+/DZNetworking.xcframework
