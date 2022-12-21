@@ -324,9 +324,6 @@ extension DZURLSession {
     
     let request = mutableRequest.copy() as! URLRequest
     
-    // @TODO: sanitise the request
-    // 1. the url should not have `?` if there are no query parameters
-    
     return request
   }
 }

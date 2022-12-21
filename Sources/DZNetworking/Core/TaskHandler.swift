@@ -36,6 +36,9 @@ internal final class TaskHandlersDictionary {
   }
 }
 
+/// TaskHandler manages delegate calls from the URLSession and dispatching of success/failure callbacks as tasks are completed.
+///
+/// This is internally handled by the `DZURLSession` class and shouldn't be required to use directly unless you're subclassing `DZURLSession`.
 public final class TaskHandler: NSObject {
   var completionHandler: (() -> Void)?
   
