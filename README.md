@@ -1,10 +1,15 @@
-# DZNetworking
+# DZNetworking v3
 
-NSURLSession based networking supporting Swift Concurrency and completion block handler style APIs.
+`URLSession` based networking supporting Swift Concurrency and completion block handler style APIs.
 
 DZNetworking exposes simple APIs that make constructing networking models with REST APIs easy. 
 
 The API is straight-forward, well tested and extensible. DZNetworking should be treated as a simple wrapper around `URLSession`.
+
+### Supports 
+- `URLSession` data, download and upload tasks
+- Uploads to S3 buckets
+- OAuth2 session handler 
 
 ### Instantiating
 
@@ -18,7 +23,7 @@ let (data, _) = try await session.GET("/posts", query: ["userID": "1"])
 ``` 
 
 --
-The `DZJSONResponseParser` implements the `DZResponseParser` protocol which handles parsing JSON responses. You can implement your own response parsers (example: XML, YAML, etc.) by implementing `DZResponseParser`.
+The `DZJSONResponseParser` implements the `DZResponseParser` protocol which handles parsing JSON responses. You can implement your own response parsers (example: XML, YAML, etc.) by conforming your parser to `DZResponseParser`.
 
 You must then assign that response parser to the DZURLSession before making network requests.
 
