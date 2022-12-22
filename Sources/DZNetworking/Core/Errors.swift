@@ -55,4 +55,42 @@ enum PublicError: LocalizedError {
   case expectedData
   /// the file to be uploaded could not be read due to read permission errors 
   case fileReadNoPermission
+  
+  var errorDescription: String? {
+    switch self {
+    case .invalidURL:
+      return NSLocalizedString("An invalid URL was passed for this request.", comment: "")
+    case .invalidResponseType:
+      return NSLocalizedString("An invalid response type was received for this request.", comment: "")
+    case .invalidBodyParameters:
+      return NSLocalizedString("An invalid list of body parameters was passed for this request.", comment: "")
+    case .invalidBodyParameter:
+      return NSLocalizedString("An invalid body parameter was passed for this request.", comment: "")
+    case .expectedData:
+      return NSLocalizedString("The response body was empty.", comment: "")
+    case .fileReadNoPermission:
+      return NSLocalizedString("No permissions to read this file.", comment: "")
+    }
+  }
+  
+  var failureReason: String? {
+    errorDescription
+  }
+  
+  var recoverySuggestion: String? {
+    switch self {
+    case .invalidURL:
+      return NSLocalizedString("Check the URL and ensure it has been formatted properly.", comment: "")
+    case .invalidResponseType:
+      return NSLocalizedString("Check the response type. When using a custom response parser, ensure it can correctly handle this response type.", comment: "")
+    case .invalidBodyParameters:
+      return NSLocalizedString("Check body parameters passed for this request.", comment: "")
+    case .invalidBodyParameter:
+      return NSLocalizedString("Check the body parameter passed for this request.", comment: "")
+    case .expectedData:
+      return NSLocalizedString("This should only happen for OPTIONS and HEAD requests. Other request types should generally include a body.", comment: "")
+    case .fileReadNoPermission:
+      return NSLocalizedString("Ensure that the file URL is not security scoped by the OS.", comment: "")
+    }
+  }
 }

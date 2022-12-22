@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Session object to use for upload files to S3
+/// Session object to use for uploading files to S3
 ///
 /// Example:
 /// ```
@@ -15,7 +15,7 @@ import Foundation
 ///   credentials: .init(key: "foo", secret: "bar")
 /// )
 ///
-/// let (_, response) = try await session.upload(file: fileURL, bucket: bucket, path: bucketPath, contentType: "text/plain")
+/// let (_, response) = try await session.upload(file: fileURL, bucket: bucket, path: "dzurlsession.txt", contentType: "text/plain")
 ///
 /// guard response.statusCode <= 204 else {
 ///    throw Error

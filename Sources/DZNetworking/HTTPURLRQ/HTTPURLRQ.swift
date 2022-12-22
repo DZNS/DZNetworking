@@ -7,7 +7,11 @@
 
 import Foundation
 #if canImport(UIKit)
+#if os(watchOS)
+import WatchKit
+#else
 import UIKit
+#endif
 #endif
 
 #if canImport(AppKit)
@@ -23,9 +27,15 @@ struct HTTPURLRQ {
     let version = info?[kCFBundleVersionKey as String] as? String
     
     #if canImport(UIKit)
+    #if os(watchOS)
+    let scale = 2.0
+    let device = WKInterfaceDevice.current().model
+    let systemVersion = WKInterfaceDevice.current().systemVersion
+    #else
     let scale = UIScreen.main.scale
     let device = UIDevice.current.model
     let systemVersion = UIDevice.current.systemVersion
+    #endif
     
     #if os(tvOS)
     ua = String(format: "%@/%@ (%@; tvOS %@; Scale/%0.2f)", name ?? "NoName", version ?? "0.1", device, systemVersion, scale)

@@ -7,6 +7,14 @@
 
 import Foundation
 
+/// A JSON response parser.
+///
+/// Supports the following content types:
+///  - `application/json`
+///  - `text/javascript`
+///  - `text/json`
+///
+///  JSON5 structures decoding available on supported platforms.
 final class DZJSONResponseParser: DZResponseParser {
   let contentTypes = Set<String>(["application/json", "text/javascript", "text/json"])
   

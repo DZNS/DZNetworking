@@ -12,11 +12,13 @@ public enum DZS3Error: LocalizedError {
   case incompleteParamters
 }
 
+/// The Access-Control-List used for the uploaded object. Can be `public` or `private`, defaults to `public`.
 public enum DZACL: String {
   case `private`
   case `public`
 }
 
+/// The S3 at-rest encryption used for the uploaded object. `none` by default.
 public enum DZS3Encryption: String {
   case `none`
   case AES256

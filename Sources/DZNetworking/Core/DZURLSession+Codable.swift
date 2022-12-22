@@ -21,6 +21,7 @@ extension DZURLSession {
   ///   - query: query parameters
   /// - Returns: object and response if the request was successful
   public func GET<T>(_ uri: String, type: T.Type, query: [String: String] = [:]) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+    precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
     let (data, response) = try await request(with: uri, method: "GET", query: query, body: nil)
     guard let data = data as? Data else {
       throw PublicError.expectedData
@@ -37,6 +38,7 @@ extension DZURLSession {
   ///   - json: the json object for the request body
   /// - Returns: object and response if the request was successful
   public func POST<T>(_ uri: String, type: T.Type, query: [String: String] = [:], json: Any?) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+    precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
     let (data, response) = try await request(with: uri, method: "POST", query: query, body: json)
     guard let data = data as? Data else {
       throw PublicError.expectedData
@@ -53,6 +55,7 @@ extension DZURLSession {
   ///   - json: the json object for the request body
   /// - Returns: object and response if the request was successful
   public func PUT<T>(_ uri: String, type: T.Type, query: [String: String] = [:], json: Any?) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+    precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
     let (data, response) = try await request(with: uri, method: "PUT", query: query, body: json)
     guard let data = data as? Data else {
       throw PublicError.expectedData
@@ -69,6 +72,7 @@ extension DZURLSession {
   ///   - json: the json object for the request body
   /// - Returns: object and response if the request was successful
   public func PATCH<T>(_ uri: String, type: T.Type, query: [String: String] = [:], json: Any?) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+    precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
     let (data, response) = try await request(with: uri, method: "PATCH", query: query, body: json)
     guard let data = data as? Data else {
       throw PublicError.expectedData
@@ -85,6 +89,7 @@ extension DZURLSession {
   ///   - body: the json object for the request body
   /// - Returns: object and response if the request was successful
   public func DELETE<T>(_ uri: String, type: T.Type, query: [String: String] = [:], body: Any?) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+    precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
     let (data, response) = try await request(with: uri, method: "DELETE", query: query, body: body)
     guard let data = data as? Data,
           data.count > 3 else {
@@ -103,6 +108,7 @@ extension DZURLSession {
   ///   - query: query parameters
   /// - Returns: object (if available) and response if the request was successful
   public func OPTIONS<T>(_ uri: String, type: T.Type, query: [String: String] = [:]) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+    precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
     let (data, response) = try await request(with: uri, method: "OPTIONS", query: query, body: nil)
     guard let data = data as? Data,
           data.count > 3 else {
@@ -121,6 +127,7 @@ extension DZURLSession {
   ///   - query: query parameters
   /// - Returns: object (if available) and response if the request was successful
   public func HEAD<T>(_ uri: String, type: T.Type, query: [String: String] = [:]) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+    precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
     let (data, response) = try await request(with: uri, method: "HEAD", query: query, body: nil)
     guard let data = data as? Data,
           data.count > 3 else {

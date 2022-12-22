@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Internal class used to manage multi-part form data for `POST` and `PUT` requests, especially those involving files. 
 public final class MultipartFormData {
   public let boundary = String(format: "------------------------%08X%08X", arc4random(), arc4random())
   public let lineEnding = "\r\n"

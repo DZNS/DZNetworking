@@ -10,7 +10,10 @@ import Foundation
 public typealias SuccessCallback = (_ responseObject: Any, _ response: HTTPURLResponse) -> Void
 public typealias ErrorCallback = (_ error: Error) -> Void
 
-public enum HTTPMethod: String {
+/// HTTP Methods as a convinience enum
+public enum HTTPMethod: String, Equatable, Identifiable, Hashable {
+  public var id: String { self.rawValue }
+  
   case GET
   case POST
   case PUT
@@ -92,6 +95,14 @@ extension DZURLSession {
   }
   
   // MARK: Completion Handlers
+  
+  /// Perform a `GET` request
+  /// - Parameters:
+  ///   - uri: the uri (can be relative to the base URL if one is set)
+  ///   - query: query parameters
+  ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
+  ///   - onError: called when the request completes successfully. Always called on the main-thread.
+  /// - Returns: Task
   @discardableResult public func GET(_ uri: String, query: [String: String] = [:], onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     Task {
       do {
@@ -104,6 +115,14 @@ extension DZURLSession {
     }
   }
   
+  /// Perform a `POST` request
+  /// - Parameters:
+  ///   - uri: the uri (can be relative to the base URL if one is set)
+  ///   - query: query parameters
+  ///   - json: the request body
+  ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
+  ///   - onError: called when the request completes successfully. Always called on the main-thread.
+  /// - Returns: Task
   @discardableResult public func POST(_ uri: String, query: [String: String] = [:], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     Task {
       do {
@@ -116,6 +135,14 @@ extension DZURLSession {
     }
   }
   
+  /// Perform a `PUT` request
+  /// - Parameters:
+  ///   - uri: the uri (can be relative to the base URL if one is set)
+  ///   - query: query parameters
+  ///   - json: the request body
+  ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
+  ///   - onError: called when the request completes successfully. Always called on the main-thread.
+  /// - Returns: Task
   @discardableResult public func PUT(_ uri: String, query: [String: String] = [:], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     Task {
       do {
@@ -128,6 +155,14 @@ extension DZURLSession {
     }
   }
   
+  /// Perform a `PATCH` request
+  /// - Parameters:
+  ///   - uri: the uri (can be relative to the base URL if one is set)
+  ///   - query: query parameters
+  ///   - json: the request body
+  ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
+  ///   - onError: called when the request completes successfully. Always called on the main-thread.
+  /// - Returns: Task
   @discardableResult public func PATCH(_ uri: String, query: [String: String] = [:], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     Task {
       do {
@@ -140,6 +175,14 @@ extension DZURLSession {
     }
   }
   
+  /// Perform a `DELETE` request
+  /// - Parameters:
+  ///   - uri: the uri (can be relative to the base URL if one is set)
+  ///   - query: query parameters
+  ///   - body: the request body (optional)
+  ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
+  ///   - onError: called when the request completes successfully. Always called on the main-thread.
+  /// - Returns: Task
   @discardableResult public func DELETE(_ uri: String, query: [String: String] = [:], body: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     Task {
       do {
@@ -152,6 +195,13 @@ extension DZURLSession {
     }
   }
   
+  /// Perform an `OPTIONS` request
+  /// - Parameters:
+  ///   - uri: the uri (can be relative to the base URL if one is set)
+  ///   - query: query parameters
+  ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
+  ///   - onError: called when the request completes successfully. Always called on the main-thread.
+  /// - Returns: Task
   @discardableResult public func OPTIONS(_ uri: String, query: [String: String] = [:], onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     Task {
       do {
@@ -164,6 +214,13 @@ extension DZURLSession {
     }
   }
   
+  /// Perform a `HEAD` request
+  /// - Parameters:
+  ///   - uri: the uri (can be relative to the base URL if one is set)
+  ///   - query: query parameters
+  ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
+  ///   - onError: called when the request completes successfully. Always called on the main-thread.
+  /// - Returns: Task
   @discardableResult public func HEAD(_ uri: String, query: [String: String] = [:], onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     Task {
       do {

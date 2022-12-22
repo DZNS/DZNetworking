@@ -7,6 +7,22 @@
 
 import Foundation
 
+/// `DZUploadSession` is a specialised class for uploading files.
+///
+/// You can use the shared session for general networking in your apps, however, it is strongly recommended to create your own instance with a configuration satisfying the model's requirements.
+///
+/// Example:
+/// ```
+/// let session = DZUploadSession()
+/// session.session.baseURL = URL(string:"http://api.myapp.com/")!
+///
+/// let (_, response) = try await session.upload(data: data, fileName: "tests.txt", fieldName: "file", uri: "/files", query: nil)
+/// 
+/// guard response.statusCode <= 204 else {
+///    throw Error
+/// }
+/// ```
+///
 public final class DZUploadSession: NSObject {
   static public let shared = DZUploadSession()
   
