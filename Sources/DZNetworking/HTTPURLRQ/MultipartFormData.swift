@@ -30,9 +30,11 @@ public final class MultipartFormData {
         line.append(lineEnding)
       }
       
-      if let contentType, !contentType.isEmpty {
-        line = line.appendingFormat("Content-Type: %@%@", contentType, lineEnding)
-      }
+      line = line.appending(lineEnding)
+      
+//      if let contentType, !contentType.isEmpty {
+//        line = line.appendingFormat("Content-Type: %@%@", contentType, lineEnding)
+//      }
       
       return line
     }()

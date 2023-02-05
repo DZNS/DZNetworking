@@ -92,6 +92,11 @@ struct HTTPURLRQ {
   
   static func POST(_ uri: String, query: [String: String] = [:], json: Any) throws -> NSMutableURLRequest {
     
+    if let json = json as? MultipartFormData {
+      let request = try HTTPURLRQ.POST(uri, query: query, body: json)
+      return request
+    }
+    
     let url = try validURLForRequest(from: uri, query: query)
     
     var body: Data
