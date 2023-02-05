@@ -20,14 +20,16 @@ extension DZURLSession {
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
   /// - Returns: object and response if the request was successful
-  public func GET<T>(_ uri: String, type: T.Type, query: [String: String] = [:]) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+  public func GET<T>(_ uri: String, type: T.Type, query: [String: String] = [:], decoder: JSONDecoder? = nil) async throws -> (T?, HTTPURLResponse) where T: Decodable {
     precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
+    
     let (data, response) = try await request(with: uri, method: "GET", query: query, body: nil)
     guard let data = data as? Data else {
       throw PublicError.expectedData
     }
     
-    let object = try DZURLSession.decoder.decode(T.self, from: data)
+    let decoder = decoder ?? DZURLSession.decoder
+    let object = try decoder.decode(T.self, from: data)
     return (object, response)
   }
   
@@ -36,15 +38,18 @@ extension DZURLSession {
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
   ///   - json: the json object for the request body
+  ///   - decoder: optional: A custom JSON Decoder instance
   /// - Returns: object and response if the request was successful
-  public func POST<T>(_ uri: String, type: T.Type, query: [String: String] = [:], json: Any?) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+  public func POST<T>(_ uri: String, type: T.Type, query: [String: String] = [:], json: Any?, decoder: JSONDecoder? = nil) async throws -> (T?, HTTPURLResponse) where T: Decodable {
     precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
+    
     let (data, response) = try await request(with: uri, method: "POST", query: query, body: json)
     guard let data = data as? Data else {
       throw PublicError.expectedData
     }
     
-    let object = try DZURLSession.decoder.decode(T.self, from: data)
+    let decoder = decoder ?? DZURLSession.decoder
+    let object = try decoder.decode(T.self, from: data)
     return (object, response)
   }
   
@@ -53,15 +58,18 @@ extension DZURLSession {
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
   ///   - json: the json object for the request body
+  ///   - decoder: optional: A custom JSON Decoder instance
   /// - Returns: object and response if the request was successful
-  public func PUT<T>(_ uri: String, type: T.Type, query: [String: String] = [:], json: Any?) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+  public func PUT<T>(_ uri: String, type: T.Type, query: [String: String] = [:], json: Any?, decoder: JSONDecoder? = nil) async throws -> (T?, HTTPURLResponse) where T: Decodable {
     precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
+    
     let (data, response) = try await request(with: uri, method: "PUT", query: query, body: json)
     guard let data = data as? Data else {
       throw PublicError.expectedData
     }
     
-    let object = try DZURLSession.decoder.decode(T.self, from: data)
+    let decoder = decoder ?? DZURLSession.decoder
+    let object = try decoder.decode(T.self, from: data)
     return (object, response)
   }
   
@@ -70,15 +78,18 @@ extension DZURLSession {
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
   ///   - json: the json object for the request body
+  ///   - decoder: optional: A custom JSON Decoder instance
   /// - Returns: object and response if the request was successful
-  public func PATCH<T>(_ uri: String, type: T.Type, query: [String: String] = [:], json: Any?) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+  public func PATCH<T>(_ uri: String, type: T.Type, query: [String: String] = [:], json: Any?, decoder: JSONDecoder? = nil) async throws -> (T?, HTTPURLResponse) where T: Decodable {
     precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
+    
     let (data, response) = try await request(with: uri, method: "PATCH", query: query, body: json)
     guard let data = data as? Data else {
       throw PublicError.expectedData
     }
     
-    let object = try DZURLSession.decoder.decode(T.self, from: data)
+    let decoder = decoder ?? DZURLSession.decoder
+    let object = try decoder.decode(T.self, from: data)
     return (object, response)
   }
   
@@ -87,9 +98,11 @@ extension DZURLSession {
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
   ///   - body: the json object for the request body
+  ///   - decoder: optional: A custom JSON Decoder instance
   /// - Returns: object and response if the request was successful
-  public func DELETE<T>(_ uri: String, type: T.Type, query: [String: String] = [:], body: Any?) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+  public func DELETE<T>(_ uri: String, type: T.Type, query: [String: String] = [:], body: Any?, decoder: JSONDecoder? = nil) async throws -> (T?, HTTPURLResponse) where T: Decodable {
     precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
+    
     let (data, response) = try await request(with: uri, method: "DELETE", query: query, body: body)
     guard let data = data as? Data,
           data.count > 3 else {
@@ -98,7 +111,8 @@ extension DZURLSession {
       return (nil, response)
     }
     
-    let object = try DZURLSession.decoder.decode(T.self, from: data)
+    let decoder = decoder ?? DZURLSession.decoder
+    let object = try decoder.decode(T.self, from: data)
     return (object, response)
   }
   
@@ -106,9 +120,11 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - decoder: optional: A custom JSON Decoder instance
   /// - Returns: object (if available) and response if the request was successful
-  public func OPTIONS<T>(_ uri: String, type: T.Type, query: [String: String] = [:]) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+  public func OPTIONS<T>(_ uri: String, type: T.Type, query: [String: String] = [:], decoder: JSONDecoder? = nil) async throws -> (T?, HTTPURLResponse) where T: Decodable {
     precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
+    
     let (data, response) = try await request(with: uri, method: "OPTIONS", query: query, body: nil)
     guard let data = data as? Data,
           data.count > 3 else {
@@ -117,7 +133,8 @@ extension DZURLSession {
       return (nil, response)
     }
     
-    let object = try? DZURLSession.decoder.decode(T.self, from: data)
+    let decoder = decoder ?? DZURLSession.decoder
+    let object = try? decoder.decode(T.self, from: data)
     return (object, response)
   }
   
@@ -125,9 +142,11 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - decoder: optional: A custom JSON Decoder instance 
   /// - Returns: object (if available) and response if the request was successful
-  public func HEAD<T>(_ uri: String, type: T.Type, query: [String: String] = [:]) async throws -> (T?, HTTPURLResponse) where T: Decodable {
+  public func HEAD<T>(_ uri: String, type: T.Type, query: [String: String] = [:], decoder: JSONDecoder? = nil) async throws -> (T?, HTTPURLResponse) where T: Decodable {
     precondition(responseParser == nil, "Using a responseParser + codable methods is not supported")
+    
     let (data, response) = try await request(with: uri, method: "HEAD", query: query, body: nil)
     guard let data = data as? Data,
           data.count > 3 else {
@@ -136,7 +155,8 @@ extension DZURLSession {
       return (nil, response)
     }
     
-    let object = try? DZURLSession.decoder.decode(T.self, from: data)
+    let decoder = decoder ?? DZURLSession.decoder
+    let object = try? decoder.decode(T.self, from: data)
     return (object, response)
   }
 }
