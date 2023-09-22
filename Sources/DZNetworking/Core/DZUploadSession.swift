@@ -51,8 +51,6 @@ public final class DZUploadSession: NSObject {
       multiPartData.add(parameters: parameters)
     }
     
-    let bodyData = multiPartData.body
-    
     let (result, response) = try await session.request(with: uri, method: HTTPMethod.POST.rawValue, query: query, body: multiPartData)
     
     return (result, response)

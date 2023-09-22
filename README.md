@@ -22,7 +22,8 @@ session.baseURL = URL(string:"http://api.myapp.com/")!
 let (data, _) = try await session.GET("/posts", query: ["userID": "1"]) 
 ``` 
 
---
+---
+
 The `DZJSONResponseParser` implements the `DZResponseParser` protocol which handles parsing JSON responses. You can implement your own response parsers (example: XML, YAML, etc.) by conforming your parser to `DZResponseParser`.
 
 You must then assign that response parser to the DZURLSession before making network requests.
@@ -32,11 +33,33 @@ let session = DZURLSession()
 session.responseParser = DZJSONResponseParser()
 ``` 
 
---
+---
 
-The `DZURLSession` class also comes with `requestModifier` block. This is useful when you need to modify all or most requests in a similar fashion before they are sent over the wire. A good use-case would be appending oAuth headers/query parameters to requests. This leaves your networking methods in your subclass clean and easily debuggable. 
+The `DZURLSession` class also comes with `requestModifier` block. This is useful when you need to modify all or most requests in a similar fashion before they are sent over the wire. 
 
---
+A good use-case would be appending oAuth headers/query parameters to requests. This leaves your networking methods in your subclass clean and easily debuggable. 
+
+```swift
+session.requestModifier = { [weak self] request in
+  guard let self else {
+    return request
+  }
+
+  var uri = request.url?.absoluteString ?? ""
+  if uri.contains("?") {
+    // already have query params, append
+    uri.append(self.extraQueryParams)
+  }
+  else {
+    uri = uri.appendingFormat("?%@", self.extraQueryParams)
+  }
+
+  request.url = URL(string: uri)
+  return request
+}
+```
+
+---
 
 ### Documentation
 
@@ -47,7 +70,7 @@ If you believe you require clarifcation on something, please open an issue, appr
 - improve documentation, if incorrect.
 - try to answer the issue in the thread, if already correctly documented.
 
---
+---
 
 ### Supported HTTP Methods
 
@@ -59,7 +82,7 @@ If you believe you require clarifcation on something, please open an issue, appr
 - PATCH
 - DELETE
 
---
+---
 
 ### Pull Requests & Issues
 
@@ -67,7 +90,7 @@ If you'd like to contribute, please open a Pull Request. If you are encountering
 
 If you see an opportunity to improve the tests suite, your additions will be much appreciated.
 
---
+---
 
 ### LICENSE
 
