@@ -45,7 +45,20 @@ public struct DZS3CredentialsManager {
     return formatter
   }()
   
-  private let urlQueryAllowed: CharacterSet = .alphanumerics.union(.init(charactersIn: "-._~")) // as per RFC 3986
+  private let httpHeaderDateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.calendar = Calendar(identifier: .iso8601)
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.timeZone = TimeZone(secondsFromGMT: 0)
+    formatter.dateFormat = "EEE',' dd' 'MMM' 'yyyy HH':'mm':'ss zzz"
+    return formatter
+  }()
+  
+  // as per RFC 3986
+  private let urlQueryAllowed: CharacterSet = .alphanumerics.union(.init(charactersIn: "-._~"))
+  
+  // as per AWS
+  private let urlPathAllowed: CharacterSet = .alphanumerics.union(.init(charactersIn: "/-._~"))
   
   public init(key: String, secret: String, region: String = "us-east-1") {
     self.key = key
@@ -72,8 +85,9 @@ public struct DZS3CredentialsManager {
     let date = iso8601()
     let method = signedRequest.httpMethod
     
+    signedRequest.addValue(date.iso, forHTTPHeaderField: "Date")
     signedRequest.addValue(host, forHTTPHeaderField: "Host")
-    signedRequest.addValue(date.full, forHTTPHeaderField: "X-Amz-Date")
+    signedRequest.addValue(date.full, forHTTPHeaderField: "x-amz-date")
     
     var contentHash: String
     
@@ -92,7 +106,15 @@ public struct DZS3CredentialsManager {
             
     let signedHeaders = headers.map { $0.key.lowercased() }.sorted().joined(separator: ";")
     
-    let canonicalRequest = "\(method)\n\(url.path)\n\(url.query ?? "")\nhost:\(host)\nx-amz-content-sha256:\(contentHash)\nx-amz-date:\(date.full)\n\n\(signedHeaders)\n\(contentHash)"
+    var canonicalRequest = "\(method)\n\(url.path.addingPercentEncoding(withAllowedCharacters: urlPathAllowed) ?? url.path)\n"
+    
+    canonicalRequest += "\(url.query?.addingPercentEncoding(withAllowedCharacters: urlQueryAllowed) ?? "")\n"
+    
+    headers.keys.sorted().forEach {
+      canonicalRequest += "\($0.lowercased()):\(headers[$0]!)\n"
+    }
+    
+    canonicalRequest += "\n\(signedHeaders)\n\(contentHash)"
     
     let canonicalRequestHash = canonicalRequest.sha256()
     
@@ -141,11 +163,14 @@ public struct DZS3CredentialsManager {
     return signature.toHexString()
   }
   /// date representations, full and short (YYYYMMDD)
-  private func iso8601() -> (full: String, short: String) {
-    let date = iso8601Formatter.string(from: Date())
+  private func iso8601() -> (full: String, short: String, iso: String) {
+    let now = Date()
+    
+    let date = iso8601Formatter.string(from: now)
     let index = date.index(date.startIndex, offsetBy: 8)
     let shortDate = String(date[..<index])
-    return (full: date, short: shortDate)
+    let iso = httpHeaderDateFormatter.string(from: now)
+    return (full: date, short: shortDate, iso: iso)
   }
 }
 

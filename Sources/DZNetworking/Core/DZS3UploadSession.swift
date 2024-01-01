@@ -54,7 +54,7 @@ public final class DZS3UploadSession: NSObject {
     
     file.stopAccessingSecurityScopedResource()
     
-    guard let url = URL(string: "/\(bucket)\(path)", relativeTo: URL(string: "https://s3.amazonaws.com")!) else {
+    guard let url = URL(string: "https://\(bucket).s3.amazonaws.com\(path)") else {
       throw PublicError.invalidURL
     }
     
