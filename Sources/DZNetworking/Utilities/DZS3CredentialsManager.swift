@@ -8,24 +8,24 @@
 import Foundation
 import CommonCrypto
 
-public enum DZS3Error: LocalizedError {
+public enum DZS3Error: LocalizedError, Sendable {
   case incompleteParamters
 }
 
 /// The Access-Control-List used for the uploaded object. Can be `public` or `private`, defaults to `public`.
-public enum DZACL: String {
+public enum DZACL: String, Sendable {
   case `private`
   case `public`
 }
 
 /// The S3 at-rest encryption used for the uploaded object. `none` by default.
-public enum DZS3Encryption: String {
+public enum DZS3Encryption: String, Sendable {
   case `none`
   case AES256
 }
 
 /// Credentials manager for S3 operations
-public struct DZS3CredentialsManager {
+public struct DZS3CredentialsManager: Sendable {
   /// the `AWSAccessKey`
   public let key: String
   /// the `AWSSecretKey`
@@ -174,9 +174,9 @@ public struct DZS3CredentialsManager {
   }
 }
 
-private extension String {
+extension String {
   
-  func sha256() -> String {
+  public func sha256() -> String {
     guard let data = self.data(using: .utf8) else { return "" }
     var hash = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
     data.withUnsafeBytes {
@@ -204,8 +204,8 @@ private extension String {
   }
 }
 
-private extension Data {
-  func toHexString() -> String {
+extension Data {
+  public func toHexString() -> String {
     let hexString = self.map{ String(format:"%02x", $0) }.joined()
     return hexString
   }

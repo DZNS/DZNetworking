@@ -28,6 +28,10 @@ extension DZURLSession {
       throw PublicError.expectedData
     }
     
+    if data.isEmpty {
+      return (nil, response)
+    }
+    
     let decoder = decoder ?? DZURLSession.decoder
     let object = try decoder.decode(T.self, from: data)
     return (object, response)
@@ -48,6 +52,10 @@ extension DZURLSession {
       throw PublicError.expectedData
     }
     
+    if data.isEmpty {
+      return (nil, response)
+    }
+    
     let decoder = decoder ?? DZURLSession.decoder
     let object = try decoder.decode(T.self, from: data)
     return (object, response)
@@ -66,6 +74,10 @@ extension DZURLSession {
     let (data, response) = try await request(with: uri, method: "PUT", query: query, body: json)
     guard let data = data as? Data else {
       throw PublicError.expectedData
+    }
+    
+    if data.isEmpty {
+      return (nil, response)
     }
     
     let decoder = decoder ?? DZURLSession.decoder

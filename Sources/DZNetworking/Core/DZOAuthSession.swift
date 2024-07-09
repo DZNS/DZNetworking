@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum OAuthError: LocalizedError {
+enum OAuthError: LocalizedError, Sendable {
   /// an auth session is already in progress
   case activeAuthState
   /// an invalid or no state token was received in the oauth verification callback

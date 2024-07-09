@@ -19,7 +19,7 @@ import AppKit
 #endif
 
 /// This is Swift port OMGHTTPURLRQ
-struct HTTPURLRQ {
+struct HTTPURLRQ: Sendable {
   static let userAgent: String = {
     var ua = ""
     let info = Bundle.main.infoDictionary
@@ -28,13 +28,39 @@ struct HTTPURLRQ {
     
     #if canImport(UIKit)
     #if os(watchOS)
-    let scale = 2.0
-    let device = WKInterfaceDevice.current().model
-    let systemVersion = WKInterfaceDevice.current().systemVersion
+    let scale: CGFloat = 2.0
+    var device: String
+    var systemVersion: String
+    
+    if Thread.isMainThread {
+      device = WKInterfaceDevice.current().model
+      systemVersion = WKInterfaceDevice.current().systemVersion
+    }
+    else {
+      DispatchQueue.main.sync {
+        device = WKInterfaceDevice.current().model
+        systemVersion = WKInterfaceDevice.current().systemVersion
+      }
+    }
     #else
-    let scale = UIScreen.main.scale
-    let device = UIDevice.current.model
-    let systemVersion = UIDevice.current.systemVersion
+    var scale: CGFloat = 2.0
+    var device: String = ""
+    var systemVersion: String = ""
+    
+    if Thread.isMainThread {
+      MainActor.assumeIsolated {
+        scale = UIScreen.main.scale
+        device = UIDevice.current.model
+        systemVersion = UIDevice.current.systemVersion
+      }
+    }
+    else {
+      DispatchQueue.main.sync {
+        scale = UIScreen.main.scale
+        device = UIDevice.current.model
+        systemVersion = UIDevice.current.systemVersion
+      }
+    }
     #endif
     
     #if os(tvOS)
