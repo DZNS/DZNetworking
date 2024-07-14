@@ -7,8 +7,8 @@
 
 import Foundation
 
-public typealias SuccessCallback = (_ responseObject: Any, _ response: HTTPURLResponse) -> Void
-public typealias ErrorCallback = (_ error: Error) -> Void
+public typealias SuccessCallback = @MainActor (_ responseObject: Any, _ response: HTTPURLResponse) -> Void
+public typealias ErrorCallback = @MainActor (_ error: Error) -> Void
 
 /// HTTP Methods as a convinience enum
 public enum HTTPMethod: String, Equatable, Identifiable, Hashable {
@@ -124,9 +124,11 @@ extension DZURLSession {
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
   @discardableResult public func POST(_ uri: String, query: [String: String] = [:], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
-    Task {
+    let boxed = SendableBox(json)
+    
+    return Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "POST", query: query, body: json)
+        let (responseObject, response) = try await request(with: uri, method: "POST", query: query, body: boxed.get())
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {
@@ -144,9 +146,11 @@ extension DZURLSession {
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
   @discardableResult public func PUT(_ uri: String, query: [String: String] = [:], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
-    Task {
+    let boxed = SendableBox(json)
+    
+    return Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "PUT", query: query, body: json)
+        let (responseObject, response) = try await request(with: uri, method: "PUT", query: query, body: boxed.get())
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {
@@ -164,9 +168,11 @@ extension DZURLSession {
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
   @discardableResult public func PATCH(_ uri: String, query: [String: String] = [:], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
-    Task {
+    let boxed = SendableBox(json)
+    
+    return Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "PATCH", query: query, body: json)
+        let (responseObject, response) = try await request(with: uri, method: "PATCH", query: query, body: boxed.get())
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {
@@ -184,9 +190,11 @@ extension DZURLSession {
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
   @discardableResult public func DELETE(_ uri: String, query: [String: String] = [:], body: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
-    Task {
+    let boxed = SendableBox(body)
+    
+    return Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "DELETE", query: query, body: body)
+        let (responseObject, response) = try await request(with: uri, method: "DELETE", query: query, body: boxed.get())
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {

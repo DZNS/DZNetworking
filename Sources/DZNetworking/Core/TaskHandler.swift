@@ -39,10 +39,10 @@ internal final class TaskHandlersDictionary {
 /// TaskHandler manages delegate calls from the URLSession and dispatching of success/failure callbacks as tasks are completed.
 ///
 /// This is internally handled by the `DZURLSession` class and shouldn't be required to use directly unless you're subclassing `DZURLSession`.
-public final class TaskHandler: NSObject {
+public final class TaskHandler: NSObject, @unchecked Sendable {
   var completionHandler: (() -> Void)?
   
-  var handlers = TaskHandlersDictionary()  
+  var handlers = TaskHandlersDictionary()
 }
 
 // MARK: - URLSessionDelegate
@@ -74,7 +74,6 @@ extension TaskHandler: URLSessionTaskDelegate {
 
 // MARK: - URLSessionDataTaskDelegate
 extension TaskHandler: URLSessionDataDelegate {
-  
   public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse) async -> URLSession.ResponseDisposition {
     return .allow
   }
@@ -104,7 +103,6 @@ extension TaskHandler: URLSessionDataDelegate {
     handlers[downloadTask] = handler
     handlers[dataTask] = nil
   }
-  
 }
 
 // MARK: - URLSessionDownloadDelegate

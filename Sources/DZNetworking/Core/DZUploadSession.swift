@@ -24,11 +24,11 @@ import Foundation
 /// ```
 ///
 public final class DZUploadSession: NSObject {
-  static public let shared = DZUploadSession()
+  nonisolated(unsafe) static public let shared = DZUploadSession()
   
   public let session = DZURLSession()
   
-  public func upload(file: URL, fieldName: String, uri: String, query: [String: String]?, parameters: [String: String]? = nil, contentType: String = "application/octet-stream") async throws -> (Any?, HTTPURLResponse) {
+  public func upload(file: URL, fieldName: String, uri: String, query: [String: String]?, parameters: [String: String]? = nil, contentType: String = "application/octet-stream") async throws -> (Data?, HTTPURLResponse) {
     
     let multiPartData = MultipartFormData()
     
@@ -52,6 +52,10 @@ public final class DZUploadSession: NSObject {
     }
     
     let (result, response) = try await session.request(with: uri, method: HTTPMethod.POST.rawValue, query: query, body: multiPartData)
+    
+    guard let result = result as? Data else {
+      throw dzError(code: 500, description: NSLocalizedString("Invalid Response", comment: ""), failure: nil)
+    }
     
     return (result, response)
   }

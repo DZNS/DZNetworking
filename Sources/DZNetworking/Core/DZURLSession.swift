@@ -24,7 +24,7 @@ public typealias RedirectModifierBlock = (_ task: URLSessionTask, _ request: URL
 /// let (data, _) = try await session.GET("/posts", query: ["userID": "1"])
 /// ```
 /// 
-open class DZURLSession: NSObject {
+open class DZURLSession: NSObject, @unchecked Sendable {
   // MARK: Public
   
   /// shared instance, configured with `URLSessionConfiguration.default` and a privately managed operation queue
