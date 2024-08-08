@@ -8,7 +8,7 @@
 import Foundation
 
 internal final class DataTaskHandler {
-  typealias Completion = (Result<(Data?, URLResponse), Error>) -> Void
+  typealias Completion = (__shared sending Result<(Data?, URLResponse), Error>) -> Void
   
   var data: Data?
   var completion: Completion?
