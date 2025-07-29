@@ -178,9 +178,11 @@ extension String {
   
   public func sha256() -> String {
     guard let data = self.data(using: .utf8) else { return "" }
-    var hash = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
-    data.withUnsafeBytes {
-      _ = CC_SHA256($0, CC_LONG(data.count), &hash)
+    var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+    data.withUnsafeBytes { rawBufferPointer in
+      _ = rawBufferPointer.bindMemory(to: UInt8.self).baseAddress.map {
+        CC_SHA256($0, CC_LONG(data.count), &hash)
+      }
     }
     let outputData = Data(hash)
     return outputData.toHexString()
