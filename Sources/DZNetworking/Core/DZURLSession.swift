@@ -109,7 +109,7 @@ open class DZURLSession: NSObject, @unchecked Sendable {
     self.configuration = configuration
     self.operationQueue = operationQueue
     self.isBackgroundSession = isBackgroundSession
-    self.delegate = delegate
+    // self.delegate = delegate
     
     super.init()
   }

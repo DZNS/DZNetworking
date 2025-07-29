@@ -245,7 +245,6 @@ extension DZURLSession {
 // MARK: - Requests
 extension DZURLSession {
   public func request(with uri: String, method: String, query: [String: String]? = nil, body: Any? = nil) async throws -> (Any, HTTPURLResponse) {
-    
     let (data, response) = try await performRequest(with: uri, method: method, query: query ?? [:], body: body)
     
     guard response.statusCode != 304 else {
@@ -290,7 +289,7 @@ extension DZURLSession {
       
       throw dzError(
         code: 503,
-        description: NSLocalizedString("The content was not of the expected type", comment: "The content in the response was not of the expected type so parsing failed"),
+        description: NSLocalizedString("The content in the response was not of the expected type so parsing failed", comment: ""),
         failure: responseText
       )
     }
@@ -325,31 +324,18 @@ extension DZURLSession {
   ///   - body: optional body for PUT, POST, PATCH requests
   /// - Returns: `Data` and `HTTPURLResponse` tuple if successful, else throws an error
   public func performRequest(with uri: String, method: String, query: [String: String] = [:], body: Any? = nil) async throws -> (Data, HTTPURLResponse) {
-    
     guard let url = URL(string: uri, relativeTo: baseURL) else {
       throw PublicError.invalidURL
     }
     
     let request = try urlRequest(with: url.absoluteString, method: method, query: query, body: body)
     
-    let task = session.dataTask(with: request)
-    
-    let result = try await withTaskCancellationHandler {
-      try await withUnsafeThrowingContinuation { continuation in
-        taskHandler.handlers[task] = DataTaskHandler(continuation.resume(with:))
-        
-        task.resume()
-      }
-      
-    } onCancel: {
-      task.cancel()
-    }
-    
+    let result = try await session.data(for: request)
     guard let response = result.1 as? HTTPURLResponse else {
-      throw PublicError.invalidResponseType
+      throw dzError(code: 500, description: NSLocalizedString("Could not cast to HTTPURLResponse", comment: ""), failure: "Could not cast to HTTPURLResponse")
     }
-
-    return (result.0 ?? Data(), response)
+    
+    return (result.0, response)
   }
   
   // MARK: Internal  
