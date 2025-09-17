@@ -30,28 +30,28 @@ open class DZURLSession: NSObject, @unchecked Sendable {
   /// shared instance, configured with `URLSessionConfiguration.default` and a privately managed operation queue
   public static let shared = DZURLSession()
   
-  /// the `URLSession` configuration
+  /// The `URLSession` configuration
   public let configuration: URLSessionConfiguration
   
-  /// when setting `true`, use the appropriate `URLSessionConfiguration.background(withIdentifier:)` initialiser for the configuration parameter
+  /// When setting `true`, use the appropriate `URLSessionConfiguration.background(withIdentifier:)` initialiser for the configuration parameter
   public let isBackgroundSession: Bool
   
-  /// delegate of the receiever, to handle optionally implemented protocol methods.
+  /// Delegate of the receiever, to handle optionally implemented protocol methods.
   ///
   /// Some `URLSession.Delegate` invocations are also forwarded to this implementation.
   public weak var delegate: URLSessionDelegate? = nil
   
-  /// the base URL to use for all requests.
+  /// The base URL to use for all requests.
   ///
   /// Example: https://api.example.com/v3/
   public var baseURL: URL? = nil
   
-  /// common HTTP headers for all requests sent from the receiver
+  /// Common HTTP headers for all requests sent from the receiver
   ///
   /// Example: Authentication headers
   public var httpHeaders: [String: AnyHashable] = [:]
   
-  /// the maximum HTTP status code value to be treated as a successful response. Responses with status code values above this threshold will be treated as an error.
+  /// The maximum HTTP status code value to be treated as a successful response. Responses with status code values above this threshold will be treated as an error.
   ///
   /// Example: 304
   /// Default: 399
@@ -72,7 +72,7 @@ open class DZURLSession: NSObject, @unchecked Sendable {
   /// When a parser value is set, the result type will be determined by the response parser's output type
   public var responseParser: DZResponseParser? = nil
   
-  /// the background completion handler received by the app for background data/download tasks
+  /// The background completion handler received by the app for background data/download tasks
   public var backgroundCompletionHandler: (() -> Void)? {
     get {
       taskHandler.completionHandler
@@ -102,14 +102,14 @@ open class DZURLSession: NSObject, @unchecked Sendable {
   ///   - operationQueue: operation queue on which network requests will be initiated, must not be the `main` operation queue. You can use the `DZURLSession.defaultOperationQueue(for:)` class method to obtain one as well.
   ///   - isBackgroundSession: `true` for sessions which should handle requests when the app is in the background
   ///   - delegate: optional object that handles `URLSessionDelegate` invocations on behalf of the receiver
-  public init(configuration: URLSessionConfiguration, operationQueue: OperationQueue, isBackgroundSession: Bool, delegate: URLSessionDelegate? = nil) {
+  public init(configuration: URLSessionConfiguration, operationQueue: OperationQueue = DZURLSession.defaultOperationQueue(), isBackgroundSession: Bool, delegate: URLSessionDelegate? = nil) {
     precondition(operationQueue != .main, "Should not use the main operation queue")
     configuration.shouldUseExtendedBackgroundIdleMode = true
     
     self.configuration = configuration
     self.operationQueue = operationQueue
     self.isBackgroundSession = isBackgroundSession
-    // self.delegate = delegate
+    self.delegate = delegate
     
     super.init()
   }

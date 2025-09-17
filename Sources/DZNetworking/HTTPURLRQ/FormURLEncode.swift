@@ -32,7 +32,9 @@ public func FormURLEncode(_ parameters: [String: AnyHashable]) -> String? {
   }
   
   // remove the trailing &
-  queryString.removeLast()
+  if !queryString.isEmpty {
+    queryString.removeLast()
+  }
   
   return queryString
 }
@@ -68,6 +70,10 @@ private func queryMagic(_ key: String?, _ value: Any) -> Array<String> {
   else if let value = value as? String,
           let key {
     parts.append(contentsOf: [key, value])
+  }
+  else if let value = value as? Int,
+          let key {
+    parts.append(contentsOf: [key, "\(value)"])
   }
   
   return parts
