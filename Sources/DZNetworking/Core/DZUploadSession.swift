@@ -26,7 +26,11 @@ import Foundation
 public final class DZUploadSession: NSObject {
   nonisolated(unsafe) static public let shared = DZUploadSession()
   
-  public let session = DZURLSession()
+  public let session: DZURLSession
+  
+  public init(session: DZURLSession = DZURLSession.shared) {
+    self.session = session
+  }
   
   public func upload(file: URL, fieldName: String, uri: String, query: [String: String]?, parameters: [String: String]? = nil, contentType: String = "application/octet-stream") async throws -> (Data?, HTTPURLResponse) {
     

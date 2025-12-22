@@ -72,10 +72,15 @@ struct HTTPURLRQ: Sendable {
     #endif
     #else
     let scale = NSScreen.main?.backingScaleFactor ?? 2.0
-    let device = Host.current().localizedName ?? "NoDeviceName"
+    let device = (Host.current().localizedName ?? "NoDeviceName")
     let systemVersion = ProcessInfo.processInfo.operatingSystemVersion
     let systemVersionString = "\(systemVersion.majorVersion).\(systemVersion.minorVersion).\(systemVersion.patchVersion)"
-    ua = String(format: "%@/%@ (%@; macOS %@; Scale/%0.2f)", name ?? "NoName", version ?? "0.1", device, systemVersionString, scale)
+    ua = String(format: "%@/%@ (%@; macOS %@; Scale/%0.2f)",
+                name ?? "NoName",
+                version ?? "0.1",
+                device.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? device,
+                systemVersionString,
+                scale)
     #endif
     
     return ua
