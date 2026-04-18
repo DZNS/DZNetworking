@@ -8,19 +8,46 @@ The API is straight-forward, well tested and extensible. DZNetworking should be 
 
 ### Supports 
 - `URLSession` data, download and upload tasks
+- Generic `Decodable` support for responses
 - Uploads to S3 buckets
 - OAuth2 session handler 
 
 ### Instantiating
 
-DZURLSession makes it really easy to get started. Here's a sample:
+`DZURLSession` makes it really easy to get started. Here's a sample:
 
 ```swift
 let session = DZURLSession()
-session.baseURL = URL(string:"http://api.myapp.com/")!
+session.baseURL = URL(string: "https://api.myapp.com/")!
+```
 
-let (data, _) = try await session.GET("/posts", query: ["userID": "1"]) 
-``` 
+### Making Requests
+
+#### Swift Concurrency (Recommended)
+
+DZNetworking provides generic methods that automatically decode responses into your models.
+
+```swift
+// GET with automatic decoding
+let (posts, response) = try await session.GET("/posts", type: [Post].self, query: ["userID": "1"])
+
+// POST with JSON body and decoding
+let (user, response) = try await session.POST("/signup", type: User.self, json: [
+  "name": "John Doe",
+  "email": "john@example.com"
+])
+```
+
+#### Customizing Decoding
+
+You can provide a custom `JSONDecoder` if your API uses specific date formats or key strategies.
+
+```swift
+let decoder = JSONDecoder()
+decoder.dateDecodingStrategy = .iso8601
+
+let (data, _) = try await session.GET("/userdata", type: UserData.self, decoder: decoder)
+```
 
 ---
 
@@ -35,27 +62,23 @@ session.responseParser = DZJSONResponseParser()
 
 ---
 
-The `DZURLSession` class also comes with `requestModifier` block. This is useful when you need to modify all or most requests in a similar fashion before they are sent over the wire. 
+### Request Modifiers
 
-A good use-case would be appending oAuth headers/query parameters to requests. This leaves your networking methods in your subclass clean and easily debuggable. 
+The `DZURLSession` class also comes with a `requestModifier` block. This is useful when you need to modify all or most requests in a similar fashion (e.g., adding authentication headers or device IDs) before they are sent.
 
 ```swift
-session.requestModifier = { [weak self] request in
-  guard let self else {
-    return request
-  }
-
-  var uri = request.url?.absoluteString ?? ""
-  if uri.contains("?") {
-    // already have query params, append
-    uri.append(self.extraQueryParams)
-  }
-  else {
-    uri = uri.appendingFormat("?%@", self.extraQueryParams)
-  }
-
-  request.url = URL(string: uri)
-  return request
+session.requestModifier = { request in
+  var req = request
+  
+  let timestamp = ISO8601DateFormatter().string(from: .now)
+  req.addValue(timestamp, forHTTPHeaderField: "Date")
+  req.addValue("my-device-id", forHTTPHeaderField: "x-deviceid")
+  
+  // Add a calculated signature for security
+  let signature = "api-secret-\(timestamp)".sha256()
+  req.addValue(signature, forHTTPHeaderField: "Authorization")
+  
+  return req
 }
 ```
 
@@ -65,7 +88,7 @@ session.requestModifier = { [weak self] request in
 
 I've tried my best to document most methods properly. All documentation is in the `DocC` format in the source files. 
 
-If you believe you require clarifcation on something, please open an issue, appropriately tagged, and I'll try to either:
+If you believe you require clarification on something, please open an issue, appropriately tagged, and I'll try to either:
 - include documentation, if missing.
 - improve documentation, if incorrect.
 - try to answer the issue in the thread, if already correctly documented.
