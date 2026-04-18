@@ -24,17 +24,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Select Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '26.0'
+      - name: Verify Environment
+        run: |
+          xcodebuild -version
+          swift --version
+          xcrun simctl list devices available | grep "iPhone 17"
 
       - name: Build and Test
         run: |
           if [ "${{ matrix.destination }}" == "platform=macOS" ]; then
             swift test --parallel
           else
-            set -o pipefail && xcodebuild test -scheme DZNetworking -destination "${{ matrix.destination }}" | xcbeautify
+            # Pre-boot the simulator to avoid timeout/hang during first run
+            # We use a subshell to avoid failure if already booted
+            xcrun simctl boot "iPhone 17" || true
+            
+            # Use -skipPackagePluginValidation to avoid some SPM-related warnings in xcodebuild
+            # Explicitly set the SDK to iphonesimulator
+            set -o pipefail && xcodebuild test \
+              -scheme DZNetworking \
+              -destination "${{ matrix.destination }}" \
+              -sdk iphonesimulator \
+              -skipPackagePluginValidation \
+              -parallel-testing-enabled NO \
+              | xcbeautify
           fi
 
   spm-build:
@@ -44,10 +57,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Select Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '26.0'
-
       - name: Build
         run: swift build -v
