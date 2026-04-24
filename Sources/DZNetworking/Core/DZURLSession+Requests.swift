@@ -328,7 +328,7 @@ extension DZURLSession {
       throw PublicError.invalidURL
     }
     
-    let request = try urlRequest(with: url.absoluteString, method: method, query: query, body: body)
+    let request = try await urlRequest(with: url.absoluteString, method: method, query: query, body: body)
     
     let result = try await session.data(for: request)
     guard let response = result.1 as? HTTPURLResponse else {
@@ -346,7 +346,7 @@ extension DZURLSession {
   ///   - method: the method of the request
   ///   - body: optional body for PUT, POST, PATCH requests
   /// - Returns: `URLRequest` for using with a `URLSession`
-  private func urlRequest(with uri: String, method: String, query: [String: String] = [:], body: Any? = nil) throws -> URLRequest {
+  private func urlRequest(with uri: String, method: String, query: [String: String] = [:], body: Any? = nil) async throws -> URLRequest {
     var mutableRequest: NSMutableURLRequest
     
     switch method {
@@ -368,8 +368,11 @@ extension DZURLSession {
     default:
       mutableRequest = try HTTPURLRQ.GET(uri, query: query)
     }
-    
-    if let requestModifier {
+
+    if let asyncRequestModifier {
+      mutableRequest = await asyncRequestModifier(mutableRequest)
+    }
+    else if let requestModifier {
       mutableRequest = requestModifier(mutableRequest)
     }
     

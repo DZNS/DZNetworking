@@ -8,6 +8,7 @@
 import Foundation
 
 public typealias RequestModifierBlock = (_ urlRequest: NSMutableURLRequest) -> NSMutableURLRequest
+public typealias AsyncRequestModifierBlock = (_ urlRequest: NSMutableURLRequest) async -> NSMutableURLRequest
 public typealias RedirectModifierBlock = (_ task: URLSessionTask, _ request: URLRequest, _ redirectResponse: HTTPURLResponse) -> URLRequest
 
 /// `DZURLSession` is the base class for all REST API networking.
@@ -57,11 +58,22 @@ open class DZURLSession: NSObject, @unchecked Sendable {
   /// Default: 399
   public var maxSuccessStatusCode: Int = 399
   
-  /// The request modifier block, if provided, is called before the `URLRequest` is actually used in a request. You can utilize this block to add additional data to the request if required.
+  /// The request modifier block, if provided, is called before the `URLRequest` is actually used in a request.
+  ///
+  /// You can utilize this block to add additional data to the request if required.
+  /// If `asyncRequestModifier` is set to a non-nil value, then this block will be ignored.
   ///
   /// Example: adding authentication query parameters to the URL which are dynamically generated (Flickr oAuth API).
   public var requestModifier: RequestModifierBlock? = nil
-  
+
+  /// The request modifier block, if provided, is called before the `URLRequest` is actually used in a request.
+  ///
+  /// You can utilize this block to add additional data to the request if required. This is an async block, so you may use `await`.
+  /// If this is set to a non-nil value, then `requestModifier` will be ignored.
+  ///
+  /// Example: adding authentication query parameters to the URL which are dynamically generated (Flickr oAuth API).
+  public var asyncRequestModifier: AsyncRequestModifierBlock? = nil
+
   /// The redirect modifier block, if provided, is called when a redirection is occuring. You can utilize this block to add additional data to the request if required or simply inspect it.
   public var redirectModifier: RedirectModifierBlock? = nil
   
