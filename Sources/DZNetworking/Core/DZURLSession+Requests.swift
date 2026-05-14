@@ -31,67 +31,74 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   /// - Returns: data and response if the request was successful
-  public func GET(_ uri: String, query: [String: String] = [:]) async throws -> (Any, HTTPURLResponse) {
-    try await request(with: uri, method: "GET", query: query, body: nil)
+  public func GET(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = []) async throws -> (Any, HTTPURLResponse) {
+    try await request(with: uri, method: "GET", query: query, headers: headers, body: nil)
   }
   
   /// Perform a `POST` request using a json object for the body
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - json: the json object for the request body
   /// - Returns: data and response if the request was successful
-  public func POST(_ uri: String, query: [String: String] = [:], json: Any?) async throws -> (Any, HTTPURLResponse) {
-    try await request(with: uri, method: "POST", query: query, body: json)
+  public func POST(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], json: Any?) async throws -> (Any, HTTPURLResponse) {
+    try await request(with: uri, method: "POST", query: query, headers: headers, body: json)
   }
   
   /// Perform a `PUT` request using a json object for the body
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - json: the json object for the request body
   /// - Returns: data and response if the request was successful
-  public func PUT(_ uri: String, query: [String: String] = [:], json: Any?) async throws -> (Any, HTTPURLResponse) {
-    try await request(with: uri, method: "PUT", query: query, body: json)
+  public func PUT(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], json: Any?) async throws -> (Any, HTTPURLResponse) {
+    try await request(with: uri, method: "PUT", query: query, headers: headers, body: json)
   }
   
   /// Perform a `PATCH` request using a json object for the body
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - json: the json object for the request body
   /// - Returns: data and response if the request was successful
-  public func PATCH(_ uri: String, query: [String: String] = [:], json: Any?) async throws -> (Any, HTTPURLResponse) {
-    try await request(with: uri, method: "PATCH", query: query, body: json)
+  public func PATCH(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], json: Any?) async throws -> (Any, HTTPURLResponse) {
+    try await request(with: uri, method: "PATCH", query: query, headers: headers, body: json)
   }
   
   /// Perform a `DELETE` request
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - body: the json object for the request body
   /// - Returns: data and response if the request was successful
-  public func DELETE(_ uri: String, query: [String: String] = [:], body: Any?) async throws -> (Any, HTTPURLResponse) {
-    try await request(with: uri, method: "DELETE", query: query, body: body)
+  public func DELETE(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], body: Any?) async throws -> (Any, HTTPURLResponse) {
+    try await request(with: uri, method: "DELETE", query: query, headers: headers, body: body)
   }
   
   /// Perform a `OPTIONS` request
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   /// - Returns: data and response if the request was successful
-  public func OPTIONS(_ uri: String, query: [String: String] = [:]) async throws -> (Any, HTTPURLResponse) {
-    try await request(with: uri, method: "OPTIONS", query: query, body: nil)
+  public func OPTIONS(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = []) async throws -> (Any, HTTPURLResponse) {
+    try await request(with: uri, method: "OPTIONS", query: query, headers: headers, body: nil)
   }
   
   /// Perform a `HEAD` request
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   /// - Returns: data and response if the request was successful
-  public func HEAD(_ uri: String, query: [String: String] = [:]) async throws -> (Any, HTTPURLResponse) {
-    try await request(with: uri, method: "HEAD", query: query, body: nil)
+  public func HEAD(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = []) async throws -> (Any, HTTPURLResponse) {
+    try await request(with: uri, method: "HEAD", query: query, headers: headers, body: nil)
   }
   
   // MARK: Completion Handlers
@@ -100,13 +107,14 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
-  @discardableResult public func GET(_ uri: String, query: [String: String] = [:], onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
+  @discardableResult public func GET(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "GET", query: query, body: nil)
+        let (responseObject, response) = try await request(with: uri, method: "GET", query: query, headers: headers, body: nil)
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {
@@ -119,16 +127,17 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - json: the request body
   ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
-  @discardableResult public func POST(_ uri: String, query: [String: String] = [:], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
+  @discardableResult public func POST(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     let boxed = SendableBox(json)
     
     return Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "POST", query: query, body: boxed.get())
+        let (responseObject, response) = try await request(with: uri, method: "POST", query: query, headers: headers, body: boxed.get())
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {
@@ -141,16 +150,17 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - json: the request body
   ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
-  @discardableResult public func PUT(_ uri: String, query: [String: String] = [:], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
+  @discardableResult public func PUT(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     let boxed = SendableBox(json)
     
     return Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "PUT", query: query, body: boxed.get())
+        let (responseObject, response) = try await request(with: uri, method: "PUT", query: query, headers: headers, body: boxed.get())
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {
@@ -163,16 +173,17 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - json: the request body
   ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
-  @discardableResult public func PATCH(_ uri: String, query: [String: String] = [:], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
+  @discardableResult public func PATCH(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], json: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     let boxed = SendableBox(json)
     
     return Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "PATCH", query: query, body: boxed.get())
+        let (responseObject, response) = try await request(with: uri, method: "PATCH", query: query, headers: headers, body: boxed.get())
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {
@@ -185,16 +196,17 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - body: the request body (optional)
   ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
-  @discardableResult public func DELETE(_ uri: String, query: [String: String] = [:], body: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
+  @discardableResult public func DELETE(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], body: Any?, onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     let boxed = SendableBox(body)
     
     return Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "DELETE", query: query, body: boxed.get())
+        let (responseObject, response) = try await request(with: uri, method: "DELETE", query: query, headers: headers, body: boxed.get())
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {
@@ -207,13 +219,14 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
-  @discardableResult public func OPTIONS(_ uri: String, query: [String: String] = [:], onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
+  @discardableResult public func OPTIONS(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "OPTIONS", query: query, body: nil)
+        let (responseObject, response) = try await request(with: uri, method: "OPTIONS", query: query, headers: headers, body: nil)
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {
@@ -226,13 +239,14 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the uri (can be relative to the base URL if one is set)
   ///   - query: query parameters
+  ///   - headers: additional headers, if any. `nil` value for the header field removes it.
   ///   - onSuccess: called when the request completes successfully. Always called on the main-thread.
   ///   - onError: called when the request completes successfully. Always called on the main-thread.
   /// - Returns: Task
-  @discardableResult public func HEAD(_ uri: String, query: [String: String] = [:], onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
+  @discardableResult public func HEAD(_ uri: String, query: [String: String] = [:], headers: [(String, String?)] = [], onSuccess: @escaping SuccessCallback, onError: ErrorCallback?) -> _Concurrency.Task<Void, Never> {
     Task {
       do {
-        let (responseObject, response) = try await request(with: uri, method: "HEAD", query: query, body: nil)
+        let (responseObject, response) = try await request(with: uri, method: "HEAD", query: query, headers: headers, body: nil)
         DispatchQueue.main.async { onSuccess(responseObject, response) }
       }
       catch {
@@ -244,9 +258,9 @@ extension DZURLSession {
 
 // MARK: - Requests
 extension DZURLSession {
-  public func request(with uri: String, method: String, query: [String: String]? = nil, body: Any? = nil) async throws -> (Any, HTTPURLResponse) {
-    let (data, response) = try await performRequest(with: uri, method: method, query: query ?? [:], body: body)
-    
+  public func request(with uri: String, method: String, query: [String: String]? = nil, headers: [(String, String?)] = [], body: Any? = nil) async throws -> (Any, HTTPURLResponse) {
+    let (data, response) = try await performRequest(with: uri, method: method, query: query ?? [:], headers: headers, body: body)
+
     guard response.statusCode != 304 else {
       return (data, response)
     }
@@ -321,15 +335,16 @@ extension DZURLSession {
   ///   - uri: the URI of the request (can be a path, `baseURL` will be attached to it)
   ///   - method: the method of the request
   ///   - query: the query items for the request
+  ///   - headers: additional headers, if any
   ///   - body: optional body for PUT, POST, PATCH requests
   /// - Returns: `Data` and `HTTPURLResponse` tuple if successful, else throws an error
-  public func performRequest(with uri: String, method: String, query: [String: String] = [:], body: Any? = nil) async throws -> (Data, HTTPURLResponse) {
+  public func performRequest(with uri: String, method: String, query: [String: String] = [:], headers: [(String, String?)] = [], body: Any? = nil) async throws -> (Data, HTTPURLResponse) {
     guard let url = URL(string: uri, relativeTo: baseURL) else {
       throw PublicError.invalidURL
     }
     
-    let request = try await urlRequest(with: url.absoluteString, method: method, query: query, body: body)
-    
+    let request = try await urlRequest(with: url.absoluteString, method: method, query: query, headers: headers, body: body)
+
     let result = try await session.data(for: request)
     guard let response = result.1 as? HTTPURLResponse else {
       throw dzError(code: 500, description: NSLocalizedString("Could not cast to HTTPURLResponse", comment: ""), failure: "Could not cast to HTTPURLResponse")
@@ -344,9 +359,11 @@ extension DZURLSession {
   /// - Parameters:
   ///   - uri: the URI of the request (can be a path, `baseURL` will be attached to it)
   ///   - method: the method of the request
+  ///   - query: query parameters
+  ///   - headers: additional headers if any, always configured after calling the request modifier blocks i.e. these will override any existing values. If the value in a pair is `nil`, the header will be removed
   ///   - body: optional body for PUT, POST, PATCH requests
   /// - Returns: `URLRequest` for using with a `URLSession`
-  private func urlRequest(with uri: String, method: String, query: [String: String] = [:], body: Any? = nil) async throws -> URLRequest {
+  private func urlRequest(with uri: String, method: String, query: [String: String] = [:], headers: [(String, String?)] = [], body: Any? = nil) async throws -> URLRequest {
     var mutableRequest: NSMutableURLRequest
     
     switch method {
@@ -375,7 +392,19 @@ extension DZURLSession {
     else if let requestModifier {
       mutableRequest = requestModifier(mutableRequest)
     }
-    
+
+    if !headers.isEmpty {
+      headers.forEach { tuple in
+        if let val = tuple.1 {
+          mutableRequest.setValue(tuple.1, forHTTPHeaderField: tuple.0)
+        }
+        else {
+          // Removes the value
+          mutableRequest.setValue("", forHTTPHeaderField: tuple.0)
+        }
+      }
+    }
+
     let request = mutableRequest.copy() as! URLRequest
     
     return request
