@@ -38,8 +38,11 @@ final class DZWebSocketClientTests: XCTestCase {
         
         await client.connect()
         
-        // Wait a tiny bit for the connection to establish
-        try await Task.sleep(for: .seconds(1))
+        // Wait up to 5 seconds for the connection to establish
+        for _ in 0..<50 {
+            if await client.state == .connected { break }
+            try await Task.sleep(for: .milliseconds(100))
+        }
         
         state = await client.state
         XCTAssertEqual(state, .connected)

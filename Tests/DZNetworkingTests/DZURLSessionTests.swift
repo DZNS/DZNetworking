@@ -23,7 +23,7 @@ final class DZURLSessionTests: XCTestCase {
   let extraQueryParams = "userId=10&Auth=21bghdyu26%30"
   
   let session: DZURLSession = {
-    let session = DZURLSession.shared
+    let session = DZURLSession()
     session.baseURL = URL(string: "https://jsonplaceholder.typicode.com")
     session.responseParser = DZJSONResponseParser()
     return session
