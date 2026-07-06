@@ -396,7 +396,7 @@ extension DZURLSession {
     if !headers.isEmpty {
       headers.forEach { tuple in
         if let val = tuple.1 {
-          mutableRequest.setValue(tuple.1, forHTTPHeaderField: tuple.0)
+          mutableRequest.setValue(val, forHTTPHeaderField: tuple.0)
         }
         else {
           // Removes the value
