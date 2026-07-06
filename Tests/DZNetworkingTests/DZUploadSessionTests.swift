@@ -11,7 +11,7 @@ import XCTest
 final class DZUploadSessionTests: XCTestCase {
   
   let session: DZUploadSession = {
-    let session = DZUploadSession.shared
+    let session = DZUploadSession(session: DZURLSession())
     session.session.baseURL = URL(string: "http://localhost:3000")
     session.session.responseParser = DZJSONResponseParser()
     return session

@@ -142,11 +142,10 @@ open class DZURLSession: NSObject, @unchecked Sendable {
   /// Default operation queue to use for the receiver
   ///
   /// You can create and use your own, or use this prepared one for convenience
-  /// - Parameter backgroundSession: when `true`, limits the number of simultaneous requests to `1`
   /// - Returns: operation queue for the internal `URLSession`
-  public class func defaultOperationQueue(for backgroundSession: Bool = false) -> OperationQueue {
+  public class func defaultOperationQueue() -> OperationQueue {
     let opQueue = OperationQueue()
-    opQueue.maxConcurrentOperationCount = backgroundSession ? 1 : 5
+    opQueue.maxConcurrentOperationCount = 10
     return opQueue
   }
   
