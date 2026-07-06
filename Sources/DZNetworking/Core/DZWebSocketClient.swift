@@ -1,20 +1,12 @@
 import Foundation
 
-/// A protocol that every outgoing WebSocket message must conform to.
-///
-/// By conforming to this protocol, the WebSocket client can extract the `eventId`
-/// to correlate request and response payloads automatically.
-public protocol WebSocketEvent: Encodable & Sendable {
-  /// A unique identifier for the event. Used to match responses to requests.
-  var eventId: String { get }
-}
-
+// MARK: - DZWebSocketClient
 /// An actor that manages a persistent WebSocket connection, providing
 /// request-response pairing, auto-reconnection, ping loops, and
 /// routing for unsolicited events.
 public actor DZWebSocketClient {
   /// Represents the current connection state of the WebSocket.
-  public enum State: Sendable {
+  public enum SocketState: Sendable {
     /// The socket is disconnected and will not attempt to reconnect.
     case disconnected
     /// The socket is currently attempting its initial connection.
@@ -29,10 +21,11 @@ public actor DZWebSocketClient {
   private let urlSession: URLSession
   
   private var webSocketTask: URLSessionWebSocketTask?
+  private var delegate: WebSocketDelegate?
   
   /// The current connection state of the client.
-  public private(set) var state: State = .disconnected
-  
+  public private(set) var state: SocketState = .disconnected
+
   // Continuations for threads waiting for the connection to be established
   private var connectionContinuations: [CheckedContinuation<Void, Never>] = []
   
@@ -48,7 +41,10 @@ public actor DZWebSocketClient {
   
   private let encoder: JSONEncoder
   private let decoder: JSONDecoder
-  
+
+  private let reconnectionPolicy: ReconnectionPolicy?
+  private var reconnectionAttempt: UInt = 0
+
   /// Initializes a new WebSocket client.
   ///
   /// - Parameters:
@@ -56,11 +52,12 @@ public actor DZWebSocketClient {
   ///   - urlSession: The `URLSession` to use for creating the underlying WebSocket task. Defaults to `.shared`.
   ///   - encoder: A `JSONEncoder` used to encode outgoing messages. Defaults to a standard `JSONEncoder`.
   ///   - decoder: A `JSONDecoder` used to decode incoming messages. Defaults to a standard `JSONDecoder`.
-  public init(url: URL, urlSession: URLSession = .shared, encoder: JSONEncoder = JSONEncoder(), decoder: JSONDecoder = JSONDecoder()) {
+  public init(url: URL, urlSession: URLSession = .shared, encoder: JSONEncoder = JSONEncoder(), decoder: JSONDecoder = JSONDecoder(), reconnectionPolicy: ReconnectionPolicy? = nil) {
     self.url = url
     self.urlSession = urlSession
     self.encoder = encoder
     self.decoder = decoder
+    self.reconnectionPolicy = reconnectionPolicy
   }
   
   /// Connects to the WebSocket server.
@@ -68,18 +65,47 @@ public actor DZWebSocketClient {
   /// If the client is already connected or in the process of connecting, this method does nothing.
   /// Calling this method transitions the state to `.connecting` and resumes pending operations once successful.
   public func connect() {
-    guard state == .disconnected || state == .reconnecting else { return }
-    
+    guard state == .disconnected || state == .reconnecting else {
+      return
+    }
+
     let isReconnecting = state == .reconnecting
     state = isReconnecting ? .reconnecting : .connecting
     
     let request = URLRequest(url: url)
     webSocketTask = urlSession.webSocketTask(with: request)
+    
+    let sessionDelegate = WebSocketDelegate(
+      onOpen: { [weak self] in
+        Task {
+          await self?.handleDidOpen()
+        }
+      },
+      onClose: { [weak self] _, _ in
+        Task {
+          await self?.handleDidClose()
+        }
+      },
+      onComplete: { [weak self] _ in
+        Task {
+          await self?.handleDidClose()
+        }
+      }
+    )
+    
+    self.delegate = sessionDelegate
+    webSocketTask?.delegate = sessionDelegate
     webSocketTask?.resume()
-    
+  }
+  
+  private func handleDidOpen() {
+    guard state == .connecting || state == .reconnecting else {
+      return
+    }
+
     state = .connected
+    reconnectionAttempt = 0
     
-    // Resume any pending connections
     for continuation in connectionContinuations {
       continuation.resume()
     }
@@ -89,12 +115,21 @@ public actor DZWebSocketClient {
     startPinging()
   }
   
+  private func handleDidClose() {
+    guard state != .disconnected else {
+      return
+    }
+
+    handleDisconnection()
+  }
+  
   /// Disconnects from the WebSocket server and cancels all pending tasks.
   ///
   /// Calling this method cancels any in-flight requests by throwing a cancellation error
   /// to their waiting continuations. The connection state transitions to `.disconnected`.
   public func disconnect() {
     state = .disconnected
+    reconnectionAttempt = 0
     pingTask?.cancel()
     receiveTask?.cancel()
     
@@ -124,9 +159,8 @@ public actor DZWebSocketClient {
     
     if state == .disconnected {
       connect()
-      return
     }
-    
+
     await withCheckedContinuation { continuation in
       connectionContinuations.append(continuation)
     }
@@ -137,7 +171,6 @@ public actor DZWebSocketClient {
   /// - Parameters:
   ///   - message: The payload to send, conforming to `WebSocketEvent`.
   ///   - responseType: The expected `Decodable` type of the response.
-  /// - Returns: The decoded response of type `U`.
   /// - Throws: Any encoding/decoding errors, networking errors, or cancellation errors if the connection drops.
   public func send<T: WebSocketEvent, U: Decodable & Sendable>(message: T, responseType: U.Type) async throws -> U {
     await waitForConnection()
@@ -253,9 +286,7 @@ public actor DZWebSocketClient {
           self.handleIncomingMessage(message)
         }
         catch {
-          if !Task.isCancelled {
-            self.handleDisconnection()
-          }
+          // The delegate's handleDidClose / handleDidComplete will trigger the reconnection.
           break
         }
       }
@@ -273,7 +304,9 @@ public actor DZWebSocketClient {
     case .data(let d):
       data = d
     case .string(let s):
-      guard let d = s.data(using: .utf8) else { return }
+      guard let d = s.data(using: .utf8) else {
+        return
+      }
       data = d
     @unknown default:
       return
@@ -308,16 +341,35 @@ public actor DZWebSocketClient {
   }
   
   private func handleDisconnection() {
+    // Only transition if we are truly losing connection unexpectedly
+    guard state == .connected || state == .connecting else {
+      return
+    }
+
     state = .reconnecting
+    webSocketTask?.cancel()
+    
+    let delay: TimeInterval
+    if let policy = reconnectionPolicy {
+      reconnectionAttempt += 1
+      delay = policy.nextWaitInterval(for: reconnectionAttempt)
+      
+      if delay == .greatestFiniteMagnitude {
+        disconnect()
+        return
+      }
+    }
+    else {
+      delay = 2
+    }
+    
     Task {
-      try? await Task.sleep(for: .seconds(2))
+      try? await Task.sleep(for: .seconds(delay))
       if self.state == .reconnecting {
         self.connect()
       }
     }
   }
-  
-  // MARK: - Ping Mechanism
   
   private func startPinging() {
     pingTask?.cancel()
@@ -332,18 +384,15 @@ public actor DZWebSocketClient {
   }
   
   private func sendPing() {
-    guard state == .connected, let task = webSocketTask else { return }
-    task.sendPing { error in
+    webSocketTask?.sendPing { error in
       if let error = error {
         print("DZWebSocketClient: Ping failed: \(error)")
-        Task {
-          await self.handleDisconnection()
-        }
+        // Don't auto-disconnect here. The receive task or the delegate will pick up the failure.
       }
     }
   }
   
-  // MARK: - Continuation Management
+  // MARK: - Dictionary Helpers
   
   private func addPendingRequest(eventId: String, continuation: CheckedContinuation<Data, Error>) {
     pendingRequests[eventId] = continuation
@@ -359,5 +408,42 @@ public actor DZWebSocketClient {
     if let continuation = pendingRequests.removeValue(forKey: eventId) {
       continuation.resume(throwing: CancellationError())
     }
+  }
+}
+
+// MARK: - WebSocketEvent
+/// A protocol that every outgoing WebSocket message must conform to.
+///
+/// By conforming to this protocol, the WebSocket client can extract the `eventId`
+/// to correlate request and response payloads automatically.
+public protocol WebSocketEvent: Encodable & Sendable {
+  /// A unique identifier for the event. Used to match responses to requests.
+  var eventId: String { get }
+}
+
+// MARK: - WebSocketDelegate
+private final class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate, Sendable {
+  let onOpen: @Sendable () -> Void
+  let onClose: @Sendable (URLSessionWebSocketTask.CloseCode, Data?) -> Void
+  let onComplete: @Sendable (Error?) -> Void
+
+  init(onOpen: @escaping @Sendable () -> Void,
+       onClose: @escaping @Sendable (URLSessionWebSocketTask.CloseCode, Data?) -> Void,
+       onComplete: @escaping @Sendable (Error?) -> Void) {
+    self.onOpen = onOpen
+    self.onClose = onClose
+    self.onComplete = onComplete
+  }
+
+  func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
+    onOpen()
+  }
+
+  func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
+    onClose(closeCode, reason)
+  }
+
+  func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    onComplete(error)
   }
 }
