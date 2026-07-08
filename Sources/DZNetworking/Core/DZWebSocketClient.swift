@@ -18,13 +18,33 @@ public actor DZWebSocketClient {
   }
   
   private let url: URL
+  private let headers: [String: String]
   private let urlSession: URLSession
   
   private var webSocketTask: URLSessionWebSocketTask?
   private var delegate: WebSocketDelegate?
   
+  /// Callback invoked whenever raw data is received.
+  public var onDataReceived: (@Sendable (Data) -> Void)?
+
+  /// Callback invoked whenever the connection state changes.
+  public var onStateChange: (@Sendable (SocketState) -> Void)?
+  
+  /// Callback invoked on connection error or close, passing the error and HTTP response.
+  public var onError: (@Sendable (Error?, HTTPURLResponse?) -> Void)?
+
+  
   /// The current connection state of the client.
-  public private(set) var state: SocketState = .disconnected
+  public private(set) var state: SocketState = .disconnected {
+    didSet {
+      let newState = state
+      if oldValue != newState {
+        Task { [onStateChange] in
+          onStateChange?(newState)
+        }
+      }
+    }
+  }
 
   // Continuations for threads waiting for the connection to be established
   private var connectionContinuations: [CheckedContinuation<Void, Never>] = []
@@ -48,12 +68,13 @@ public actor DZWebSocketClient {
   /// Initializes a new WebSocket client.
   ///
   /// - Parameters:
-  ///   - url: The `URL` of the WebSocket server.
+  ///   - request: The `URLRequest` to connect to.
   ///   - urlSession: The `URLSession` to use for creating the underlying WebSocket task. Defaults to `.shared`.
   ///   - encoder: A `JSONEncoder` used to encode outgoing messages. Defaults to a standard `JSONEncoder`.
   ///   - decoder: A `JSONDecoder` used to decode incoming messages. Defaults to a standard `JSONDecoder`.
-  public init(url: URL, urlSession: URLSession = .shared, encoder: JSONEncoder = JSONEncoder(), decoder: JSONDecoder = JSONDecoder(), reconnectionPolicy: ReconnectionPolicy? = nil) {
+  public init(url: URL, headers: [String: String] = [:], urlSession: URLSession = .shared, encoder: JSONEncoder = JSONEncoder(), decoder: JSONDecoder = JSONDecoder(), reconnectionPolicy: ReconnectionPolicy? = nil) {
     self.url = url
+    self.headers = headers
     self.urlSession = urlSession
     self.encoder = encoder
     self.decoder = decoder
@@ -72,7 +93,8 @@ public actor DZWebSocketClient {
     let isReconnecting = state == .reconnecting
     state = isReconnecting ? .reconnecting : .connecting
     
-    let request = URLRequest(url: url)
+    var request = URLRequest(url: url)
+    headers.forEach { request.setValue($1, forHTTPHeaderField: $0) }
     webSocketTask = urlSession.webSocketTask(with: request)
     
     let sessionDelegate = WebSocketDelegate(
@@ -86,8 +108,11 @@ public actor DZWebSocketClient {
           await self?.handleDidClose()
         }
       },
-      onComplete: { [weak self] _ in
-        Task {
+      onComplete: { [weak self] error, response in
+        Task { [weak self] in
+          if let handler = await self?.onError {
+            handler(error, response)
+          }
           await self?.handleDidClose()
         }
       }
@@ -213,6 +238,20 @@ public actor DZWebSocketClient {
     try await webSocketTask?.send(wsMessage)
   }
   
+  /// Sends raw data over the WebSocket.
+  public func send(data: Data) async throws {
+    await waitForConnection()
+    let wsMessage = URLSessionWebSocketTask.Message.data(data)
+    try await webSocketTask?.send(wsMessage)
+  }
+  
+  /// Sends a raw string over the WebSocket.
+  public func send(string: String) async throws {
+    await waitForConnection()
+    let wsMessage = URLSessionWebSocketTask.Message.string(string)
+    try await webSocketTask?.send(wsMessage)
+  }
+  
   /// Registers a handler for unsolicited server events that match a specific event name.
   ///
   /// - Parameters:
@@ -312,6 +351,8 @@ public actor DZWebSocketClient {
       return
     }
     
+    onDataReceived?(data)
+    
     do {
       let envelope = try decoder.decode(Envelope.self, from: data)
       
@@ -336,7 +377,9 @@ public actor DZWebSocketClient {
       
     }
     catch {
-      print("DZWebSocketClient: Failed to process incoming message: \(error)")
+      if onDataReceived == nil {
+        print("DZWebSocketClient: Failed to process incoming message: \(error)")
+      }
     }
   }
   
@@ -384,10 +427,13 @@ public actor DZWebSocketClient {
   }
   
   private func sendPing() {
-    webSocketTask?.sendPing { error in
+    webSocketTask?.sendPing { [weak self] error in
       if let error = error {
         print("DZWebSocketClient: Ping failed: \(error)")
-        // Don't auto-disconnect here. The receive task or the delegate will pick up the failure.
+        // Force disconnect so reconnect loop handles it
+        Task { [weak self] in
+          await self?.handleDisconnection()
+        }
       }
     }
   }
@@ -425,11 +471,11 @@ public protocol WebSocketEvent: Encodable & Sendable {
 private final class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate, Sendable {
   let onOpen: @Sendable () -> Void
   let onClose: @Sendable (URLSessionWebSocketTask.CloseCode, Data?) -> Void
-  let onComplete: @Sendable (Error?) -> Void
+  let onComplete: @Sendable (Error?, HTTPURLResponse?) -> Void
 
   init(onOpen: @escaping @Sendable () -> Void,
        onClose: @escaping @Sendable (URLSessionWebSocketTask.CloseCode, Data?) -> Void,
-       onComplete: @escaping @Sendable (Error?) -> Void) {
+       onComplete: @escaping @Sendable (Error?, HTTPURLResponse?) -> Void) {
     self.onOpen = onOpen
     self.onClose = onClose
     self.onComplete = onComplete
@@ -444,6 +490,6 @@ private final class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate, Se
   }
 
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-    onComplete(error)
+    onComplete(error, task.response as? HTTPURLResponse)
   }
 }
