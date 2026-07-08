@@ -25,13 +25,23 @@ public actor DZWebSocketClient {
   private var delegate: WebSocketDelegate?
   
   /// Callback invoked whenever raw data is received.
-  public var onDataReceived: (@Sendable (Data) -> Void)?
+  public private(set) var onDataReceived: (@Sendable (Data) -> Void)?
 
   /// Callback invoked whenever the connection state changes.
-  public var onStateChange: (@Sendable (SocketState) -> Void)?
+  public private(set) var onStateChange: (@Sendable (SocketState) -> Void)?
   
   /// Callback invoked on connection error or close, passing the error and HTTP response.
-  public var onError: (@Sendable (Error?, HTTPURLResponse?) -> Void)?
+  public private(set) var onError: (@Sendable (Error?, HTTPURLResponse?) -> Void)?
+  
+  public func setHandlers(
+    onStateChange: (@Sendable (SocketState) -> Void)? = nil,
+    onDataReceived: (@Sendable (Data) -> Void)? = nil,
+    onError: (@Sendable (Error?, HTTPURLResponse?) -> Void)? = nil
+  ) {
+    if onStateChange != nil { self.onStateChange = onStateChange }
+    if onDataReceived != nil { self.onDataReceived = onDataReceived }
+    if onError != nil { self.onError = onError }
+  }
 
   
   /// The current connection state of the client.
