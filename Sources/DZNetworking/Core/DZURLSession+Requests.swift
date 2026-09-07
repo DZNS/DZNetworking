@@ -363,7 +363,7 @@ extension DZURLSession {
   ///   - headers: additional headers if any, always configured after calling the request modifier blocks i.e. these will override any existing values. If the value in a pair is `nil`, the header will be removed
   ///   - body: optional body for PUT, POST, PATCH requests
   /// - Returns: `URLRequest` for using with a `URLSession`
-  private func urlRequest(with uri: String, method: String, query: [String: String] = [:], headers: [(String, String?)] = [], body: Any? = nil) async throws -> URLRequest {
+  internal func urlRequest(with uri: String, method: String, query: [String: String] = [:], headers: [(String, String?)] = [], body: Any? = nil) async throws -> URLRequest {
     var mutableRequest: NSMutableURLRequest
     
     switch method {

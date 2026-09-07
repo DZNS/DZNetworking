@@ -49,6 +49,19 @@ decoder.dateDecodingStrategy = .iso8601
 let (data, _) = try await session.GET("/userdata", type: UserData.self, decoder: decoder)
 ```
 
+#### Streaming responses
+
+For bodies that arrive over time — server-sent events, newline-delimited JSON — `stream` returns the response head as soon as it lands and the body as lines. `serverSentEvents` parses those lines into events per the EventSource spec.
+
+```swift
+let (events, response) = try await session.serverSentEvents("/v1/messages", json: ["stream": true, "model": "…"])
+for try await event in events {
+  print(event.event ?? "message", event.data)
+}
+```
+
+`baseURL`, the request modifiers, and extra `headers` apply as they do for every other request. A status above `maxSuccessStatusCode` reads the body and throws the same `DZErrorDomain` error the non-streaming calls throw, with the body under `DZErrorData`.
+
 ---
 
 The `DZJSONResponseParser` implements the `DZResponseParser` protocol which handles parsing JSON responses. You can implement your own response parsers (example: XML, YAML, etc.) by conforming your parser to `DZResponseParser`.
