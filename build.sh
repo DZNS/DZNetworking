@@ -34,4 +34,5 @@ xcodebuild -create-xcframework \
  -framework ./archives/DZNetworking-iOSSim.xcarchive/Products/usr/local/lib/DZNetworking.framework \
  -debug-symbols "${PWD}/archives/DZNetworking-iOSSim.xcarchive/dSYMs/DZNetworking.framework.dSYM" \
  -framework ./archives/DZNetworking-macOS.xcarchive/Products/usr/local/lib/DZNetworking.framework \
+ -debug-symbols "${PWD}/archives/DZNetworking-macOS.xcarchive/dSYMs/DZNetworking.framework.dSYM" \
  -output DZNetworking.xcframework
