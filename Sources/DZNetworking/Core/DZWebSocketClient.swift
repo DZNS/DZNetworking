@@ -48,9 +48,9 @@ public actor DZWebSocketClient {
   public private(set) var state: SocketState = .disconnected {
     didSet {
       let newState = state
-      if oldValue != newState {
-        Task { [onStateChange] in
-          onStateChange?(newState)
+      if oldValue != newState, let handler = onStateChange {
+        Task {
+          handler(newState)
         }
       }
     }
@@ -68,6 +68,8 @@ public actor DZWebSocketClient {
   
   private var pingTask: Task<Void, Never>?
   private var receiveTask: Task<Void, Never>?
+  // Waits before the next reconnection attempt
+  private var reconnectTask: Task<Void, Never>?
   
   private let encoder: JSONEncoder
   private let decoder: JSONDecoder
@@ -94,47 +96,56 @@ public actor DZWebSocketClient {
   /// Connects to the WebSocket server.
   ///
   /// If the client is already connected or in the process of connecting, this method does nothing.
+  /// If the client is waiting to reconnect, it reconnects right away without resetting the attempt count.
   /// Calling this method transitions the state to `.connecting` and resumes pending operations once successful.
   public func connect() {
-    guard state == .disconnected || state == .reconnecting else {
+    guard state == .disconnected || (state == .reconnecting && reconnectTask != nil) else {
       return
     }
+
+    reconnectTask?.cancel()
+    reconnectTask = nil
 
     let isReconnecting = state == .reconnecting
     state = isReconnecting ? .reconnecting : .connecting
     
     var request = URLRequest(url: url)
     headers.forEach { request.setValue($1, forHTTPHeaderField: $0) }
-    webSocketTask = urlSession.webSocketTask(with: request)
+    let task = urlSession.webSocketTask(with: request)
+    webSocketTask = task
     
+    // Each callback passes its own task, so callbacks from an old connection are ignored
     let sessionDelegate = WebSocketDelegate(
-      onOpen: { [weak self] in
+      onOpen: { [weak self] task in
         Task {
-          await self?.handleDidOpen()
+          await self?.handleDidOpen(task)
         }
       },
-      onClose: { [weak self] _, _ in
+      onClose: { [weak self] task, _, _ in
         Task {
-          await self?.handleDidClose()
+          await self?.handleDidClose(task)
         }
       },
-      onComplete: { [weak self] error, response in
+      onComplete: { [weak self] task, error, response in
         Task { [weak self] in
+          // Errors are always reported, even from an old connection
           if let handler = await self?.onError {
             handler(error, response)
           }
-          await self?.handleDidClose()
+          await self?.handleDidClose(task)
         }
       }
     )
     
     self.delegate = sessionDelegate
-    webSocketTask?.delegate = sessionDelegate
-    webSocketTask?.resume()
+    task.delegate = sessionDelegate
+    task.resume()
   }
   
-  private func handleDidOpen() {
-    guard state == .connecting || state == .reconnecting else {
+  private func handleDidOpen(_ task: URLSessionWebSocketTask) {
+    guard task === webSocketTask,
+          state == .connecting || state == .reconnecting,
+          reconnectTask == nil else {
       return
     }
 
@@ -150,8 +161,8 @@ public actor DZWebSocketClient {
     startPinging()
   }
   
-  private func handleDidClose() {
-    guard state != .disconnected else {
+  private func handleDidClose(_ task: URLSessionTask) {
+    guard task === webSocketTask else {
       return
     }
 
@@ -165,8 +176,12 @@ public actor DZWebSocketClient {
   public func disconnect() {
     state = .disconnected
     reconnectionAttempt = 0
+    reconnectTask?.cancel()
+    reconnectTask = nil
     pingTask?.cancel()
+    pingTask = nil
     receiveTask?.cancel()
+    receiveTask = nil
     
     webSocketTask?.cancel(with: .normalClosure, reason: nil)
     webSocketTask = nil
@@ -326,12 +341,13 @@ public actor DZWebSocketClient {
   
   private func startReceiving() {
     receiveTask?.cancel()
+    guard let task = webSocketTask else { return }
     receiveTask = Task {
       while !Task.isCancelled {
-        guard let task = self.webSocketTask else { break }
-        
         do {
           let message = try await task.receive()
+          // Ignore messages from an old connection
+          guard !Task.isCancelled, task === self.webSocketTask else { break }
           self.handleIncomingMessage(message)
         }
         catch {
@@ -394,12 +410,17 @@ public actor DZWebSocketClient {
   }
   
   private func handleDisconnection() {
-    // Only transition if we are truly losing connection unexpectedly
-    guard state == .connected || state == .connecting else {
+    // Skip if a retry is already scheduled for this failure
+    guard state != .disconnected, reconnectTask == nil else {
       return
     }
 
     state = .reconnecting
+    pingTask?.cancel()
+    pingTask = nil
+    receiveTask?.cancel()
+    receiveTask = nil
+    // Keep the cancelled task so sending behaves as before
     webSocketTask?.cancel()
     
     let delay: TimeInterval
@@ -416,11 +437,11 @@ public actor DZWebSocketClient {
       delay = 2
     }
     
-    Task {
+    reconnectTask = Task {
       try? await Task.sleep(for: .seconds(delay))
-      if self.state == .reconnecting {
-        self.connect()
-      }
+      // Stop if connect() or disconnect() cancelled the wait
+      guard !Task.isCancelled, self.state == .reconnecting else { return }
+      self.connect()
     }
   }
   
@@ -437,12 +458,13 @@ public actor DZWebSocketClient {
   }
   
   private func sendPing() {
-    webSocketTask?.sendPing { [weak self] error in
+    guard let task = webSocketTask else { return }
+    task.sendPing { [weak self] error in
       if let error = error {
         print("DZWebSocketClient: Ping failed: \(error)")
         // Force disconnect so reconnect loop handles it
         Task { [weak self] in
-          await self?.handleDisconnection()
+          await self?.handleDidClose(task)
         }
       }
     }
@@ -479,27 +501,27 @@ public protocol WebSocketEvent: Encodable & Sendable {
 
 // MARK: - WebSocketDelegate
 private final class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate, Sendable {
-  let onOpen: @Sendable () -> Void
-  let onClose: @Sendable (URLSessionWebSocketTask.CloseCode, Data?) -> Void
-  let onComplete: @Sendable (Error?, HTTPURLResponse?) -> Void
+  let onOpen: @Sendable (URLSessionWebSocketTask) -> Void
+  let onClose: @Sendable (URLSessionWebSocketTask, URLSessionWebSocketTask.CloseCode, Data?) -> Void
+  let onComplete: @Sendable (URLSessionTask, Error?, HTTPURLResponse?) -> Void
 
-  init(onOpen: @escaping @Sendable () -> Void,
-       onClose: @escaping @Sendable (URLSessionWebSocketTask.CloseCode, Data?) -> Void,
-       onComplete: @escaping @Sendable (Error?, HTTPURLResponse?) -> Void) {
+  init(onOpen: @escaping @Sendable (URLSessionWebSocketTask) -> Void,
+       onClose: @escaping @Sendable (URLSessionWebSocketTask, URLSessionWebSocketTask.CloseCode, Data?) -> Void,
+       onComplete: @escaping @Sendable (URLSessionTask, Error?, HTTPURLResponse?) -> Void) {
     self.onOpen = onOpen
     self.onClose = onClose
     self.onComplete = onComplete
   }
 
   func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
-    onOpen()
+    onOpen(webSocketTask)
   }
 
   func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
-    onClose(closeCode, reason)
+    onClose(webSocketTask, closeCode, reason)
   }
 
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-    onComplete(error, task.response as? HTTPURLResponse)
+    onComplete(task, error, task.response as? HTTPURLResponse)
   }
 }
