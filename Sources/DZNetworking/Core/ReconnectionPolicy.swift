@@ -9,15 +9,16 @@ import Foundation
 
 // MARK: - ReconnectionPolicy
 
-public struct ReconnectionPolicy {
+public struct ReconnectionPolicy: Sendable {
   let baseDelay: TimeInterval
   let maximumAttempts: UInt
   let maximumDelay: TimeInterval
   let useExponentialBackoff: Bool
 
   public init(baseDelay: TimeInterval = 2, maximumAttempts: UInt = 5, maximumDelay: TimeInterval = 60, useExponentialBackoff: Bool = true) {
-    precondition(baseDelay < maximumDelay, "baseDelay should always be less than maximumDelay")
-    precondition((baseDelay * Double(maximumAttempts)) < maximumDelay, "baseDelay should always be less than maximumDelay")
+    precondition(baseDelay.isFinite && baseDelay > 0, "baseDelay must be a positive, finite number of seconds")
+    // .greatestFiniteMagnitude is reserved to mean "stop retrying"
+    precondition(maximumDelay.isFinite && maximumDelay >= baseDelay && maximumDelay < .greatestFiniteMagnitude, "maximumDelay must be finite and at least baseDelay")
 
     self.baseDelay = baseDelay
     self.maximumAttempts = maximumAttempts
