@@ -28,9 +28,6 @@ public actor DZWebSocketClient {
   public private(set) var onDataReceived: (@Sendable (Data) -> Void)?
 
   /// Callback invoked whenever the connection state changes.
-  ///
-  /// Calls arrive in order, one at a time. Each call uses the handler that was set when the state changed.
-  /// Do not block inside the handler or wait for a later call, because later calls wait for it to return.
   public private(set) var onStateChange: (@Sendable (SocketState) -> Void)?
   
   /// Callback invoked on connection error or close, passing the error and HTTP response.
@@ -52,9 +49,7 @@ public actor DZWebSocketClient {
     didSet {
       let newState = state
       if oldValue != newState, let handler = onStateChange {
-        // Each callback waits for the previous one, so states arrive in order
-        stateTask = Task { [previous = stateTask] in
-          await previous?.value
+        Task {
           handler(newState)
         }
       }
@@ -75,8 +70,6 @@ public actor DZWebSocketClient {
   private var receiveTask: Task<Void, Never>?
   // Waits before the next reconnection attempt
   private var reconnectTask: Task<Void, Never>?
-  // Last state callback, so the next one can wait for it
-  private var stateTask: Task<Void, Never>?
   
   private let encoder: JSONEncoder
   private let decoder: JSONDecoder
@@ -410,8 +403,12 @@ public actor DZWebSocketClient {
     receiveTask = Task { [weak self] in
       while !Task.isCancelled {
         // The delegate's handleDidClose / handleDidComplete will trigger the reconnection.
-        guard let message = try? await task.receive() else { break }
-        guard await self?.deliver(message, from: task) == true else { break }
+        guard let message = try? await task.receive() else {
+          break
+        }
+        guard await self?.deliver(message, from: task) == true else {
+          break
+        }
       }
     }
   }
@@ -528,7 +525,9 @@ public actor DZWebSocketClient {
     pingTask = Task { [weak self] in
       while !Task.isCancelled {
         try? await Task.sleep(for: .seconds(interval))
-        guard !Task.isCancelled, await self?.sendPing() == true else { break }
+        guard !Task.isCancelled, await self?.sendPing() == true else {
+          break
+        }
       }
     }
   }
