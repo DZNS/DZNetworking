@@ -28,6 +28,9 @@ public actor DZWebSocketClient {
   public private(set) var onDataReceived: (@Sendable (Data) -> Void)?
 
   /// Callback invoked whenever the connection state changes.
+  ///
+  /// Calls arrive in order, one at a time. Each call uses the handler that was set when the state changed.
+  /// Do not block inside the handler or wait for a later call, because later calls wait for it to return.
   public private(set) var onStateChange: (@Sendable (SocketState) -> Void)?
   
   /// Callback invoked on connection error or close, passing the error and HTTP response.
@@ -49,7 +52,9 @@ public actor DZWebSocketClient {
     didSet {
       let newState = state
       if oldValue != newState, let handler = onStateChange {
-        Task {
+        // Each callback waits for the previous one, so states arrive in order
+        stateTask = Task { [previous = stateTask] in
+          await previous?.value
           handler(newState)
         }
       }
@@ -57,7 +62,7 @@ public actor DZWebSocketClient {
   }
 
   // Continuations for threads waiting for the connection to be established
-  private var connectionContinuations: [CheckedContinuation<Void, Never>] = []
+  private var connectionContinuations: [UUID: CheckedContinuation<Void, Error>] = [:]
   
   // Pending requests mapped by their eventId
   private var pendingRequests: [String: CheckedContinuation<Data, Error>] = [:]
@@ -70,27 +75,59 @@ public actor DZWebSocketClient {
   private var receiveTask: Task<Void, Never>?
   // Waits before the next reconnection attempt
   private var reconnectTask: Task<Void, Never>?
+  // Last state callback, so the next one can wait for it
+  private var stateTask: Task<Void, Never>?
   
   private let encoder: JSONEncoder
   private let decoder: JSONDecoder
 
   private let reconnectionPolicy: ReconnectionPolicy?
   private var reconnectionAttempt: UInt = 0
+  private let pingInterval: TimeInterval?
+
+  private static let disconnectedError = NSError(domain: "DZWebSocketClient", code: -1, userInfo: [NSLocalizedDescriptionKey: "WebSocket disconnected"])
 
   /// Initializes a new WebSocket client.
   ///
   /// - Parameters:
-  ///   - request: The `URLRequest` to connect to.
+  ///   - url: The URL of the WebSocket server.
+  ///   - headers: Extra HTTP headers sent with each connection attempt.
   ///   - urlSession: The `URLSession` to use for creating the underlying WebSocket task. Defaults to `.shared`.
   ///   - encoder: A `JSONEncoder` used to encode outgoing messages. Defaults to a standard `JSONEncoder`.
   ///   - decoder: A `JSONDecoder` used to decode incoming messages. Defaults to a standard `JSONDecoder`.
+  ///
+  ///   - reconnectionPolicy: How to retry after the connection drops. With `nil`, the client retries every
+  ///     2 seconds until `disconnect()` is called. A successful connection resets the attempt count.
+  ///
+  /// The client pings the server every 10 seconds while connected.
+  /// To limit how long a connection attempt may stay silent, set `timeoutIntervalForRequest` on the
+  /// `URLSessionConfiguration` before creating the session. It is an inactivity timeout, so it restarts whenever data arrives.
   public init(url: URL, headers: [String: String] = [:], urlSession: URLSession = .shared, encoder: JSONEncoder = JSONEncoder(), decoder: JSONDecoder = JSONDecoder(), reconnectionPolicy: ReconnectionPolicy? = nil) {
+    self.init(url: url, headers: headers, urlSession: urlSession, encoder: encoder, decoder: decoder, reconnectionPolicy: reconnectionPolicy, pingInterval: 10)
+  }
+
+  /// Initializes a new WebSocket client with a custom ping interval.
+  ///
+  /// - Parameter pingInterval: Seconds between pings while connected, from 1 second to 1 day. Pass `nil` to turn pings off.
+  public init(url: URL, headers: [String: String] = [:], urlSession: URLSession = .shared, encoder: JSONEncoder = JSONEncoder(), decoder: JSONDecoder = JSONDecoder(), reconnectionPolicy: ReconnectionPolicy? = nil, pingInterval: TimeInterval?) {
+    if let pingInterval {
+      precondition((1...86_400).contains(pingInterval), "pingInterval must be between 1 second and 1 day")
+    }
+
     self.url = url
     self.headers = headers
     self.urlSession = urlSession
     self.encoder = encoder
     self.decoder = decoder
     self.reconnectionPolicy = reconnectionPolicy
+    self.pingInterval = pingInterval
+  }
+
+  deinit {
+    reconnectTask?.cancel()
+    pingTask?.cancel()
+    receiveTask?.cancel()
+    webSocketTask?.cancel(with: .goingAway, reason: nil)
   }
   
   /// Connects to the WebSocket server.
@@ -98,6 +135,8 @@ public actor DZWebSocketClient {
   /// If the client is already connected or in the process of connecting, this method does nothing.
   /// If the client is waiting to reconnect, it reconnects right away without resetting the attempt count.
   /// Calling this method transitions the state to `.connecting` and resumes pending operations once successful.
+  /// The client keeps reconnecting after a drop until the policy gives up or `disconnect()` is called,
+  /// even if every waiting send is cancelled.
   public func connect() {
     guard state == .disconnected || (state == .reconnecting && reconnectTask != nil) else {
       return
@@ -132,7 +171,7 @@ public actor DZWebSocketClient {
           if let handler = await self?.onError {
             handler(error, response)
           }
-          await self?.handleDidClose(task)
+          await self?.handleDidClose(task, error: error)
         }
       }
     )
@@ -152,7 +191,7 @@ public actor DZWebSocketClient {
     state = .connected
     reconnectionAttempt = 0
     
-    for continuation in connectionContinuations {
+    for continuation in connectionContinuations.values {
       continuation.resume()
     }
     connectionContinuations.removeAll()
@@ -161,18 +200,18 @@ public actor DZWebSocketClient {
     startPinging()
   }
   
-  private func handleDidClose(_ task: URLSessionTask) {
+  private func handleDidClose(_ task: URLSessionTask, error: Error? = nil) {
     guard task === webSocketTask else {
       return
     }
 
-    handleDisconnection()
+    handleDisconnection(error: error)
   }
   
   /// Disconnects from the WebSocket server and cancels all pending tasks.
   ///
-  /// Calling this method cancels any in-flight requests by throwing a cancellation error
-  /// to their waiting continuations. The connection state transitions to `.disconnected`.
+  /// Sends waiting for a connection and requests waiting for a response fail with a
+  /// "WebSocket disconnected" error. The connection state transitions to `.disconnected`.
   public func disconnect() {
     state = .disconnected
     reconnectionAttempt = 0
@@ -186,34 +225,49 @@ public actor DZWebSocketClient {
     webSocketTask?.cancel(with: .normalClosure, reason: nil)
     webSocketTask = nil
     
-    // Cancel all pending requests
-    let cancelError = NSError(domain: "DZWebSocketClient", code: -1, userInfo: [NSLocalizedDescriptionKey: "WebSocket disconnected"])
-    for (_, continuation) in pendingRequests {
-      continuation.resume(throwing: cancelError)
-    }
-    pendingRequests.removeAll()
+    failPendingRequests(with: Self.disconnectedError)
     
-    for continuation in connectionContinuations {
-      continuation.resume()
+    for continuation in connectionContinuations.values {
+      continuation.resume(throwing: Self.disconnectedError)
     }
     connectionContinuations.removeAll()
   }
   
-  /// Waits asynchronously until the WebSocket reaches a `.connected` state.
+  /// Waits until the WebSocket is connected and returns its task.
   ///
-  /// If the client is disconnected, this triggers a connection attempt.
-  private func waitForConnection() async {
-    if state == .connected {
-      return
-    }
-    
-    if state == .disconnected {
-      connect()
+  /// If the client is disconnected, this starts a connection attempt.
+  /// While reconnecting, it keeps waiting. It throws if the caller is cancelled or the client disconnects.
+  private func connectedTask() async throws -> URLSessionWebSocketTask {
+    try Task.checkCancellation()
+
+    if state != .connected {
+      if state == .disconnected {
+        connect()
+      }
+
+      let id = UUID()
+      try await withTaskCancellationHandler {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+          if Task.isCancelled {
+            continuation.resume(throwing: CancellationError())
+          }
+          else {
+            connectionContinuations[id] = continuation
+          }
+        }
+      } onCancel: {
+        Task {
+          await self.cancelConnectionWait(id: id)
+        }
+      }
     }
 
-    await withCheckedContinuation { continuation in
-      connectionContinuations.append(continuation)
+    // The connection can drop again before this caller resumes
+    try Task.checkCancellation()
+    guard state == .connected, let task = webSocketTask else {
+      throw Self.disconnectedError
     }
+    return task
   }
   
   /// Sends a payload to the WebSocket server and waits for a specific response.
@@ -221,24 +275,31 @@ public actor DZWebSocketClient {
   /// - Parameters:
   ///   - message: The payload to send, conforming to `WebSocketEvent`.
   ///   - responseType: The expected `Decodable` type of the response.
-  /// - Throws: Any encoding/decoding errors, networking errors, or cancellation errors if the connection drops.
+  /// If the client is disconnected, this starts a connection attempt first, even after `disconnect()`.
+  /// Use a new `eventId` for every request. Do not reuse one, even after a request was cancelled or failed.
+  ///
+  /// - Throws: Any encoding/decoding errors, networking errors, `CancellationError` if the caller is cancelled,
+  ///   or a "WebSocket disconnected" error if the connection drops before the response arrives.
   public func send<T: WebSocketEvent, U: Decodable & Sendable>(message: T, responseType: U.Type) async throws -> U {
-    await waitForConnection()
+    let task = try await connectedTask()
     
     let eventId = message.eventId
     let data = try encoder.encode(message)
-    let wsMessage = URLSessionWebSocketTask.Message.data(data)
     
     let responseData: Data = try await withTaskCancellationHandler {
       return try await withCheckedThrowingContinuation { continuation in
-        Task {
-          self.addPendingRequest(eventId: eventId, continuation: continuation)
-          
-          do {
-            try await self.webSocketTask?.send(wsMessage)
-          }
-          catch {
-            self.failPendingRequest(eventId: eventId, error: error)
+        // Register before sending, so a cancellation always finds the request
+        if Task.isCancelled {
+          continuation.resume(throwing: CancellationError())
+          return
+        }
+        pendingRequests[eventId] = continuation
+
+        task.send(.data(data)) { [weak self] error in
+          if let error {
+            Task {
+              await self?.failPendingRequest(eventId: eventId, error: error)
+            }
           }
         }
       }
@@ -254,27 +315,28 @@ public actor DZWebSocketClient {
   /// Sends a payload to the WebSocket server without waiting for a specific response (fire-and-forget).
   ///
   /// - Parameter message: The payload to send, conforming to `WebSocketEvent`.
-  /// - Throws: Any encoding errors or networking errors if the dispatch fails.
+  /// If the client is disconnected, this starts a connection attempt first, even after `disconnect()`.
+  /// Cancelling stops the send only if it has not started yet. A message that has started sending cannot be taken back.
+  ///
+  /// - Throws: Any encoding errors, networking errors, `CancellationError`, or a "WebSocket disconnected" error.
   public func send<T: WebSocketEvent>(message: T) async throws {
-    await waitForConnection()
+    let task = try await connectedTask()
     
     let data = try encoder.encode(message)
-    let wsMessage = URLSessionWebSocketTask.Message.data(data)
-    try await webSocketTask?.send(wsMessage)
+    try Task.checkCancellation()
+    try await task.send(.data(data))
   }
   
-  /// Sends raw data over the WebSocket.
+  /// Sends raw data over the WebSocket. Behaves like `send(message:)`.
   public func send(data: Data) async throws {
-    await waitForConnection()
-    let wsMessage = URLSessionWebSocketTask.Message.data(data)
-    try await webSocketTask?.send(wsMessage)
+    let task = try await connectedTask()
+    try await task.send(.data(data))
   }
   
-  /// Sends a raw string over the WebSocket.
+  /// Sends a raw string over the WebSocket. Behaves like `send(message:)`.
   public func send(string: String) async throws {
-    await waitForConnection()
-    let wsMessage = URLSessionWebSocketTask.Message.string(string)
-    try await webSocketTask?.send(wsMessage)
+    let task = try await connectedTask()
+    try await task.send(.string(string))
   }
   
   /// Registers a handler for unsolicited server events that match a specific event name.
@@ -315,7 +377,9 @@ public actor DZWebSocketClient {
   /// Returns an `AsyncStream` that yields incoming events for a specific event name.
   ///
   /// This is an alternative to `addHandler` that natively supports Swift Concurrency.
-  /// The stream automatically cleans up its internal handler when the iterating `Task` is cancelled.
+  /// The stream removes its internal handler when it is cancelled or finished.
+  /// A registered stream can keep the client alive until that cleanup removes the handler.
+  /// Stopping iteration alone does not guarantee that cleanup.
   ///
   /// - Parameters:
   ///   - event: The name of the event to listen for.
@@ -342,20 +406,22 @@ public actor DZWebSocketClient {
   private func startReceiving() {
     receiveTask?.cancel()
     guard let task = webSocketTask else { return }
-    receiveTask = Task {
+    // Holds the client weakly, so an unused client can be released
+    receiveTask = Task { [weak self] in
       while !Task.isCancelled {
-        do {
-          let message = try await task.receive()
-          // Ignore messages from an old connection
-          guard !Task.isCancelled, task === self.webSocketTask else { break }
-          self.handleIncomingMessage(message)
-        }
-        catch {
-          // The delegate's handleDidClose / handleDidComplete will trigger the reconnection.
-          break
-        }
+        // The delegate's handleDidClose / handleDidComplete will trigger the reconnection.
+        guard let message = try? await task.receive() else { break }
+        guard await self?.deliver(message, from: task) == true else { break }
       }
     }
+  }
+
+  /// Handles a received message and returns whether the receive loop should continue.
+  private func deliver(_ message: URLSessionWebSocketTask.Message, from task: URLSessionWebSocketTask) -> Bool {
+    // Ignore messages from an old connection
+    guard !Task.isCancelled, task === webSocketTask else { return false }
+    handleIncomingMessage(message)
+    return true
   }
   
   private struct Envelope: Decodable {
@@ -409,7 +475,7 @@ public actor DZWebSocketClient {
     }
   }
   
-  private func handleDisconnection() {
+  private func handleDisconnection(error: Error? = nil) {
     // Skip if a retry is already scheduled for this failure
     guard state != .disconnected, reconnectTask == nil else {
       return
@@ -420,8 +486,10 @@ public actor DZWebSocketClient {
     pingTask = nil
     receiveTask?.cancel()
     receiveTask = nil
-    // Keep the cancelled task so sending behaves as before
+    // Keep the cancelled task so callbacks from it can still be matched and ignored
     webSocketTask?.cancel()
+    // Their responses cannot arrive on a new connection
+    failPendingRequests(with: error ?? Self.disconnectedError)
     
     let delay: TimeInterval
     if let policy = reconnectionPolicy {
@@ -437,43 +505,61 @@ public actor DZWebSocketClient {
       delay = 2
     }
     
-    reconnectTask = Task {
+    reconnectTask = Task { [weak self] in
       try? await Task.sleep(for: .seconds(delay))
       // Stop if connect() or disconnect() cancelled the wait
-      guard !Task.isCancelled, self.state == .reconnecting else { return }
-      self.connect()
+      guard !Task.isCancelled else { return }
+      await self?.retry()
     }
+  }
+
+  /// Starts the next attempt unless this wait was cancelled.
+  private func retry() {
+    // A cancelled wait must not start a new attempt
+    guard !Task.isCancelled, state == .reconnecting else { return }
+    connect()
   }
   
   private func startPinging() {
     pingTask?.cancel()
-    pingTask = Task {
+    pingTask = nil
+    guard let interval = pingInterval else { return }
+
+    pingTask = Task { [weak self] in
       while !Task.isCancelled {
-        try? await Task.sleep(for: .seconds(10))
-        if Task.isCancelled { break }
-        
-        self.sendPing()
+        try? await Task.sleep(for: .seconds(interval))
+        guard !Task.isCancelled, await self?.sendPing() == true else { break }
       }
     }
   }
   
-  private func sendPing() {
-    guard let task = webSocketTask else { return }
+  /// Sends a ping and returns whether the ping loop should continue.
+  private func sendPing() -> Bool {
+    // Stop if this loop was cancelled or the connection is gone
+    guard !Task.isCancelled, state == .connected, let task = webSocketTask else { return false }
     task.sendPing { [weak self] error in
       if let error = error {
         print("DZWebSocketClient: Ping failed: \(error)")
         // Force disconnect so reconnect loop handles it
         Task { [weak self] in
-          await self?.handleDidClose(task)
+          await self?.handleDidClose(task, error: error)
         }
       }
     }
+    return true
   }
   
   // MARK: - Dictionary Helpers
   
-  private func addPendingRequest(eventId: String, continuation: CheckedContinuation<Data, Error>) {
-    pendingRequests[eventId] = continuation
+  private func failPendingRequests(with error: Error) {
+    for continuation in pendingRequests.values {
+      continuation.resume(throwing: error)
+    }
+    pendingRequests.removeAll()
+  }
+
+  private func cancelConnectionWait(id: UUID) {
+    connectionContinuations.removeValue(forKey: id)?.resume(throwing: CancellationError())
   }
   
   private func failPendingRequest(eventId: String, error: Error) {
@@ -496,6 +582,7 @@ public actor DZWebSocketClient {
 /// to correlate request and response payloads automatically.
 public protocol WebSocketEvent: Encodable & Sendable {
   /// A unique identifier for the event. Used to match responses to requests.
+  /// Use a new value for every request, even when sending the same content again.
   var eventId: String { get }
 }
 
